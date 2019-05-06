@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cardRadius">8dp</dimen>
+    <dimen name="cardRadiusOver">12dp</dimen>
+    <dimen name="list_item_spacing">36dp</dimen>
+    <dimen name="list_item_spacing_half">18dp</dimen>
+    <dimen name="saveCardHeight">64dp</dimen>
+</resources>
