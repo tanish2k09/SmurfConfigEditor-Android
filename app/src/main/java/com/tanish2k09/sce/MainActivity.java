@@ -2,6 +2,7 @@ package com.tanish2k09.sce;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -48,12 +49,17 @@ public class MainActivity extends AppCompatActivity {
         cig = new ConfigImportExport(this);
 
         noNotesCard = findViewById(R.id.no_notes_card);
-        saveCard = findViewById(R.id.saveButton);
 
+        saveCard = findViewById(R.id.saveButton);
         saveCard.setOnClickListener(v -> cig.saveConfig());
 
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.black));
         Shell.su("su").submit();
+
+        SharedPreferences sp = getSharedPreferences("settings",MODE_PRIVATE);
+        if (sp.getBoolean("autoImportConfig", false))
+            commenceConfigImport();
+
     }
 
     @Override
@@ -86,27 +92,19 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_import_config) {
-            removeConfigFragments();
+        switch(id) {
+            case R.id.action_import_config:
+                return commenceConfigImport();
 
-            if (!cig.configImport())
-                return false;
+            case R.id.action_info:
+                Intent infoActivityIntent = new Intent(this, InfoActivity.class);
+                startActivity(infoActivityIntent);
+                break;
 
-            int size = ConfigCacheClass.getConfiglistSize();
-            Toast.makeText(this, "Found " + size + " values", Toast.LENGTH_SHORT).show();
-
-            if (size > 0) {
-                fillConfigFragments();
-                noNotesCard.setVisibility(View.INVISIBLE);
-                saveCard.setVisibility(View.VISIBLE);
-                saveCard.setEnabled(true);
-            } else {
-                Toast.makeText(this, "No values could be extracted", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        } else if (id == R.id.action_info) {
-            Intent settingsActivityIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingsActivityIntent);
+            case R.id.action_settings:
+                Intent settingsActivityIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsActivityIntent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -122,6 +120,28 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 moveTaskToBack(true);
         }
+    }
+
+    private boolean commenceConfigImport() {
+        removeConfigFragments();
+
+        if (!cig.configImport()) {
+            Toast.makeText(this, getResources().getString(R.string.swwImport), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        int size = ConfigCacheClass.getConfiglistSize();
+        Toast.makeText(this, "Found " + size + " values", Toast.LENGTH_SHORT).show();
+
+        if (size > 0) {
+            fillConfigFragments();
+            noNotesCard.setVisibility(View.INVISIBLE);
+            saveCard.setVisibility(View.VISIBLE);
+            saveCard.setEnabled(true);
+        } else {
+            Toast.makeText(this, "No values could be extracted", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     private void removeConfigFragments() {
@@ -144,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
         for (int idx = 1; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
             ft = fm.beginTransaction();
             fConfigVar configFragment = new fConfigVar();
-            configFragment.setupCardInfo(idx);
+            if (!configFragment.setupCardInfo(idx))
+                continue;
             ft.add(R.id.listLayout, configFragment, "configCard" + idx);
             ft.commit();
         }
