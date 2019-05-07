@@ -1,5 +1,7 @@
 package com.tanish2k09.sce.utils;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class ConfigCacheClass {
@@ -9,7 +11,11 @@ public class ConfigCacheClass {
     public ConfigCacheClass() {
     }
 
-    public static int addConfig(String name, String val, boolean isValActive) {
+    public static int addConfig(String name,
+                                String val,
+                                boolean isValActive,
+                                String title,
+                                String description) {
 
         for (int idx = 0; idx < configList.size(); ++idx) {
             StringValClass tmp = configList.get(idx);
@@ -28,6 +34,12 @@ public class ConfigCacheClass {
 
         if (isValActive)
             newStringVal.setActiveVal(val);
+
+        if (title != null)
+            newStringVal.setTitle(title);
+
+        if (description != null)
+            newStringVal.setDescription(description);
 
         configList.add(newStringVal);
         return configList.size() - 1;

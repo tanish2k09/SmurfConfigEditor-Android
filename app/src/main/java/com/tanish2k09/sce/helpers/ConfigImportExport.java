@@ -6,14 +6,8 @@ import com.tanish2k09.sce.utils.StringValClass;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.io.SuFile;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -26,7 +20,6 @@ import java.io.IOException;
 public class ConfigImportExport {
     private File configFile;
     private Context ctx;
-    private int pasteDump = 0;
 
     public ConfigImportExport(Context context) {
         ctx = context;
@@ -61,6 +54,8 @@ public class ConfigImportExport {
                 ConfigCacheClass.clearAll();
                 BufferedReader inBR = new BufferedReader(new FileReader(configFile));
                 String cache = inBR.readLine();
+                String title = "";
+                StringBuilder description = new StringBuilder();
 
                 while (cache != null) {
                     if (isValidConfigLine(cache)) {
@@ -68,11 +63,18 @@ public class ConfigImportExport {
                         if (cache.startsWith("#")) {
                             cache = cache.substring(1);
                             configPair = cache.split("=");
-                            ConfigCacheClass.addConfig(configPair[0], configPair[1], false);
+                            ConfigCacheClass.addConfig(configPair[0], configPair[1], false, title, description.toString());
                         } else {
                             configPair = cache.split("=");
-                            ConfigCacheClass.addConfig(configPair[0], configPair[1], true);
+                            ConfigCacheClass.addConfig(configPair[0], configPair[1], true, title, description.toString());
                         }
+                        description = new StringBuilder();
+                    } else if (cache.startsWith("##:")) {
+                        if (cache.length() > 3)
+                            title = cache.substring(3);
+                    } else if (cache.startsWith("##~")) {
+                        if (cache.length() > 3)
+                            description.append(cache.substring(3)).append('\n');
                     }
                     cache = inBR.readLine();
                 }
@@ -96,10 +98,24 @@ public class ConfigImportExport {
 
             for (int idx = 0; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
                 StringValClass svc = ConfigCacheClass.getStringVal(idx);
-
                 assert svc != null;
+
+                if (svc.getTitle().length() > 0) {
+                    outBW.write("##:" + svc.getTitle());
+                    outBW.newLine();
+                }
+
+                if (svc.getDescriptionString().length() > 0) {
+                    String[] lines = svc.getDescriptionString().split("\n");
+                    for (String string : lines) {
+                        outBW.write("##~" + string);
+                        outBW.newLine();
+                    }
+                }
+
                 for (int option = 0; option < svc.getNumOptions(); ++option) {
                     StringBuilder lineToWrite = new StringBuilder();
+
                     if (!svc.getOption(option).equals(svc.getActiveVal()) &&
                         !svc.getName().equals(ctx.getString(R.string.profileVersion)))
                             lineToWrite.append("#");
@@ -119,13 +135,6 @@ public class ConfigImportExport {
             Toast.makeText(ctx, R.string.swwRC, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-    }
-
-    private void configDump() {
-        if (pasteDump == 1)
-            configDumpRoot();
-        else if (pasteDump == 2)
-            configDumpInflate();
     }
 
     private boolean configDumpRoot() {

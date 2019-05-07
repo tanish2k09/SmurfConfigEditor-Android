@@ -6,10 +6,14 @@ public class StringValClass {
     private String name;
     private ArrayList<String> options;
     private String activeVal = "<no value set>";
+    private String description;
+    private String title;
 
     StringValClass(String name) {
         this.name = name;
         options = new ArrayList<>();
+        description = "";
+        title = "";
     }
 
     void addVal(String val) {
@@ -43,5 +47,19 @@ public class StringValClass {
 
     void clearOptions() {
         options.clear();
+    }
+
+    void setTitle(String titleArg) {
+        title = titleArg;
+    }
+
+    public String getTitle() { return title; }
+
+    void setDescription(String desc) {
+        description = desc;
+    }
+
+    public String getDescriptionString() {
+        return description;
     }
 }

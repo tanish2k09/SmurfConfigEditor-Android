@@ -1,13 +1,14 @@
 package com.tanish2k09.sce.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.tanish2k09.sce.utils.StringValClass;
  */
 public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener, View.OnClickListener {
 
-    private TextView title, status, curVal;
+    private TextView title, curVal;
     private StringValClass svc;
     public int index = -1;
 
@@ -29,7 +30,7 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         svc = ConfigCacheClass.getStringVal(index);
         this.index = index;
 
-        return (svc == null);
+        return (svc != null);
     }
 
     public fConfigVar() {
@@ -48,16 +49,15 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         final View v = inflater.inflate(R.layout.fragment_config_var, container, false);
         title = v.findViewById(R.id.title);
         curVal = v.findViewById(R.id.curVal);
-        status = v.findViewById(R.id.status);
 
-        title.setText(svc.getName());
+        title.setText(svc.getName().toUpperCase());
         curVal.setText(svc.getActiveVal());
-
-        CardView underflow = v.findViewById(R.id.underflowCard);
-        underflow.setOnClickListener(this);
 
         LinearLayout ll_topCard = v.findViewById(R.id.ll_topCard);
         ll_topCard.setOnClickListener(this);
+
+        ImageButton infoButton = v.findViewById(R.id.infoButtonConfig);
+        infoButton.setOnClickListener(this);
 
         return v;
     }
@@ -78,8 +78,25 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         curVal.setText(svc.getActiveVal());
     }
 
+    private void showInfoDialog(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), R.style.dialogCustomStyle);
+
+        builder.setPositiveButton("Okay", (dialog, which) -> {
+           dialog.dismiss();
+        });
+
+        builder.setTitle(svc.getTitle())
+                .setMessage(svc.getDescriptionString())
+                .setCancelable(true)
+                .create()
+                .show();
+    }
+
     @Override
     public void onClick(View v) {
-        ConfigOptionsModal.newInstance(svc).show(getChildFragmentManager(), svc.getName() + " Selector");
+        if (v.getId() == R.id.ll_topCard)
+            ConfigOptionsModal.newInstance(svc).show(getChildFragmentManager(), svc.getName() + " Selector");
+        else
+            showInfoDialog(v);
     }
 }

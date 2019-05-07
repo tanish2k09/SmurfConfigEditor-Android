@@ -99,8 +99,7 @@
             android:gravity="center"
             android:text="@string/save"
             android:textColor="@color/saveColor"
-            android:textScaleX="1.2"
-            android:textSize="40sp" />
+            android:textSize="36sp" />
     </android.support.v7.widget.CardView>
 
     <ScrollView
