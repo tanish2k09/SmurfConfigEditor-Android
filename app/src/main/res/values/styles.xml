@@ -15,6 +15,8 @@
 
         <!-- To change the background of navbar -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -35,7 +37,15 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="SwitchStyle" parent="Theme.AppCompat.Light">
+        <item name="android:colorForeground">#FFFFFF</item>
+    </style>
+
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="materialcolorpicker__AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
     </style>
 </resources>

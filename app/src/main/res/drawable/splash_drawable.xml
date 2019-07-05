@@ -1,0 +1,14 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+
+        <shape>
+            <solid android:color="@color/colorPrimary"/>
+        </shape>
+    </item>
+
+    <item
+        android:width="240dp"
+        android:height="380dp"
+        android:drawable="@drawable/splash_bg"
+        android:gravity="center" />
+</layer-list>

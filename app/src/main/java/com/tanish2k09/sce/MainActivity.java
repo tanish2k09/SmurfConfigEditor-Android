@@ -4,8 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,7 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.tanish2k09.sce.fragments.fConfigVar;
+import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment;
+import com.tanish2k09.sce.fragments.containerFragments.fConfigVar;
 import com.tanish2k09.sce.helpers.ConfigImportExport;
 import com.tanish2k09.sce.utils.ConfigCacheClass;
 import com.topjohnwu.superuser.Shell;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CardView noNotesCard, saveCard;
     private ConfigImportExport cig;
+    private boolean runScript = false;
 
     static {
         /* Shell.Config methods shall be called before any shell is created
@@ -45,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         cig = new ConfigImportExport(this);
 
         noNotesCard = findViewById(R.id.no_notes_card);
+        noNotesCard.setOnClickListener(v -> commenceConfigImport());
 
         saveCard = findViewById(R.id.saveButton);
-        saveCard.setOnClickListener(v -> cig.saveConfig());
+        saveCard.setOnClickListener(v -> cig.saveConfig(runScript));
 
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.black));
         Shell.su("su").submit();
@@ -74,6 +82,37 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                  Manifest.permission.READ_EXTERNAL_STORAGE},
                     1);
+        }
+
+        updateTheme();
+    }
+
+    private void updateTheme() {
+        SharedPreferences sp = getSharedPreferences("settings",MODE_PRIVATE);
+        int accent = Color.parseColor(sp.getString("accentCol", "#00bfa5"));
+
+        saveCard.setCardBackgroundColor(accent);
+        noNotesCard.setCardBackgroundColor(accent);
+        runScript = sp.getBoolean("autoUpdateConfig", false);
+
+        String color = "#121212";
+        if (sp.getBoolean("useBlackNotDark", true))
+            color = "#000000";
+
+        ColorDrawable colDrawable = new ColorDrawable(Color.parseColor(color));
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackground(colDrawable);
+        getWindow().setStatusBarColor(Color.parseColor(color));
+        ConstraintLayout mainContentLayout = findViewById(R.id.mainContentLayout);
+        mainContentLayout.setBackground(colDrawable);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            noNotesCard.setOutlineAmbientShadowColor(accent);
+            noNotesCard.setOutlineSpotShadowColor(accent);
+            saveCard.setOutlineAmbientShadowColor(accent);
+            saveCard.setOutlineSpotShadowColor(accent);
         }
     }
 
@@ -148,26 +187,35 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
 
         for (int idx = 1; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
-            if (fm.findFragmentByTag("configCard"+idx) != null)
-                fm.beginTransaction().remove(Objects.requireNonNull(fm.findFragmentByTag("configCard" + idx))).commit();
+            CategoryFragment cf = (CategoryFragment) fm.findFragmentByTag("catFrag"+Objects.requireNonNull(ConfigCacheClass.getStringVal(idx)).getCategory());
+            if (cf != null) {
+                if(cf.popFragment(idx))
+                    fm.beginTransaction().remove(cf).commitNow();
+            }
         }
-
-        noNotesCard.setVisibility(View.VISIBLE);
-        saveCard.setEnabled(false);
-        saveCard.setVisibility(View.INVISIBLE);
     }
 
     private void fillConfigFragments() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft;
 
+        /* Assumes the first config is PROFILE.VERSION, so we skip that */
         for (int idx = 1; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
-            ft = fm.beginTransaction();
             fConfigVar configFragment = new fConfigVar();
+            String category = Objects.requireNonNull(ConfigCacheClass.getStringVal(idx)).getCategory();
+            CategoryFragment cf = (CategoryFragment) fm.findFragmentByTag("catFrag"+category);
+
+            if (cf == null) {
+                ft = fm.beginTransaction();
+                cf = new CategoryFragment();
+                cf.setInstanceCategory(category);
+                ft.add(R.id.listLayout, cf, "catFrag"+category).commitNow();
+            }
+
             if (!configFragment.setupCardInfo(idx))
                 continue;
-            ft.add(R.id.listLayout, configFragment, "configCard" + idx);
-            ft.commit();
+
+            cf.pushConfigVarFragment(configFragment, idx);
         }
     }
 }
