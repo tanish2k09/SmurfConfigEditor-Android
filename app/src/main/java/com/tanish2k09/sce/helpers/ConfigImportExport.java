@@ -8,6 +8,7 @@ import com.topjohnwu.superuser.io.SuFile;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -55,6 +56,7 @@ public class ConfigImportExport {
                 BufferedReader inBR = new BufferedReader(new FileReader(configFile));
                 String cache = inBR.readLine();
                 String title = "";
+                String category = "";
                 StringBuilder description = new StringBuilder();
 
                 while (cache != null) {
@@ -63,10 +65,10 @@ public class ConfigImportExport {
                         if (cache.startsWith("#")) {
                             cache = cache.substring(1);
                             configPair = cache.split("=");
-                            ConfigCacheClass.addConfig(configPair[0], configPair[1], false, title, description.toString());
+                            ConfigCacheClass.addConfig(configPair[0], configPair[1], false, title, description.toString(), category);
                         } else {
                             configPair = cache.split("=");
-                            ConfigCacheClass.addConfig(configPair[0], configPair[1], true, title, description.toString());
+                            ConfigCacheClass.addConfig(configPair[0], configPair[1], true, title, description.toString(), category);
                         }
                         description = new StringBuilder();
                     } else if (cache.startsWith("##:")) {
@@ -75,6 +77,9 @@ public class ConfigImportExport {
                     } else if (cache.startsWith("##~")) {
                         if (cache.length() > 3)
                             description.append(cache.substring(3)).append('\n');
+                    } else if (cache.startsWith("##*")) {
+                        if (cache.length() > 3)
+                            category = cache.substring(3);
                     }
                     cache = inBR.readLine();
                 }
@@ -87,7 +92,7 @@ public class ConfigImportExport {
         }
     }
 
-    public void saveConfig() {
+    public void saveConfig(boolean runScript) {
 
         try {
             Toast.makeText(ctx, "new? " + configFile.createNewFile(), Toast.LENGTH_SHORT).show();
@@ -99,6 +104,13 @@ public class ConfigImportExport {
             for (int idx = 0; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
                 StringValClass svc = ConfigCacheClass.getStringVal(idx);
                 assert svc != null;
+
+                String category = svc.getCategory();
+
+                if (category.length() > 0 && !svc.getName().equals("profile.version")) {
+                    outBW.write("##*" + category);
+                    outBW.newLine();
+                }
 
                 if (svc.getTitle().length() > 0) {
                     outBW.write("##:" + svc.getTitle());
@@ -130,11 +142,16 @@ public class ConfigImportExport {
             outBW.flush();
             outBW.close();
             Toast.makeText(ctx, "Saved successfully", Toast.LENGTH_SHORT).show();
-            Shell.su("sh /init.smurf.sh").submit();
+            if (runScript)
+                Shell.su("sh /init.smurf.sh").submit();
         } catch (IOException e) {
             Toast.makeText(ctx, R.string.swwRC, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
+
+    public void saveConfig() {
+        saveConfig(false);
     }
 
     private boolean configDumpRoot() {

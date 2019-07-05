@@ -8,6 +8,7 @@ public class StringValClass {
     private String activeVal = "<no value set>";
     private String description;
     private String title;
+    private String category;
 
     StringValClass(String name) {
         this.name = name;
@@ -58,6 +59,9 @@ public class StringValClass {
     void setDescription(String desc) {
         description = desc;
     }
+
+    void setCategory(String cat) { category = cat; }
+    public String getCategory() { return category; }
 
     public String getDescriptionString() {
         return description;

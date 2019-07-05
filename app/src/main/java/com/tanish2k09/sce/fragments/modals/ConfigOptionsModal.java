@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,11 +28,13 @@ import com.tanish2k09.sce.utils.StringValClass;
 public class ConfigOptionsModal extends BottomSheetDialogFragment {
 
     private static StringValClass svc;
+    private static int color;
     private Listener mListener;
 
-    public static ConfigOptionsModal newInstance(StringValClass svc_arg) {
+    public static ConfigOptionsModal newInstance(StringValClass svc_arg, int accentColor) {
         final ConfigOptionsModal fragment = new ConfigOptionsModal();
         svc = svc_arg;
+        color = accentColor;
         return fragment;
     }
 
@@ -47,8 +50,10 @@ public class ConfigOptionsModal extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_config_options_dialog, container, false);
         TextView modalTitle = v.findViewById(R.id.modalTitle);
+        CardView modalTitleCard = v.findViewById(R.id.modalTopTitleCard);
 
         modalTitle.setText(getString(R.string.modalTitle, svc.getName(), svc.getActiveVal()));
+        modalTitleCard.setCardBackgroundColor(color);
         return v;
     }
 

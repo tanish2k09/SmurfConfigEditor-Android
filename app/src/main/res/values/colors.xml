@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">#121212</color>
     <color name="colorAccent">#0277bd</color>
     <color name="colorTeal">#00bfa5</color>
     <color name="textDefault">#FFFFFF</color>
-    <color name="textSec">#33FFFFFF</color>
+    <color name="textSec">#898989</color>
     <color name="textDark">#000000</color>
     <color name="menuBG">#1b1b1b</color>
     <color name="black">@android:color/black</color>
     <color name="colorOutlineConfigCard">#272727</color>
+    <color name="switchDisabled">#FFF</color>
     <color name="colorBad">#ef5350</color>
     <color name="textColorPrimary">#bb111111</color>
     <color name="textColorHint">#e0e0e0</color>
     <color name="saveColor">#000000</color>
+
+
+    <color name="materialcolorpicker__white">#ffffff</color>
+    <color name="materialcolorpicker__red">#f44336</color>
+    <color name="materialcolorpicker__green">#4caf50</color>
+    <color name="materialcolorpicker__blue">#2196f3</color>
+    <color name="materialcolorpicker__grey">#b3b3b3</color>
+    <color name="materialcolorpicker__lightgrey">#d9d9d9</color>
+    <color name="materialcolorpicker__dribble">#ea4c89</color>
+    <color name="materialcolorpicker__dribbledark">#c32361</color>
+    <color name="materialcolorpicker__black">#000000</color>
+    <color name="materialcolorpicker__dialogcolor">#009688</color>
+    <color name="materialcolorpicker__dark">#2b2b2b</color>
 </resources>
