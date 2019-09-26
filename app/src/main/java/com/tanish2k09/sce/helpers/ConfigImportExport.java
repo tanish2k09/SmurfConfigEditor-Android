@@ -8,7 +8,6 @@ import com.topjohnwu.superuser.io.SuFile;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;

@@ -3,13 +3,16 @@ package com.tanish2k09.sce;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.chip.ChipGroup;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -25,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         Switch autoImportConfig = findViewById(R.id.autoImportConfigSwitch);
         Switch autoUpdateConfig = findViewById(R.id.autoUpdateConfigSwitch);
         Switch useTitles = findViewById(R.id.useTitlesOnCards);
-        Switch useBlackBG = findViewById(R.id.useBlackNotDark);
+        ChipGroup themeSelector = findViewById(R.id.themeChipGrp);
         CardView colorCard = findViewById(R.id.colorCard);
 
         autoImportConfig.setChecked(sp.getBoolean("autoImportConfig", false));
@@ -40,18 +43,19 @@ public class SettingsActivity extends AppCompatActivity {
         useTitles.setChecked(sp.getBoolean("useTitlesOnCards", false));
         useTitles.setOnCheckedChangeListener((buttonView, isChecked) -> sp.edit().putBoolean("useTitlesOnCards", isChecked).apply());
 
-        useBlackBG.setChecked(sp.getBoolean("useBlackNotDark", true));
-        setThemeColor(useBlackBG.isChecked());
-        useBlackBG.setOnCheckedChangeListener(((buttonView, isChecked) -> {
-            sp.edit().putBoolean("useBlackNotDark", isChecked).apply();
-
-            String color = "#121212";
-
-            if (isChecked)
-                color = "#000000";
-
-            setThemeColor(color);
-        }));
+        themeSelector.check(getResources().getIdentifier(sp.getString("theme", "dark") + "ThemeChip", "id", this.getPackageName()));
+        themeSelector.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.lightThemeChip) {
+                sp.edit().putString("theme", "light").apply();
+                setThemeColor(0);
+            } else if (checkedId == R.id.darkThemeChip) {
+                sp.edit().putString("theme", "dark").apply();
+                setThemeColor(1);
+            } else if (checkedId == R.id.blackThemeChip) {
+                sp.edit().putString("theme", "black").apply();
+                setThemeColor(2);
+            }
+        });
 
         setColorCard(colorCard, Color.parseColor(sp.getString("accentCol", "#00bfa5")));
         colorCard.setOnClickListener(v -> {
@@ -70,18 +74,28 @@ public class SettingsActivity extends AppCompatActivity {
         card.setCardBackgroundColor(color);
     }
 
-    private void setThemeColor(String colorHex) {
+    private void setBaseTheme(String colorHex) {
         ConstraintLayout settingsLayout = findViewById(R.id.settingsLayout);
-
         ColorDrawable themeColor = new ColorDrawable(Color.parseColor(colorHex));
+
         settingsLayout.setBackground(themeColor);
         getWindow().setStatusBarColor(Color.parseColor(colorHex));
+        getWindow().setNavigationBarColor(Color.parseColor(colorHex));
     }
 
-    private void setThemeColor(boolean isBlackChecked) {
-        if (isBlackChecked)
-            setThemeColor("#000000");
-        else
-            setThemeColor("#121212");
+    private void setThemeColorLight(String colorHex) {
+
+    }
+
+    private void setThemeColor(int theme) {
+        if (theme == 0) {
+            setBaseTheme(getResources().getString(R.string.lightThemeMainColor));
+        }
+        else if (theme == 1) {
+            setBaseTheme(getResources().getString(R.string.darkThemeMainColor));
+        }
+        else if (theme == 2) {
+            setBaseTheme(getResources().getString(R.string.blackThemeMainColor));
+        }
     }
 }

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,17 +11,17 @@
         <item name="android:textColor">@color/textDefault</item>
 
         <!-- To change the background of options menu -->
-        <item name="android:itemBackground">@color/menuBG</item>
+        <!-- <item name="android:itemBackground">@color/menuBG</item> -->
 
-        <!-- To change the background of navbar -->
+        <!-- To change the background of navigation bar -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
-
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/textDefault</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -30,22 +30,31 @@
     </style>
 
     <style name="dialogCustomStyle" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:background">@color/menuBG</item>
+
     </style>
 
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="SwitchStyle" parent="Theme.AppCompat.Light">
-        <item name="android:colorForeground">#FFFFFF</item>
+    <style name="SwitchStyleDark" parent="Theme.MaterialComponents">
+        <item name="android:colorForeground">#888888</item>
+    </style>
+
+    <style name="SwitchStyleLight" parent="SwitchStyleDark">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 
-    <style name="materialcolorpicker__AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="materialcolorpicker__AppTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ChipsLight" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">#e0e0e0</item>
+        <item name="chipSurfaceColor">#9e9e9e</item>
     </style>
 </resources>

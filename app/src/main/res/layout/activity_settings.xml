@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     tools:context=".SettingsActivity">
 
     <TextView
@@ -32,9 +32,8 @@
         android:layout_marginEnd="16dp"
         android:checked="false"
         android:text="@string/autoImportConfigSetting"
-        android:textColor="@color/textDefault"
         android:textSize="14sp"
-        android:theme="@style/SwitchStyle"
+        android:theme="@style/SwitchStyleLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appTitle" />
@@ -49,7 +48,7 @@
         android:text="@string/autoUpdateConfigSetting"
         android:textColor="@color/textDefault"
         android:textSize="14sp"
-        android:theme="@style/SwitchStyle"
+        android:theme="@style/SwitchStyleLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/autoImportConfigSwitch" />
@@ -64,22 +63,75 @@
         android:text="@string/useTitleOnCards"
         android:textColor="@color/textDefault"
         android:textSize="14sp"
-        android:theme="@style/SwitchStyle"
+        android:theme="@style/SwitchStyleLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autoUpdateConfigSwitch" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/useTitlesOnCards">
+
+        <TextView
+            android:id="@+id/themeSelectTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/themeText"
+            android:textSize="14sp" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/themeChipGrp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:chipSpacing="10dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/lightThemeChip"
+                style="@style/ChipsLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lightText"
+                android:textColor="@color/textDefault" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/darkThemeChip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/darkText"
+                app:chipBackgroundColor="#44FFFFFF" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/blackThemeChip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blackText"
+                app:chipBackgroundColor="#44FFFFFF" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </LinearLayout>
 
     <Switch
         android:id="@+id/useBlackNotDark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="16dp"
         android:text="@string/useBlackBG"
         android:textColor="@color/textDefault"
         android:textSize="14sp"
-        android:theme="@style/SwitchStyle"
+        android:theme="@style/SwitchStyleLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/useTitlesOnCards" />
@@ -97,10 +149,8 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,23 +161,26 @@
             android:id="@+id/settingsAccentPickerText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:text="@string/pickAccentColor"
             android:textColor="@color/textDefault"
             android:textSize="14sp" />
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/colorCard"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="4dp"
             android:clickable="true"
-            android:elevation="20dp"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorTeal"
             app:cardCornerRadius="@dimen/cardRadius"
-            app:cardElevation="12dp">
+            app:cardElevation="0dp"
+            app:cardMaxElevation="16dp">
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

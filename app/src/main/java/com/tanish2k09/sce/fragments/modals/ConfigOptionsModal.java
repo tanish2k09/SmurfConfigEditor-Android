@@ -2,18 +2,19 @@ package com.tanish2k09.sce.fragments.modals;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tanish2k09.sce.R;
 import com.tanish2k09.sce.utils.StringValClass;
 
@@ -65,7 +66,7 @@ public class ConfigOptionsModal extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         final Fragment parent = getParentFragment();
         if (parent != null) {
@@ -95,13 +96,10 @@ public class ConfigOptionsModal extends BottomSheetDialogFragment {
             text = itemView.findViewById(R.id.text);
             serial = itemView.findViewById(R.id.serial);
             tapView = itemView.findViewById(R.id.tapView);
-            tapView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onItemClickedGov(getAdapterPosition());
-                        dismiss();
-                    }
+            tapView.setOnClickListener(v -> {
+                if (mListener != null) {
+                    mListener.onItemClickedGov(getAdapterPosition());
+                    dismiss();
                 }
             });
         }

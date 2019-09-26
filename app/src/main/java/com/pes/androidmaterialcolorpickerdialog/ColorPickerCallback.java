@@ -1,6 +1,6 @@
 package com.pes.androidmaterialcolorpickerdialog;
 
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 /**
  * Created by Patrick Geselbracht on 2017-03-04

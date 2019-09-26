@@ -1,26 +1,27 @@
 package com.tanish2k09.sce;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment;
 import com.tanish2k09.sce.fragments.containerFragments.fConfigVar;
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("settings",MODE_PRIVATE);
         if (sp.getBoolean("autoImportConfig", false))
             commenceConfigImport();
-
     }
 
     @Override
@@ -87,6 +87,14 @@ public class MainActivity extends AppCompatActivity {
         updateTheme();
     }
 
+    private void changeStatusBarTheme(boolean isLight) {
+        View view = findViewById(R.id.daddyLayout).getRootView();
+        if (isLight)
+            view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        else
+            view.setSystemUiVisibility(0);
+    }
+
     private void updateTheme() {
         SharedPreferences sp = getSharedPreferences("settings",MODE_PRIVATE);
         int accent = Color.parseColor(sp.getString("accentCol", "#00bfa5"));
@@ -95,18 +103,26 @@ public class MainActivity extends AppCompatActivity {
         noNotesCard.setCardBackgroundColor(accent);
         runScript = sp.getBoolean("autoUpdateConfig", false);
 
-        String color = "#121212";
-        if (sp.getBoolean("useBlackNotDark", true))
-            color = "#000000";
+        String color = getResources().getString(R.string.darkThemeMainColor);
+        String theme = sp.getString("theme", "dark");
+        if (Objects.equals(theme, "light")) {
+            color = getResources().getString(R.string.lightThemeMainColor);
+            changeStatusBarTheme(true);
+        }
+        else if (Objects.equals(theme, "black")) {
+            color = getResources().getString(R.string.blackThemeMainColor);
+            changeStatusBarTheme(false);
+        }
 
         ColorDrawable colDrawable = new ColorDrawable(Color.parseColor(color));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackground(colDrawable);
+
         getWindow().setStatusBarColor(Color.parseColor(color));
+        getWindow().setNavigationBarColor(Color.parseColor(color));
         ConstraintLayout mainContentLayout = findViewById(R.id.mainContentLayout);
         mainContentLayout.setBackground(colDrawable);
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             noNotesCard.setOutlineAmbientShadowColor(accent);
