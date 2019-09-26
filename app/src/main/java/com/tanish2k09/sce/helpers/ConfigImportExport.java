@@ -95,7 +95,7 @@ public class ConfigImportExport {
     public void saveConfig(boolean runScript) {
 
         try {
-            Toast.makeText(ctx, "new? " + configFile.createNewFile(), Toast.LENGTH_SHORT).show();
+            Log.d("SCE-CIE", "New config file created? " + configFile.createNewFile());
 
             BufferedWriter outBW = new BufferedWriter(new FileWriter(configFile));
             outBW.write(ctx.getString(R.string.configStamp));
