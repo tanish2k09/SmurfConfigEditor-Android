@@ -21,6 +21,7 @@ import java.io.IOException;
 public class ConfigImportExport {
     private File configFile;
     private Context ctx;
+    private static int MAX_CONFIG_POINTS = 2;
 
     public ConfigImportExport(Context context) {
         ctx = context;
@@ -92,6 +93,33 @@ public class ConfigImportExport {
         }
     }
 
+    private String detectScript(int layer) {
+        if (layer > MAX_CONFIG_POINTS)
+            return "";
+        Log.d("SCE-CIE", " -- Checking layer " + layer);
+
+        String path = "";
+
+        if (layer == 1)
+            path = ctx.getResources().getString(R.string.ConfigPath1);
+        else if (layer == 2)
+            path = ctx.getResources().getString(R.string.ConfigPath2);
+
+        SuFile script = new SuFile(path);
+        if (script.exists())
+            return script.getAbsolutePath();
+
+        return detectScript(++layer);
+    }
+
+    private void runScript() {
+        Log.d("SCE-CIE", "--- RunScript true ---");
+        String scriptPath = detectScript(1);
+
+        Log.d("SCE-CIE", "Detected script path: " + scriptPath);
+        Shell.su("sh " + scriptPath).submit();
+    }
+
     public void saveConfig(boolean runScript) {
 
         try {
@@ -143,15 +171,11 @@ public class ConfigImportExport {
             outBW.close();
             Toast.makeText(ctx, "Saved successfully", Toast.LENGTH_SHORT).show();
             if (runScript)
-                Shell.su("sh /init.smurf.sh").submit();
+                runScript();
         } catch (IOException e) {
             Toast.makeText(ctx, R.string.swwRC, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-    }
-
-    public void saveConfig() {
-        saveConfig(false);
     }
 
     private boolean configDumpRoot() {

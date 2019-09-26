@@ -56,6 +56,9 @@
     <string name="useTitleOnCards">Use titles on config card instead of value</string>
     <string name="useBlackBG">Use pure black background instead of dark</string>
 
+    <string name="ConfigPath1">/init.smurf.sh</string>
+    <string name="ConfigPath2">/data/adb/module/smurf/post-fs-data.sh</string>
+
     <string name="colorPickerCredit">Color Picker : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">SCE Source Code : https://github.com/tanish2k09/SmurfConfigEditor</string>
 </resources>
