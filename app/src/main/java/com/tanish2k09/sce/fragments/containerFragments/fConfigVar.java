@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +32,9 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
     private StringValClass svc;
     private LinearLayout ll_topCard;
     private int accentCol;
-    public int index = -1;
 
     public boolean setupCardInfo(int index) {
         svc = ConfigCacheClass.getStringVal(index);
-        this.index = index;
-
         return (svc != null);
     }
 
@@ -97,7 +94,7 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 

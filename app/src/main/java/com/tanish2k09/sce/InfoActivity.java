@@ -1,7 +1,7 @@
 package com.tanish2k09.sce;
 
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class InfoActivity extends AppCompatActivity {
