@@ -107,7 +107,7 @@ public class ConfigImportExport {
 
         SuFile script = new SuFile(path);
         if (script.exists())
-            return script.getAbsolutePath();
+            return path;
 
         return detectScript(++layer);
     }
