@@ -2,75 +2,126 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/infoTopLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".InfoActivity">
+    tools:context=".InfoActivity"
+    tools:background="@color/black">
+
+    <TextView
+        android:id="@+id/InfoAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/app_name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/credit"
-        android:textSize="20sp"
+        android:textColor="@color/creditText"
+        android:textSize="12sp"
         android:textStyle="bold"
-        android:typeface="normal"
+        android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/InfoAppTitle" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:autoLink="web"
-        android:clickable="true"
-        android:text="@string/paypal"
+        android:layout_marginTop="48dp"
+        android:clickable="false"
+        android:text="@string/gimmeMoni"
         android:textSize="16sp"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:typeface="sans"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+    <Button
+        android:id="@+id/paypalButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/paypal_button_bg"
+        android:clickable="true"
+        android:foreground="@drawable/paypal_logo"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
+
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/contactMe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:autoLink="web"
-        android:clickable="true"
+        android:clickable="false"
         android:maxLines="2"
-        android:text="@string/telegram"
+        android:text="@string/contactMe"
         android:textSize="16sp"
-        android:typeface="monospace"
+        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:autoLink="web"
-        android:clickable="true"
-        android:maxLines="5"
-        android:text="@string/xda"
-        android:textSize="16sp"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/contactMe"
+        app:layout_constraintStart_toStartOf="@+id/contactMe"
+        app:layout_constraintTop_toBottomOf="@+id/contactMe">
+
+        <Button
+            android:id="@+id/xdaButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/xda_button_bg"
+            android:clickable="true"
+            android:foreground="@drawable/xda_logo"
+            android:foregroundGravity="center"
+            app:layout_constraintLeft_toLeftOf="@id/contactMe"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/tgButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/telegram_button_bg"
+            android:clickable="true"
+            android:text="@string/telegram"
+            android:textColor="@color/telegram"
+            android:textScaleX="1.1"
+            android:typeface="monospace"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView4"
@@ -82,11 +133,11 @@
         android:autoLink="web"
         android:clickable="true"
         android:text="@string/colorPickerCredit"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <TextView
         android:id="@+id/textView6"
@@ -98,7 +149,7 @@
         android:autoLink="web"
         android:clickable="true"
         android:text="@string/SourceCode"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

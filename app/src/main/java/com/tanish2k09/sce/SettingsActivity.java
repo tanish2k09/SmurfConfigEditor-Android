@@ -76,6 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
         ColorDrawable themeColor = new ColorDrawable(Color.parseColor(colorHex));
         settingsLayout.setBackground(themeColor);
         getWindow().setStatusBarColor(Color.parseColor(colorHex));
+        getWindow().setNavigationBarColor(Color.parseColor(colorHex));
     }
 
     private void setThemeColor(boolean isBlackChecked) {

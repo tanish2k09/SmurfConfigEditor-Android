@@ -15,6 +15,9 @@
     <color name="textColorPrimary">#bb111111</color>
     <color name="textColorHint">#e0e0e0</color>
     <color name="saveColor">#000000</color>
+    <color name="creditText">#bdbdbd</color>
+    <color name="xda">#ef6c00</color>
+    <color name="telegram">#37AEE2</color>
 
 
     <color name="materialcolorpicker__white">#ffffff</color>

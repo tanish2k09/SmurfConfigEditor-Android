@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView noNotesCard, saveCard;
     private ConfigImportExport cig;
     private boolean runScript = false;
+    private SharedPreferences sp;
 
     static {
         /* Shell.Config methods shall be called before any shell is created
@@ -61,13 +63,11 @@ public class MainActivity extends AppCompatActivity {
         saveCard = findViewById(R.id.saveButton);
         saveCard.setOnClickListener(v -> cig.saveConfig(runScript));
 
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.black));
         Shell.su("su").submit();
 
-        SharedPreferences sp = getSharedPreferences("settings",MODE_PRIVATE);
+        sp = getSharedPreferences("settings",MODE_PRIVATE);
         if (sp.getBoolean("autoImportConfig", false))
             commenceConfigImport();
-
     }
 
     @Override
@@ -84,29 +84,32 @@ public class MainActivity extends AppCompatActivity {
                     1);
         }
 
+        runScript = sp.getBoolean("autoUpdateConfig", false);
         updateTheme();
     }
 
     private void updateTheme() {
-        SharedPreferences sp = getSharedPreferences("settings",MODE_PRIVATE);
         int accent = Color.parseColor(sp.getString("accentCol", "#00bfa5"));
+        TextView saveTitle = findViewById(R.id.saveTitle);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        ConstraintLayout mainContentLayout = findViewById(R.id.mainContentLayout);
 
         saveCard.setCardBackgroundColor(accent);
         noNotesCard.setCardBackgroundColor(accent);
-        runScript = sp.getBoolean("autoUpdateConfig", false);
 
         String color = "#121212";
         if (sp.getBoolean("useBlackNotDark", true))
             color = "#000000";
 
-        ColorDrawable colDrawable = new ColorDrawable(Color.parseColor(color));
+        int parsedColor = Color.parseColor(color);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ColorDrawable colDrawable = new ColorDrawable(parsedColor);
+
         toolbar.setBackground(colDrawable);
-        getWindow().setStatusBarColor(Color.parseColor(color));
-        ConstraintLayout mainContentLayout = findViewById(R.id.mainContentLayout);
+        getWindow().setStatusBarColor(parsedColor);
+        getWindow().setNavigationBarColor(parsedColor);
         mainContentLayout.setBackground(colDrawable);
-
+        saveTitle.setTextColor(parsedColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             noNotesCard.setOutlineAmbientShadowColor(accent);
