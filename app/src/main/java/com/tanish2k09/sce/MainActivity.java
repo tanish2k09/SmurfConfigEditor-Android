@@ -66,8 +66,10 @@ public class MainActivity extends AppCompatActivity {
         Shell.su("su").submit();
 
         sp = getSharedPreferences("settings",MODE_PRIVATE);
-        if (sp.getBoolean("autoImportConfig", false))
-            commenceConfigImport();
+        if (sp.getBoolean("autoImportConfig", true) &&
+            (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED))
+                    commenceConfigImport();
     }
 
     @Override
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         noNotesCard.setCardBackgroundColor(accent);
 
         String color = "#121212";
-        if (sp.getBoolean("useBlackNotDark", true))
+        if (sp.getBoolean("useBlackNotDark", false))
             color = "#000000";
 
         int parsedColor = Color.parseColor(color);

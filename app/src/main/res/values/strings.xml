@@ -26,7 +26,7 @@
     <string name="infoCard">Information about the config</string>
     <string name="needsRestart">- Needs restart</string>
     <string name="profileVersion">profile.version</string>
-    <string name="tapselect">(Tap to select an option)</string>
+    <string name="tapselect">- Tap to select an option -</string>
     <string name="modalTitle">%s : %s</string>
     <string name="numSerial">%d)</string>
 
@@ -60,8 +60,10 @@
     <string name="useBlackBG">Use pure black background instead of dark</string>
 
     <string name="ConfigPath1">/init.smurf.sh</string>
-    <string name="ConfigPath2">/data/adb/module/smurf/post-fs-data.sh</string>
+    <string name="ConfigPath2">/data/adb/modules/smurf/post-fs-data.sh</string>
 
     <string name="colorPickerCredit">Color Picker : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">SCE Source Code : https://github.com/tanish2k09/SmurfConfigEditor</string>
+
+    <string name="displayVersion">- Version 0.9 rc4 -</string>
 </resources>

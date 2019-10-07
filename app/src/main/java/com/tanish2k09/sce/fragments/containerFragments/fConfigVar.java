@@ -75,7 +75,7 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         accentCol = Color.parseColor(sp.getString("accentCol", "#00bfa5"));
         curVal.setTextColor(accentCol);
 
-        if (sp.getBoolean("useBlackNotDark", true))
+        if (sp.getBoolean("useBlackNotDark", false))
             ll_topCard.setBackground(getResources().getDrawable(R.drawable.card_border, ll_topCard.getContext().getTheme()));
         else
             ll_topCard.setBackground(getResources().getDrawable(R.drawable.card_border_dark, ll_topCard.getContext().getTheme()));

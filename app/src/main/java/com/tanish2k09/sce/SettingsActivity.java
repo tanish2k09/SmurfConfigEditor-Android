@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         Switch useBlackBG = findViewById(R.id.useBlackNotDark);
         CardView colorCard = findViewById(R.id.colorCard);
 
-        autoImportConfig.setChecked(sp.getBoolean("autoImportConfig", false));
+        autoImportConfig.setChecked(sp.getBoolean("autoImportConfig", true));
         autoImportConfig.setOnCheckedChangeListener((buttonView, isChecked) -> {
             sp.edit().putBoolean("autoImportConfig", autoImportConfig.isChecked()).apply();
             Toast.makeText(this, "autoImportConfig: Restart app to apply", Toast.LENGTH_SHORT).show();
@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         useTitles.setChecked(sp.getBoolean("useTitlesOnCards", false));
         useTitles.setOnCheckedChangeListener((buttonView, isChecked) -> sp.edit().putBoolean("useTitlesOnCards", isChecked).apply());
 
-        useBlackBG.setChecked(sp.getBoolean("useBlackNotDark", true));
+        useBlackBG.setChecked(sp.getBoolean("useBlackNotDark", false));
         setThemeColor(useBlackBG.isChecked());
         useBlackBG.setOnCheckedChangeListener(((buttonView, isChecked) -> {
             sp.edit().putBoolean("useBlackNotDark", isChecked).apply();

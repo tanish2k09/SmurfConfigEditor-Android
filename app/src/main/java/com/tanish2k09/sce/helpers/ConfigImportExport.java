@@ -18,6 +18,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static com.tanish2k09.sce.R.string.ConfigPath1;
+import static com.tanish2k09.sce.R.string.ConfigPath2;
+
 public class ConfigImportExport {
     private File configFile;
     private Context ctx;
@@ -101,9 +104,9 @@ public class ConfigImportExport {
         String path = "";
 
         if (layer == 1)
-            path = ctx.getResources().getString(R.string.ConfigPath1);
+            path = ctx.getResources().getString(ConfigPath1);
         else if (layer == 2)
-            path = ctx.getResources().getString(R.string.ConfigPath2);
+            path = ctx.getResources().getString(ConfigPath2);
 
         SuFile script = new SuFile(path);
         if (script.exists())
