@@ -48,7 +48,7 @@ public class InfoActivity extends AppCompatActivity {
         ConstraintLayout infoTopLayout = findViewById(R.id.infoTopLayout);
         String color = "#121212";
 
-        if (sp.getBoolean("useBlackNotDark", true))
+        if (sp.getBoolean("useBlackNotDark", false))
             color = "#000000";
 
         int parsedColor = Color.parseColor(color);
