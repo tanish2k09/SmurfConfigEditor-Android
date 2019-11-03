@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smurf Config Editor</string>
+    <string name="app_name" translatable="false">Smurf Config Editor</string>
     <string name="action_settings">Settings</string>
     <string name="action_info">Info</string>
 
@@ -10,11 +10,11 @@
 
     <string name="configNF">The config file wasn\'t found. Create one?</string>
 
-    <string name="bamboozle_face">;)</string>
+    <string name="bamboozle_face" translatable="false">;)</string>
     <string name="nu_config">Tap me to import config</string>
 
     <string name="import_config">Import Config"</string>
-    <string name="configFile">smurf.kernel.config</string>
+    <string name="configFile" translatable="false">smurf.kernel.config</string>
     <string name="StoragePermDenied">Storage Permission is Required!</string>
     <string name="save">S A V E</string>
 
@@ -25,10 +25,10 @@
     <string name="importInflate">Config inflated from resource</string>
     <string name="infoCard">Information about the config</string>
     <string name="needsRestart">- Needs restart</string>
-    <string name="profileVersion">profile.version</string>
+    <string name="profileVersion" translatable="false">profile.version</string>
     <string name="tapselect">- Tap to select an option -</string>
-    <string name="modalTitle">%s : %s</string>
-    <string name="numSerial">%d)</string>
+    <string name="modalTitle" translatable="false">%s : %s</string>
+    <string name="numSerial" translatable="false">%d)</string>
 
     <string name="autoImportConfigSetting">Always import config on app start</string>
     <string name="autoUpdateConfigSetting">Run config application script on saving</string>
@@ -39,12 +39,12 @@
     </string>
 
     <string name="credit">- Made by tanish2k09 -</string>
-    <string name="developer">tanish2k09</string>
+    <string name="developer" translatable="false">tanish2k09</string>
     <string name="gimmeMoni">Give me all your money here: </string>
-    <string name="telegram">Telegram</string>
-    <string name="paypalLink">https://www.paypal.me/tanish2k09</string>
-    <string name="xdaLink">https://forum.xda-developers.com/member.php?u=5913332</string>
-    <string name="telegramLink">https://t.me/tanish2k09</string>
+    <string name="telegram" translatable="false">Telegram</string>
+    <string name="paypalLink" translatable="false">https://www.paypal.me/tanish2k09</string>
+    <string name="xdaLink" translatable="false">https://forum.xda-developers.com/member.php?u=5913332</string>
+    <string name="telegramLink" translatable="false">https://t.me/tanish2k09</string>
     <string name="contactMe">Contact me on:</string>
 
 
@@ -59,8 +59,8 @@
     <string name="useTitleOnCards">Use titles on config card instead of value</string>
     <string name="useBlackBG">Use pure black background instead of dark</string>
 
-    <string name="ConfigPath1">/init.smurf.sh</string>
-    <string name="ConfigPath2">/data/adb/modules/smurf/post-fs-data.sh</string>
+    <string name="ConfigPath1" translatable="false">/init.smurf.sh</string>
+    <string name="ConfigPath2" translatable="false">/data/adb/modules/smurf/post-fs-data.sh</string>
 
     <string name="colorPickerCredit">Color Picker : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">SCE Source Code : https://github.com/tanish2k09/SmurfConfigEditor</string>
