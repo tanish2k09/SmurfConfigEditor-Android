@@ -61,9 +61,10 @@
 
     <string name="ConfigPath1" translatable="false">/init.smurf.sh</string>
     <string name="ConfigPath2" translatable="false">/data/adb/modules/smurf/post-fs-data.sh</string>
-
+    <string name="ConfigPath3" translatable="false">/data/adb/modules/smurf/post-fs-data.sh</string>
+    
     <string name="colorPickerCredit">Color Picker : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">SCE Source Code : https://github.com/tanish2k09/SmurfConfigEditor</string>
 
-    <string name="displayVersion">- Version 0.9 rc4 -</string>
+    <string name="displayVersion">- Version 1.0 -</string>
 </resources>

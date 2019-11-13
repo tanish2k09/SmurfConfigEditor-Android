@@ -6,13 +6,14 @@ android {
         applicationId "com.tanish2k09.sce"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 9
-        versionName "0.9"
+        versionCode 10
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -27,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    def libsuVersion = '2.5.0'
+    def libsuVersion = '2.5.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -42,8 +43,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-beta01'
 
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
-    /* Optional: For using com.topjohnwu.superuser.io classes */
     implementation "com.github.topjohnwu.libsu:io:${libsuVersion}"
-    /* Optional: For including a prebuilt busybox */
-    implementation "com.github.topjohnwu.libsu:busybox:${libsuVersion}"
 }

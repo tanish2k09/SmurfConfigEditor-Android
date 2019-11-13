@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import static com.tanish2k09.sce.R.string.ConfigPath1;
 import static com.tanish2k09.sce.R.string.ConfigPath2;
+import static com.tanish2k09.sce.R.string.ConfigPath3;
 
 public class ConfigImportExport {
     private File configFile;
@@ -107,6 +108,8 @@ public class ConfigImportExport {
             path = ctx.getResources().getString(ConfigPath1);
         else if (layer == 2)
             path = ctx.getResources().getString(ConfigPath2);
+        else if (layer == 3)
+            path = ctx.getResources().getString(ConfigPath3);
 
         SuFile script = new SuFile(path);
         if (script.exists())
