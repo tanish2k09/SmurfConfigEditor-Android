@@ -34,10 +34,10 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(this, "autoImportConfig: Restart app to apply", Toast.LENGTH_SHORT).show();
         });
 
-        autoUpdateConfig.setChecked(sp.getBoolean("autoUpdateConfig", false));
+        autoUpdateConfig.setChecked(sp.getBoolean("autoUpdateConfig", true));
         autoUpdateConfig.setOnCheckedChangeListener((buttonView, isChecked) -> sp.edit().putBoolean("autoUpdateConfig", autoUpdateConfig.isChecked()).apply());
 
-        useTitles.setChecked(sp.getBoolean("useTitlesOnCards", false));
+        useTitles.setChecked(sp.getBoolean("useTitlesOnCards", true));
         useTitles.setOnCheckedChangeListener((buttonView, isChecked) -> sp.edit().putBoolean("useTitlesOnCards", isChecked).apply());
 
         useBlackBG.setChecked(sp.getBoolean("useBlackNotDark", false));

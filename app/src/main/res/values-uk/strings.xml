@@ -17,6 +17,7 @@
 
     <string name="swwRC">Щось пішло не так під час читання конфігурації</string>
     <string name="swwImport">Щось пішло не так під час імпорту конфігурації</string>
+    <string name="noRoot">Немає кореневого доступу: не може застосувати налаштування</string>
 
     <string name="importRoot">Конфігурацію завантажено з кореня</string>
     <string name="importInflate">Конфігурацію розширено з ресурсу</string>
@@ -50,5 +51,5 @@
     <string name="colorPickerCredit">Підбирач кольору : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">Вихідний код SCE : https://github.com/tanish2k09/SmurfConfigEditor</string>
 
-    <string name="displayVersion">- Версія 0.9 rc4 -</string>
+    <string name="displayVersion">- Версія 1.1 -</string>
 </resources>

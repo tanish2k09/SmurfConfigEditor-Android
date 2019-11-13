@@ -20,6 +20,7 @@
 
     <string name="swwRC">Something went wrong while reading config</string>
     <string name="swwImport">Something went wrong while importing config</string>
+    <string name="noRoot">No root access: Can\'t apply settings</string>
 
     <string name="importRoot">Config loaded from root</string>
     <string name="importInflate">Config inflated from resource</string>
@@ -66,5 +67,5 @@
     <string name="colorPickerCredit">Color Picker : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">SCE Source Code : https://github.com/tanish2k09/SmurfConfigEditor</string>
 
-    <string name="displayVersion">- Version 1.0 -</string>
+    <string name="displayVersion">- Version 1.1 -</string>
 </resources>

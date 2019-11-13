@@ -25,7 +25,6 @@ import static com.tanish2k09.sce.R.string.ConfigPath3;
 public class ConfigImportExport {
     private File configFile;
     private Context ctx;
-    private static int MAX_CONFIG_POINTS = 2;
 
     public ConfigImportExport(Context context) {
         ctx = context;
@@ -49,9 +48,6 @@ public class ConfigImportExport {
         if (openConfig() != 0) {
             if (configDumpRoot()) {
                 Toast.makeText(ctx, ctx.getString(R.string.importRoot), Toast.LENGTH_SHORT).show();
-                return configImport();
-            } else if (configDumpInflate()) {
-                Toast.makeText(ctx, ctx.getString(R.string.importInflate), Toast.LENGTH_SHORT).show();
                 return configImport();
             }
             return false;
@@ -98,6 +94,7 @@ public class ConfigImportExport {
     }
 
     private String detectScript(int layer) {
+        int MAX_CONFIG_POINTS = 3;
         if (layer > MAX_CONFIG_POINTS)
             return "";
         Log.d("SCE-CIE", " -- Checking layer " + layer);
@@ -119,6 +116,11 @@ public class ConfigImportExport {
     }
 
     private void runScript() {
+        if (!Shell.rootAccess()) {
+            Toast.makeText(ctx, ctx.getResources().getString(R.string.noRoot), Toast.LENGTH_LONG).show();
+            Log.e("SCE-CIE", "--- NO ROOT ACCESS ---");
+            return;
+        }
         Log.d("SCE-CIE", "--- RunScript true ---");
         String scriptPath = detectScript(1);
 
@@ -185,15 +187,10 @@ public class ConfigImportExport {
     }
 
     private boolean configDumpRoot() {
-        Toast.makeText(ctx, configFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         String filename = ctx.getResources().getString(R.string.configFile);
         File rootConfig = SuFile.open("/"+ filename);
         if (rootConfig.exists())
             Shell.su("cp /" + filename + " " + configFile.getAbsolutePath()).exec();
         return configFile.exists();
-    }
-
-    private boolean configDumpInflate() {
-        return false;
     }
 }

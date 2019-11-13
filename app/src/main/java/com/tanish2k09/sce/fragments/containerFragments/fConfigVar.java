@@ -80,7 +80,7 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         else
             ll_topCard.setBackground(getResources().getDrawable(R.drawable.card_border_dark, ll_topCard.getContext().getTheme()));
 
-        if (sp.getBoolean("useTitlesOnCards", false)) {
+        if (sp.getBoolean("useTitlesOnCards", true)) {
             title.setText(svc.getTitle());
             title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             curVal.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);

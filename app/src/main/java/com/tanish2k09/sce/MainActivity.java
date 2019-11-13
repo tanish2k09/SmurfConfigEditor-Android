@@ -29,13 +29,14 @@ import com.tanish2k09.sce.helpers.ConfigImportExport;
 import com.tanish2k09.sce.utils.ConfigCacheClass;
 import com.topjohnwu.superuser.Shell;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private CardView noNotesCard, saveCard;
     private ConfigImportExport cig;
-    private boolean runScript = false;
+    private boolean runScript = true;
     private SharedPreferences sp;
 
     static {
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         saveCard = findViewById(R.id.saveButton);
         saveCard.setOnClickListener(v -> cig.saveConfig(runScript));
 
-        Shell.su("su").submit();
+        Shell.su("cd /").submit();
 
         sp = getSharedPreferences("settings",MODE_PRIVATE);
         if (sp.getBoolean("autoImportConfig", true) &&
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     1);
         }
 
-        runScript = sp.getBoolean("autoUpdateConfig", false);
+        runScript = sp.getBoolean("autoUpdateConfig", true);
         updateTheme();
     }
 
@@ -221,5 +222,17 @@ public class MainActivity extends AppCompatActivity {
 
             cf.pushConfigVarFragment(configFragment, idx);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            Shell shell = Shell.getCachedShell();
+            if (shell != null)
+                shell.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
     }
 }
