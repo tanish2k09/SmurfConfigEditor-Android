@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/tapselect"
+        android:text="@string/tapSelect"
         android:textColor="@color/creditText"
         android:textSize="12sp"
         android:textStyle="bold"

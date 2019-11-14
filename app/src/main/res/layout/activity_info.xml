@@ -5,8 +5,8 @@
     android:id="@+id/infoTopLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InfoActivity"
-    tools:background="@color/black">
+    tools:background="@color/colorPrimaryDark"
+    tools:context=".InfoActivity">
 
     <TextView
         android:id="@+id/InfoAppTitle"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/creditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -39,124 +39,252 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/InfoAppTitle" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/paypalLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
-        android:clickable="false"
-        android:text="@string/gimmeMoni"
-        android:textSize="16sp"
-        android:typeface="sans"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/paypalButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/paypal_button_bg"
+        android:layout_marginStart="@dimen/infoBoxSideMargins"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/infoBoxSideMargins"
+        android:background="@drawable/white_outline"
         android:clickable="true"
-        android:foreground="@drawable/paypal_logo"
-        android:foregroundGravity="center"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/creditText">
+
+        <TextView
+            android:id="@+id/gimmeMoniText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="@string/gimmeMoni"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <ImageView
+            android:id="@+id/paypalImage"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="@color/infoFiller"
+            android:contentDescription="@string/paypalLink"
+            android:foreground="@drawable/paypal_logo"
+            android:foregroundGravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/colorPickerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/infoBoxSideMargins"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/infoBoxSideMargins"
+        android:background="@drawable/white_outline"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paypalLayout">
+
+        <TextView
+            android:id="@+id/colorPickerText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:autoLink="web"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/colorPickerLiteral"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <ImageView
+            android:id="@+id/colorPickerLinkImage"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/infoFiller"
+            android:contentDescription="@string/colorPickerLink"
+            android:foreground="@drawable/ic_github"
+            android:foregroundGravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sourceCodeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/infoBoxSideMargins"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/infoBoxSideMargins"
+        android:background="@drawable/white_outline"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorPickerLayout">
+
+        <TextView
+            android:id="@+id/sourceCodeText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:autoLink="web"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/SourceCodeLiteral"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <ImageView
+            android:id="@+id/sourceCodeLinkImage"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/infoFiller"
+            android:contentDescription="@string/colorPickerLink"
+            android:foreground="@drawable/ic_github"
+            android:foregroundGravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="@dimen/infoDivSideMargins"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="@dimen/infoDivSideMargins"
+        android:background="@color/infoFiller"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sourceCodeLayout" />
 
     <TextView
         android:id="@+id/contactMe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:clickable="false"
-        android:maxLines="2"
+        android:gravity="center"
+        android:maxLines="1"
         android:text="@string/contactMe"
-        android:textSize="16sp"
-        android:typeface="normal"
+        android:textColor="@color/infoFiller"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="@dimen/infoDivSideMargins"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="@dimen/infoDivSideMargins"
+        android:background="@color/infoFiller"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contactMe" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/contactButtonsLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/infoBoxSideMargins"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/infoBoxSideMargins"
+        android:clickable="false"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/contactMe"
-        app:layout_constraintStart_toStartOf="@+id/contactMe"
-        app:layout_constraintTop_toBottomOf="@+id/contactMe">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contactMe">
 
         <Button
             android:id="@+id/xdaButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:background="@drawable/xda_button_bg"
+            android:background="@drawable/ic_xda_t"
             android:clickable="true"
-            android:foreground="@drawable/xda_logo"
-            android:foregroundGravity="center"
+            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintLeft_toLeftOf="@id/contactMe"
             tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/tgButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:background="@drawable/telegram_button_bg"
+            android:background="@drawable/ic_telegram_t"
             android:clickable="true"
-            android:text="@string/telegram"
-            android:textColor="@color/telegram"
-            android:textScaleX="1.1"
-            android:typeface="monospace"
+            android:foreground="?android:attr/selectableItemBackground"
             tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contactButtonsLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/infoBoxSideMargins"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/infoBoxSideMargins"
+        android:clickable="false"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contactButtonsLayout1">
+
+        <Button
+            android:id="@+id/emailButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_email_t"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_constraintLeft_toLeftOf="@id/contactMe"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/discordButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_discord_t"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            tools:ignore="ButtonStyle" />
+
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
-        android:autoLink="web"
-        android:clickable="true"
-        android:text="@string/colorPickerCredit"
-        android:textSize="14sp"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:autoLink="web"
-        android:clickable="true"
-        android:text="@string/SourceCode"
-        android:textSize="14sp"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/versionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -167,8 +295,6 @@
         android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,8 +15,11 @@
     <color name="textColorHint">#e0e0e0</color>
     <color name="saveColor">@color/textDark</color>
     <color name="creditText">#bdbdbd</color>
-    <color name="xda">#ef6c00</color>
-    <color name="telegram">#37AEE2</color>
+    <color name="xda">#fb8c00</color>
+    <color name="telegram">#42a5f5</color>
+    <color name="email">#26a69a</color>
+    <color name="discord">#7289DA</color>
+    <color name="infoFiller">#EEEEEE</color>
 
 
     <color name="materialcolorpicker__white">#ffffff</color>

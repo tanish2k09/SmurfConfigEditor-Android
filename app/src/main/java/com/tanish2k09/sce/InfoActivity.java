@@ -8,8 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 public class InfoActivity extends AppCompatActivity {
 
@@ -18,12 +18,28 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        Button paypal = findViewById(R.id.paypalButton);
+        LinearLayout paypal = findViewById(R.id.paypalLayout);
+        LinearLayout colorPicker = findViewById(R.id.colorPickerLayout);
+        LinearLayout source = findViewById(R.id.sourceCodeLayout);
         Button xda = findViewById(R.id.xdaButton);
         Button telegram = findViewById(R.id.tgButton);
+        Button email = findViewById(R.id.emailButton);
+        Button discord = findViewById(R.id.discordButton);
 
         paypal.setOnClickListener(view -> {
             Uri uri = Uri.parse(getString(R.string.paypalLink));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
+
+        colorPicker.setOnClickListener(view -> {
+            Uri uri = Uri.parse(getString(R.string.colorPickerLink));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
+
+        source.setOnClickListener(view -> {
+            Uri uri = Uri.parse(getString(R.string.SourceCodeLink));
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         });
@@ -36,6 +52,18 @@ public class InfoActivity extends AppCompatActivity {
 
         telegram.setOnClickListener(view -> {
             Uri uri = Uri.parse(getString(R.string.telegramLink));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
+
+        email.setOnClickListener(view -> {
+            Uri uri = Uri.parse(getString(R.string.emailLink));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        });
+
+        discord.setOnClickListener(view -> {
+            Uri uri = Uri.parse(getString(R.string.discordLink));
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         });

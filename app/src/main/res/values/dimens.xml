@@ -4,6 +4,8 @@
     <dimen name="list_item_spacing">36dp</dimen>
     <dimen name="list_item_spacing_half">18dp</dimen>
     <dimen name="saveCardHeight">64dp</dimen>
+    <dimen name="infoBoxSideMargins">32dp</dimen>
+    <dimen name="infoDivSideMargins">128dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="materialcolorpicker__activity_horizontal_margin">16dp</dimen>

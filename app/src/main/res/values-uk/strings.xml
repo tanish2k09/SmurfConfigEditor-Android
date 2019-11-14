@@ -23,19 +23,15 @@
     <string name="importInflate">Конфігурацію розширено з ресурсу</string>
     <string name="infoCard">Інформація про конфігурацію</string>
     <string name="needsRestart">- Потрібне перезавантаження</string>
-    <string name="tapselect">- Натисніть, щоб вибрати параметр -</string>
+    <string name="tapSelect">- Натисніть, щоб вибрати параметр -</string>
 
     <string name="autoImportConfigSetting">Завжди імпортувати конфігурацію під час запуску застосунку</string>
     <string name="autoUpdateConfigSetting">Запускати скрипт конфігурації під час збереження</string>
     <string name="pickAccentColor">Мій улюблений колір ось цей -></string>
 
-    <string name="configStamp">
-        #############################################################################\n# Права належать Pappschlumpf та xXx\n# Використання без дозволу заборонене!!\n#\n# Файл конфігурації дозволяє налаштовувати Smurf-Kernel\n# Smurf Config Editor створено tanish2k09\n#\n# Smurf kernel від XDA Senior Member @pappschlumpf\n#############################################################################\n#\n# ----- Як користуватися ------\n#\n# Для кожного параметру ви знайдете декілька варіантів налаштувань\n# Просто заберіть # перед параметром, який хочете застосувати\n# і додайте # перед усіма іншими варіантами в цій категорії\n#\n# Налаштування посортовані в такому порядку:\n# - Дружні до батареї (вверху)\n# - Більша продуктивність (внизу)\n#############################################################################\n
-    </string>
-
     <string name="credit">- Створено tanish2k09 -</string>
-    <string name="gimmeMoni">Віддати мені всі гроші можна тут: </string>
-    <string name="contactMe">Зв\'язатися зі мною:</string>
+    <string name="gimmeMoni">Віддати мені всі гроші можна тут</string>
+    <string name="contactMe">Зв\'язатися зі мною</string>
 
 
     <string name="materialcolorpicker__app_name">Підбирач кольору Android Material</string>
@@ -44,10 +40,10 @@
     <string name="materialcolorpicker__inputColor">Колір: </string>
     <string name="materialcolorpicker__btnSelectColor">Вибрати</string>
 
-    <string name="noCategLiteral">Без категорії</string>
+    <string name="noCategoryLiteral">Без категорії</string>
     <string name="useTitleOnCards">Показувати назви параметрів, замість значень</string>
     <string name="useBlackBG">Використовувати чорний фон, замість темного</string>
 
-    <string name="colorPickerCredit">Підбирач кольору : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
-    <string name="SourceCode">Вихідний код SCE : https://github.com/tanish2k09/SmurfConfigEditor</string>
+    <string name="colorPickerLiteral">Підбирач кольору Вихідний код</string>
+    <string name="SourceCodeLiteral">Вихідний код SCE</string>
 </resources>
