@@ -50,6 +50,4 @@
 
     <string name="colorPickerCredit">Підбирач кольору : https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCode">Вихідний код SCE : https://github.com/tanish2k09/SmurfConfigEditor</string>
-
-    <string name="displayVersion">- Версія 1.1 -</string>
 </resources>

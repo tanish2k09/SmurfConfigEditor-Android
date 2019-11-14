@@ -5,7 +5,7 @@
     android:id="@+id/mainContentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
@@ -134,4 +134,5 @@
             android:layout_marginEnd="8dp"
             android:orientation="vertical" />
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
