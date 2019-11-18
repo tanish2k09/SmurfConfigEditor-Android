@@ -5,47 +5,58 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="8dp"
     android:background="@android:color/transparent"
-    tools:context=".fragments.containerFragments.CategoryFragment">
+    tools:context=".fragments.containerFragments.CategoryFragment"
+    tools:background="@color/colorPrimaryDark">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/catCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="false"
-        android:elevation="50dp"
-        app:cardBackgroundColor="@color/colorTeal"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="12dp"
+    <View
+        android:id="@+id/catDivTop"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/infoDivSideMargins"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/infoDivSideMargins"
+        android:background="@color/colorTeal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/categoryTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="@string/noCategoryLiteral"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/noCategoryLiteral"
+        android:textColor="@color/colorTeal"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catDivTop" />
 
+
+    <View
+        android:id="@+id/catDivBottom"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/infoDivSideMargins"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/infoDivSideMargins"
+        android:background="@color/colorTeal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryTitle" />
 
     <LinearLayout
         android:id="@+id/categoryList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/catCard">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/catDivBottom">
 
     </LinearLayout>
 

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class InfoActivity extends AppCompatActivity {
 
@@ -18,19 +19,12 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        LinearLayout paypal = findViewById(R.id.paypalLayout);
         LinearLayout colorPicker = findViewById(R.id.colorPickerLayout);
         LinearLayout source = findViewById(R.id.sourceCodeLayout);
         Button xda = findViewById(R.id.xdaButton);
         Button telegram = findViewById(R.id.tgButton);
         Button email = findViewById(R.id.emailButton);
         Button discord = findViewById(R.id.discordButton);
-
-        paypal.setOnClickListener(view -> {
-            Uri uri = Uri.parse(getString(R.string.paypalLink));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        });
 
         colorPicker.setOnClickListener(view -> {
             Uri uri = Uri.parse(getString(R.string.colorPickerLink));
@@ -62,11 +56,7 @@ public class InfoActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        discord.setOnClickListener(view -> {
-            Uri uri = Uri.parse(getString(R.string.discordLink));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        });
+        discord.setOnClickListener(view -> Toast.makeText(this, this.getResources().getString(R.string.quantum), Toast.LENGTH_LONG).show());
     }
 
     @Override

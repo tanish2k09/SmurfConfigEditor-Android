@@ -104,12 +104,12 @@
             android:layout_height="match_parent"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            android:ems="10"
-            android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:text="@string/save"
+            android:text="@string/saveAndApply"
             android:textColor="@color/textDark"
-            android:textSize="36sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
 
     </androidx.cardview.widget.CardView>
 

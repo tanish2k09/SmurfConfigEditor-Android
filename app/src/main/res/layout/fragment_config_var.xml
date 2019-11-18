@@ -75,11 +75,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="end"
                 android:textColor="@color/colorTeal"
-                android:textSize="16sp"
-                android:textStyle="normal"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:typeface="monospace"
                 tools:text="Performance" />
 
         </LinearLayout>

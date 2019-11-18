@@ -30,7 +30,6 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
 
     private TextView curVal, title;
     private StringValClass svc;
-    private LinearLayout ll_topCard;
     private int accentCol;
 
     public boolean setupCardInfo(int index) {
@@ -59,7 +58,7 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         title.setText(svc.getName().toUpperCase());
         curVal.setText(svc.getActiveVal());
 
-        ll_topCard = v.findViewById(R.id.ll_topCard);
+        LinearLayout ll_topCard = v.findViewById(R.id.ll_topCard);
         ll_topCard.setOnClickListener(this);
 
         ImageButton infoButton = v.findViewById(R.id.infoButtonConfig);
@@ -78,13 +77,10 @@ public class fConfigVar extends Fragment implements ConfigOptionsModal.Listener,
         if (sp.getBoolean("useTitlesOnCards", true)) {
             title.setText(svc.getTitle());
             title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            curVal.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            title.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+            title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
         } else {
-            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            curVal.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             title.setText(svc.getName().toUpperCase());
-            title.setTypeface(Typeface.MONOSPACE);
+            title.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
         }
     }
 

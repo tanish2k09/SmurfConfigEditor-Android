@@ -14,6 +14,7 @@
     <string name="import_config">Імпортувати конфігурацію</string>
     <string name="StoragePermDenied">Потрібен дозвіл на збереження в сховищі!</string>
     <string name="save">ЗБЕРЕГТИ</string>
+    <string name="saveAndApply">ЗБЕРЕГТИ + Застосувати</string>
 
     <string name="swwRC">Щось пішло не так під час читання конфігурації</string>
     <string name="swwImport">Щось пішло не так під час імпорту конфігурації</string>

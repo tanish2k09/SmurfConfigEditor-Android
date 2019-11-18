@@ -4,8 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:context=".ColorPicker">
+              android:orientation="vertical">
 
     <View
         android:id="@+id/colorView"
@@ -26,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__alpha_progress"
@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/alphaSeekBar"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__red_progress"
@@ -50,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/redSeekBar"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__green_progress"
@@ -62,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/greenSeekBar"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__blue_progress"
@@ -74,9 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/hexCode"
             android:layout_alignEnd="@+id/hexCode"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/hexCode"
             android:labelFor="@id/hexCode"
             android:text="@string/materialcolorpicker__hash"
             android:textColor="@android:color/white"/>
@@ -86,11 +87,9 @@
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/blueSeekBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:clickable="true"
@@ -102,8 +101,8 @@
             android:paddingStart="4dp"
             android:textSize="18sp"
             tools:text="123456"
-
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/okColorButton"
@@ -112,7 +111,6 @@
             android:layout_alignBaseline="@id/hexCode"
             android:layout_alignParentBottom="false"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:clickable="true"
             android:text="@string/materialcolorpicker__btnSelectColor"
             android:textColor="@android:color/black"

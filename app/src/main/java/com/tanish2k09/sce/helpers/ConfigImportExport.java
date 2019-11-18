@@ -3,6 +3,7 @@ package com.tanish2k09.sce.helpers;
 import com.tanish2k09.sce.R;
 import com.tanish2k09.sce.utils.ConfigCacheClass;
 import com.tanish2k09.sce.utils.StringValClass;
+import com.tanish2k09.sce.utils.TopCommentStore;
 import com.topjohnwu.superuser.Shell;
 import com.topjohnwu.superuser.io.SuFile;
 
@@ -20,7 +21,6 @@ import java.io.IOException;
 
 import static com.tanish2k09.sce.R.string.ConfigPath1;
 import static com.tanish2k09.sce.R.string.ConfigPath2;
-import static com.tanish2k09.sce.R.string.ConfigPath3;
 
 public class ConfigImportExport {
     private File configFile;
@@ -44,6 +44,16 @@ public class ConfigImportExport {
         return (line.split("=").length == 2);
     }
 
+    /* The config file expects a certain notation/format:
+     * The top value must be the profile.version
+     *
+     *  ##~ - Comment/Description
+     *  ##* - Category
+     *  ##: - Title
+     *  # - Inactive Option (if it has exactly 1 '=')
+     *  # - Comment (if not an inactive option)
+     *  ##/ - Top comment (should be cached)
+     */
     public boolean configImport() {
         if (openConfig() != 0) {
             if (configDumpRoot()) {
@@ -76,11 +86,12 @@ public class ConfigImportExport {
                         if (cache.length() > 3)
                             title = cache.substring(3);
                     } else if (cache.startsWith("##~")) {
-                        if (cache.length() > 3)
                             description.append(cache.substring(3)).append('\n');
                     } else if (cache.startsWith("##*")) {
                         if (cache.length() > 3)
                             category = cache.substring(3);
+                    } else if (cache.startsWith("##/")) {
+                        TopCommentStore.appendLine(cache);
                     }
                     cache = inBR.readLine();
                 }
@@ -94,7 +105,7 @@ public class ConfigImportExport {
     }
 
     private String detectScript(int layer) {
-        int MAX_CONFIG_POINTS = 3;
+        int MAX_CONFIG_POINTS = 2;
         if (layer > MAX_CONFIG_POINTS)
             return "";
         Log.d("SCE-CIE", " -- Checking layer " + layer);
@@ -105,8 +116,6 @@ public class ConfigImportExport {
             path = ctx.getResources().getString(ConfigPath1);
         else if (layer == 2)
             path = ctx.getResources().getString(ConfigPath2);
-        else if (layer == 3)
-            path = ctx.getResources().getString(ConfigPath3);
 
         SuFile script = new SuFile(path);
         if (script.exists())
@@ -124,18 +133,20 @@ public class ConfigImportExport {
         Log.d("SCE-CIE", "--- RunScript true ---");
         String scriptPath = detectScript(1);
 
-        Log.d("SCE-CIE", "Detected script path: " + scriptPath);
-        Shell.su("sh " + scriptPath).submit();
+        bashSh(scriptPath);
+    }
+
+    private void bashSh(String path) {
+        Log.d("SCE-CIE", "Executing script path: " + path);
+        Shell.su("sh " + path).submit();
     }
 
     public void saveConfig(boolean runScript) {
-
         try {
             Log.d("SCE-CIE", "New config file created? " + configFile.createNewFile());
 
             BufferedWriter outBW = new BufferedWriter(new FileWriter(configFile));
-            outBW.write(ctx.getString(R.string.configStamp));
-
+            outBW.write(TopCommentStore.getComment());
 
             for (int idx = 0; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
                 StringValClass svc = ConfigCacheClass.getStringVal(idx);
@@ -143,7 +154,7 @@ public class ConfigImportExport {
 
                 String category = svc.getCategory();
 
-                if (category.length() > 0 && !svc.getName().equals("profile.version")) {
+                if (category.length() > 0 && !svc.getName().equals(ctx.getResources().getString(R.string.profileVersion))) {
                     outBW.write("##*" + category);
                     outBW.newLine();
                 }

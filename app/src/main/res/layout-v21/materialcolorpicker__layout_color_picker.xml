@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".ColorPicker">
+    android:orientation="vertical">
 
     <View
         android:id="@+id/colorView"
@@ -27,6 +26,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__alpha_progress"
@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/alphaSeekBar"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__red_progress"
@@ -51,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/redSeekBar"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__green_progress"
@@ -63,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/greenSeekBar"
             android:max="255"
+            android:min="20"
             android:maxHeight="3dip"
             android:minHeight="3dip"
             android:progressDrawable="@drawable/materialcolorpicker__blue_progress"
@@ -99,7 +102,8 @@
             android:textColorHint="@android:color/primary_text_light"
             android:textSize="18sp"
             tools:text="123456"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/okColorButton"

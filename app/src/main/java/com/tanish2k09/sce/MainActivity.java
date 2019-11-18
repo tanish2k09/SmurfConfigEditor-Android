@@ -17,6 +17,9 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +30,7 @@ import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment;
 import com.tanish2k09.sce.fragments.containerFragments.fConfigVar;
 import com.tanish2k09.sce.helpers.ConfigImportExport;
 import com.tanish2k09.sce.utils.ConfigCacheClass;
+import com.tanish2k09.sce.utils.TopCommentStore;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.IOException;
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        TextView saveTitle = findViewById(R.id.saveTitle);
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -87,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         runScript = sp.getBoolean("autoUpdateConfig", true);
+        if (runScript) {
+            saveTitle.setText(getResources().getString(R.string.saveAndApply));
+            saveTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        } else {
+            saveTitle.setText(getResources().getString(R.string.save));
+            saveTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        }
+
         updateTheme();
     }
 
@@ -168,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean commenceConfigImport() {
         removeConfigFragments();
+        TopCommentStore.clear();
 
         if (!cig.configImport()) {
             Toast.makeText(this, getResources().getString(R.string.swwImport), Toast.LENGTH_SHORT).show();
@@ -175,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int size = ConfigCacheClass.getConfiglistSize();
-        Toast.makeText(this, "Found " + size + " values", Toast.LENGTH_SHORT).show();
+        Log.d("SCE-CIE", "Found " + size + " values");
 
         if (size > 0) {
             fillConfigFragments();
@@ -204,7 +218,11 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft;
 
-        /* Assumes the first config is PROFILE.VERSION, so we skip that */
+        /* Assumes the first config is PROFILE.VERSION, so we skip that for fragment inflation*/
+        String pv = "Profile version: " + Objects.requireNonNull(ConfigCacheClass.getStringVal(0)).getActiveVal();
+        Toast.makeText(this, pv, Toast.LENGTH_SHORT).show();
+        Log.d("SCE-CIE", pv);
+
         for (int idx = 1; idx < ConfigCacheClass.getConfiglistSize(); ++idx) {
             fConfigVar configFragment = new fConfigVar();
             String category = Objects.requireNonNull(ConfigCacheClass.getStringVal(idx)).getCategory();

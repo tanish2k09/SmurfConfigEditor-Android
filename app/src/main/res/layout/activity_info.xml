@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/InfoAppTitle" />
 
     <LinearLayout
-        android:id="@+id/paypalLayout"
+        android:id="@+id/colorPickerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/infoBoxSideMargins"
@@ -53,49 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/creditText">
-
-        <TextView
-            android:id="@+id/gimmeMoniText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:clickable="false"
-            android:gravity="center"
-            android:text="@string/gimmeMoni"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
-
-        <ImageView
-            android:id="@+id/paypalImage"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@color/infoFiller"
-            android:contentDescription="@string/paypalLink"
-            android:foreground="@drawable/paypal_logo"
-            android:foregroundGravity="center" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/colorPickerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/infoBoxSideMargins"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="@dimen/infoBoxSideMargins"
-        android:background="@drawable/white_outline"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paypalLayout">
 
         <TextView
             android:id="@+id/colorPickerText"
@@ -165,7 +122,7 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/divider3"
+        android:id="@+id/contactDivTop"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginLeft="@dimen/infoDivSideMargins"
@@ -193,10 +150,10 @@
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+        app:layout_constraintTop_toBottomOf="@+id/contactDivTop" />
 
     <View
-        android:id="@+id/divider4"
+        android:id="@+id/contactDivBottom"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginLeft="@dimen/infoDivSideMargins"
@@ -218,7 +175,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contactMe">
+        app:layout_constraintTop_toBottomOf="@+id/contactDivBottom">
 
         <Button
             android:id="@+id/xdaButton"
