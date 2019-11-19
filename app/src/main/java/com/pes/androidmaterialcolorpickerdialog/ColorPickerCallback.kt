@@ -1,13 +1,13 @@
-package com.pes.androidmaterialcolorpickerdialog;
+package com.pes.androidmaterialcolorpickerdialog
 
-import androidx.annotation.ColorInt;
+import androidx.annotation.ColorInt
 
 /**
  * Created by Patrick Geselbracht on 2017-03-04
  *
  * @author Patrick Geselbracht
  */
-public interface ColorPickerCallback {
+interface ColorPickerCallback {
     /**
      * Gets called whenever a user chooses a color from the ColorPicker, i.e., presses the
      * "Choose" button.
@@ -15,6 +15,6 @@ public interface ColorPickerCallback {
      * @param color Color chosen
      */
 
-    void onColorChosen(@ColorInt int color);
+    fun onColorChosen(@ColorInt color: Int)
 }
 

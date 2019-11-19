@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="4dp"
     tools:background="@color/black"
-    tools:context=".fragments.containerFragments.fConfigVar">
+    tools:context=".fragments.containerFragments.ConfigVar">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/frontCard"

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tanish2k09.sce.R;
-import com.tanish2k09.sce.utils.StringValClass;
+import com.tanish2k09.sce.utils.StringVal;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>
@@ -27,11 +27,11 @@ import com.tanish2k09.sce.utils.StringValClass;
  */
 public class ConfigOptionsModal extends BottomSheetDialogFragment {
 
-    private static StringValClass svc;
+    private static StringVal svc;
     private static int color;
     private Listener mListener;
 
-    public static ConfigOptionsModal newInstance(StringValClass svc_arg, int accentColor) {
+    public static ConfigOptionsModal newInstance(StringVal svc_arg, int accentColor) {
         final ConfigOptionsModal fragment = new ConfigOptionsModal();
         svc = svc_arg;
         color = accentColor;

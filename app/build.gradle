@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -6,8 +8,8 @@ android {
         applicationId "com.tanish2k09.sce"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 160
-        versionName "1.6"
+        versionCode 170
+        versionName "1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,6 +27,7 @@ android {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
@@ -44,4 +47,6 @@ dependencies {
 
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
     implementation "com.github.topjohnwu.libsu:io:${libsuVersion}"
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
