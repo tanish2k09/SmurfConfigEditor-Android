@@ -61,10 +61,15 @@
     <string name="ConfigPath1" translatable="false">/init.smurf.sh</string>
     <string name="ConfigPath2" translatable="false">/data/adb/modules/smurf/service.sh</string>
 
+    <string name="directImport" translatable="false">Direct</string>
+    <string name="folderImport" translatable="false">Folder</string>
+    <string name="zipImport" translatable="false">Zip</string>
+    <string name="device_name" translatable="false">OnePlus 6</string>
+
     <string name="colorPickerLiteral">Color Picker Source Code</string>
     <string name="colorPickerLink" translatable="false">https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCodeLiteral">SCE Source Code</string>
     <string name="SourceCodeLink" translatable="false">https://github.com/tanish2k09/SmurfConfigEditor</string>
 
-    <string name="displayVersion" translatable="false">- Version 1.7 -</string>
+    <string name="displayVersion" translatable="false">- Version 2.0 alpha 3 -</string>
 </resources>

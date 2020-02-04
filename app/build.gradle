@@ -8,8 +8,8 @@ android {
         applicationId "com.tanish2k09.sce"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 170
-        versionName "1.7"
+        versionCode 200
+        versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -18,11 +18,32 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        alpha {
+            dimension "version"
+            applicationIdSuffix ".alpha"
+            versionNameSuffix "-alpha3"
+        }
+        full {
+            dimension "version"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-full"
+        }
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
+    buildToolsVersion = '29.0.3'
 }
 
 repositories {
@@ -31,22 +52,27 @@ repositories {
 }
 
 dependencies {
-    def libsuVersion = '2.5.1'
+    def libSuVersion = '2.5.1'
+    def htextview_version = "0.1.6"
+
+    apply plugin: 'kotlin-android-extensions'
+
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha01'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
 
-    implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
-    implementation "com.github.topjohnwu.libsu:io:${libsuVersion}"
+    implementation "com.github.topjohnwu.libsu:core:${libSuVersion}"
+    implementation "com.github.topjohnwu.libsu:io:${libSuVersion}"
     implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.airbnb.android:lottie:3.3.1'
+    implementation "com.hanks:htextview-base:$htextview_version"
+    implementation "com.hanks:htextview-scale:$htextview_version"
 }

@@ -27,6 +27,7 @@ class ConfigImportExport(private val ctx: Context) {
     private fun openConfig(): Int {
         configFile = File(Environment.getExternalStorageDirectory().path + "/SmurfKernel",
                 ctx.resources.getString(R.string.configFile))
+        Log.d("SCE_CIE", "DIR PATH: " + configFile!!.path)
         return if (configFile!!.exists()) {
             0
         } else {
@@ -92,7 +93,7 @@ class ConfigImportExport(private val ctx: Context) {
                 return true
             } catch (e: IOException) {
                 Toast.makeText(ctx, R.string.swwRC, Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
+                Log.e("SCE-CIE", "SWW Read", e)
                 return false
             }
 

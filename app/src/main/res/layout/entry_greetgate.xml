@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/greet_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:elevation="10dp">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/wink_anim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="emoji_wink_t.json"
+        app:lottie_loop="true" />
+
+    <LinearLayout
+        android:id="@+id/greet_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wink_anim"
+        app:layout_constraintVertical_bias="0.75">
+
+        <LinearLayout
+            android:id="@+id/import_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/import_direct_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_greet_option"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/greet_padding_inner"
+                android:paddingBottom="@dimen/greet_padding_inner">
+
+                <ImageView
+                    android:id="@+id/direct_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/directImport"
+                    app:srcCompat="@drawable/ic_import" />
+
+                <com.hanks.htextview.scale.ScaleTextView
+                    android:id="@+id/import_direct_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/greet_text_padding"
+                    android:text="@string/directImport"
+                    android:textColor="@color/textDark"
+                    android:textSize="@dimen/greet_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/import_folder_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_greet_option"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/greet_padding_inner"
+                android:paddingBottom="@dimen/greet_padding_inner">
+
+                <ImageView
+                    android:id="@+id/folder_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/folderImport"
+                    app:srcCompat="@drawable/ic_folder_import" />
+
+                <com.hanks.htextview.scale.ScaleTextView
+                    android:id="@+id/import_folder_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/greet_text_padding"
+                    android:text="@string/folderImport"
+                    android:textColor="@color/textDark"
+                    android:textSize="@dimen/greet_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/import_zip_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="@drawable/ripple_greet_option"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/greet_padding_inner"
+                android:paddingBottom="@dimen/greet_padding_inner">
+
+                <ImageView
+                    android:id="@+id/zip_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/folderImport"
+                    app:srcCompat="@drawable/ic_folder_zip" />
+
+                <com.hanks.htextview.scale.ScaleTextView
+                    android:id="@+id/import_zip_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/greet_text_padding"
+                    android:text="@string/zipImport"
+                    android:textColor="@color/textDark"
+                    android:textSize="@dimen/greet_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/activity_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/settings_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/ic_settings"
+                android:drawablePadding="@dimen/greet_text_padding"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:fontFamily="monospace"
+                android:foreground="@drawable/ripple_greet_option"
+                android:gravity="center"
+                android:paddingTop="@dimen/greet_padding_inner"
+                android:paddingBottom="@dimen/greet_padding_inner"
+                android:text="@string/action_settings"
+                android:textColor="@color/textDark"
+                android:textSize="@dimen/greet_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/info_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/ic_info_outline"
+                android:drawablePadding="@dimen/greet_text_padding"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:fontFamily="monospace"
+                android:foreground="@drawable/ripple_greet_option"
+                android:gravity="center"
+                android:paddingTop="@dimen/greet_padding_inner"
+                android:paddingBottom="@dimen/greet_padding_inner"
+                android:text="@string/action_info"
+                android:textColor="@color/textDark"
+                android:textSize="@dimen/greet_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/device_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/ic_device"
+                android:drawablePadding="@dimen/greet_text_padding"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:fontFamily="monospace"
+                android:foreground="@drawable/ripple_greet_option"
+                android:gravity="center"
+                android:paddingTop="@dimen/greet_padding_inner"
+                android:paddingBottom="@dimen/greet_padding_inner"
+                android:text="@string/device_name"
+                android:textColor="@color/textDark"
+                android:textSize="@dimen/greet_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

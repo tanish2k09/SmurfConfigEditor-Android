@@ -2,48 +2,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="8dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="16dp"
     android:background="@android:color/transparent"
-    tools:context=".fragments.containerFragments.CategoryFragment"
-    tools:background="@color/colorPrimaryDark">
+    app:cardBackgroundColor="@color/colorPrimaryDark"
+    app:cardCornerRadius="@dimen/cardRadius"
+    tools:context=".fragments.containerFragments.CategoryFragment">
 
-    <View
-        android:id="@+id/catDivTop"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="@dimen/infoDivSideMargins"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="@dimen/infoDivSideMargins"
-        android:background="@color/colorTeal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/categoryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/noCategoryLiteral"
-        android:textColor="@color/colorTeal"
-        android:textSize="14sp"
+        android:textAllCaps="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:typeface="monospace"
+        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/catDivTop" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/catDivBottom"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="@dimen/infoDivSideMargins"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="@dimen/infoDivSideMargins"
-        android:background="@color/colorTeal"
+        android:layout_width="16dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/categoryTitle" />
@@ -54,10 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/catDivBottom">
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tanish2k09.sce">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true">
-        <activity android:name=".SettingsActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".InfoActivity" android:theme="@style/AppTheme.NoActionBar" />
+        android:requestLegacyExternalStorage="true"
+        tools:replace="android:allowBackup">
+        <activity android:name=".SettingsActivity" android:theme="@style/AppTheme.Transparent" />
+        <activity android:name=".InfoActivity" android:theme="@style/AppTheme.Transparent" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

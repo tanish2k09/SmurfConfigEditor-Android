@@ -9,6 +9,6 @@
     <item
         android:width="240dp"
         android:height="380dp"
-        android:drawable="@drawable/splash_bg"
+        android:drawable="@drawable/bg_splash"
         android:gravity="center" />
 </layer-list>

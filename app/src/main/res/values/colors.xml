@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#121212</color>
-    <color name="colorAccent">#0277bd</color>
+    <color name="colorAccent">#14D2B3</color>
     <color name="colorTeal">#14D2B3</color>
     <color name="textDefault">#e0e0e0</color>
     <color name="textSec">#898989</color>
@@ -21,6 +21,7 @@
     <color name="discord">#7289DA</color>
     <color name="infoFiller">#EEEEEE</color>
 
+    <color name="blur_white_overlay">#44FFFFFF</color>
 
     <color name="materialcolorpicker__white">#ffffff</color>
     <color name="materialcolorpicker__red">#f44336</color>

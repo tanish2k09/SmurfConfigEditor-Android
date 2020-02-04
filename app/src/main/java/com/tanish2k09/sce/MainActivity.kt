@@ -1,12 +1,13 @@
 package com.tanish2k09.sce
 
 import android.Manifest
+import android.animation.Animator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -14,16 +15,17 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.appcompat.widget.Toolbar
 
 import android.util.Log
-import android.util.TypedValue
-import android.view.Menu
-import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewAnimationUtils
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
+import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment
 import com.tanish2k09.sce.fragments.containerFragments.ConfigVar
@@ -36,37 +38,111 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
-    private var noNotesCard: CardView? = null
-    private var saveCard: CardView? = null
+    private var saveFab: FloatingActionButton? = null
     private var cig: ConfigImportExport? = null
     private var runScript = true
     private var sp: SharedPreferences? = null
+    private var masterLayout: ConstraintLayout? = null
+    private var fabLayout: ConstraintLayout? = null
+    private var winkAnim: LottieAnimationView? = null
 
+    /* Greet screen controls */
+    private var winkContainer: ConstraintLayout? = null
+
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+
+        fabLayout = findViewById(R.id.fabs_layout)
+        masterLayout = findViewById(R.id.master_layout)
 
         cig = ConfigImportExport(this)
 
-        noNotesCard = findViewById(R.id.no_notes_card)
-        noNotesCard!!.setOnClickListener { commenceConfigImport() }
+        saveFab = findViewById(R.id.save_fab)
+        saveFab!!.setOnClickListener { cig!!.saveConfig(runScript) }
+        saveFab!!.setOnLongClickListener {
+            optionsVisibilityHandler()
+            return@setOnLongClickListener true
+        }
 
-        saveCard = findViewById(R.id.saveButton)
-        saveCard!!.setOnClickListener { cig!!.saveConfig(runScript) }
+        winkAnim = findViewById(R.id.wink_anim)
 
-        Shell.su("cd /").submit()
+        val settingsButton = findViewById<TextView>(R.id.settings_button)
+        settingsButton.setOnTouchListener(object: View.OnTouchListener {
+            override fun onTouch(v: View, m: MotionEvent): Boolean {
+                if (m.action == MotionEvent.ACTION_UP) {
+                    val intent = Intent(v.context, SettingsActivity::class.java)
+                    rippleAnimationActivityOpener(m, settingsButton, intent)
+                    return true
+                }
+                return false
+            }
+        })
+
+        val infoButton = findViewById<TextView>(R.id.info_button)
+        infoButton.setOnTouchListener(object: View.OnTouchListener {
+            override fun onTouch(v: View, m: MotionEvent): Boolean {
+                if (m.action == MotionEvent.ACTION_UP) {
+                    val intent = Intent(v.context, InfoActivity::class.java)
+                    rippleAnimationActivityOpener(m, infoButton, intent)
+                    return true
+                }
+                return false
+            }
+        })
+
+        val importDirectButton = findViewById<LinearLayout>(R.id.import_direct_button)
+        importDirectButton.setOnClickListener {
+            commenceConfigImport()
+        }
+
+        try {
+            Shell.su("cd /").exec()
+        } catch (e: IOException) {
+            Log.d("SCE-MAIN", "Caught exception executing shell, probably not rooted")
+        }
 
         sp = getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+        /* TODO: Fix auto importing config
         if (sp!!.getBoolean("autoImportConfig", true) && ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
             commenceConfigImport()
+         */
+    }
+
+    private fun getRelativeLeft(view: View): Int {
+        return if (view.parent == view.rootView)
+            view.left
+        else
+            view.left + getRelativeLeft(view.parent as View)
+    }
+
+    private fun getRelativeTop(view: View): Int {
+        return if (view.parent == view.rootView)
+            view.top
+        else
+            view.top + getRelativeTop(view.parent as View)
+    }
+
+    private fun rippleAnimationActivityOpener(m: MotionEvent,v: View, i:Intent) {
+        val revealX = (getRelativeLeft(v) + m.x.toInt())
+        val revealY = (getRelativeTop(v) + m.y.toInt())
+        i.putExtra("x", revealX)
+        i.putExtra("y", revealY)
+        winkAnim?.pauseAnimation()
+        this.startActivity(i)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        winkContainer = findViewById(R.id.greet_layout)
     }
 
     override fun onResume() {
         super.onResume()
-        val saveTitle = findViewById<TextView>(R.id.saveTitle)
 
         if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -77,25 +153,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         runScript = sp!!.getBoolean("autoUpdateConfig", true)
-        if (runScript) {
-            saveTitle.text = resources.getString(R.string.saveAndApply)
-            saveTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        } else {
-            saveTitle.text = resources.getString(R.string.save)
-            saveTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
-        }
+        winkAnim?.playAnimation()
 
         updateTheme()
     }
 
     private fun updateTheme() {
         val accent = Color.parseColor(sp!!.getString("accentCol", "#00bfa5"))
-        val saveTitle = findViewById<TextView>(R.id.saveTitle)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        val mainContentLayout = findViewById<ConstraintLayout>(R.id.mainContentLayout)
 
-        saveCard!!.setCardBackgroundColor(accent)
-        noNotesCard!!.setCardBackgroundColor(accent)
+        saveFab!!.setBackgroundColor(accent)
 
         var color = "#121212"
         if (sp!!.getBoolean("useBlackNotDark", false))
@@ -103,49 +169,38 @@ class MainActivity : AppCompatActivity() {
 
         val parsedColor = Color.parseColor(color)
 
-        val colDrawable = ColorDrawable(parsedColor)
-
-        toolbar.background = colDrawable
         window.statusBarColor = parsedColor
-        window.navigationBarColor = parsedColor
-        mainContentLayout.background = colDrawable
-        saveTitle.setTextColor(parsedColor)
+
+        if (winkContainer!!.isVisible) {
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.colorAccent)
+        } else {
+            window.navigationBarColor = parsedColor
+        }
+        //mainContentLayout!!.background = colDrawable
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            noNotesCard!!.outlineAmbientShadowColor = accent
-            noNotesCard!!.outlineSpotShadowColor = accent
-            saveCard!!.outlineAmbientShadowColor = accent
-            saveCard!!.outlineSpotShadowColor = accent
+            saveFab!!.outlineAmbientShadowColor = accent
+            saveFab!!.outlineSpotShadowColor = accent
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
+    private fun optionsVisibilityHandler() {
+        if (!fabLayout!!.isVisible) {
+            // Isn't visible, start animation to show more options
+            saveFab!!.bottom
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+            val anim: Animator = ViewAnimationUtils.createCircularReveal(
+                    fabLayout,
+                    (saveFab!!.left + saveFab!!.right)/2,
+                    (saveFab!!.top + saveFab!!.bottom)/2,
+                    0.toFloat(),
+                    1080.toFloat()
+            )
 
-
-        when (item.itemId) {
-            R.id.action_import_config -> return commenceConfigImport()
-
-            R.id.action_info -> {
-                val infoActivityIntent = Intent(this, InfoActivity::class.java)
-                startActivity(infoActivityIntent)
-            }
-
-            R.id.action_settings -> {
-                val settingsActivityIntent = Intent(this, SettingsActivity::class.java)
-                startActivity(settingsActivityIntent)
-            }
+            anim.start()
+            fabLayout!!.visibility = View.VISIBLE
+            saveFab!!.isLongClickable = false
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -172,9 +227,9 @@ class MainActivity : AppCompatActivity() {
 
         if (size > 0) {
             fillConfigFragments()
-            noNotesCard!!.visibility = View.INVISIBLE
-            saveCard!!.visibility = View.VISIBLE
-            saveCard!!.isEnabled = true
+            winkContainer!!.visibility = View.GONE
+            saveFab!!.visibility = View.VISIBLE
+            saveFab!!.isEnabled = true
         } else {
             Toast.makeText(this, "No values could be extracted", Toast.LENGTH_SHORT).show()
         }

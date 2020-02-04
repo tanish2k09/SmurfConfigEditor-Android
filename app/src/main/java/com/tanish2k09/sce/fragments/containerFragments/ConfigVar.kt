@@ -60,7 +60,7 @@ class ConfigVar : Fragment(), ConfigOptionsModal.Listener, View.OnClickListener 
         super.onResume()
         val sp = curVal!!.context.getSharedPreferences("settings", MODE_PRIVATE)
         accentCol = Color.parseColor(sp.getString("accentCol", "#00bfa5"))
-        curVal!!.setTextColor(accentCol)
+        //curVal!!.setTextColor(accentCol)
 
         if (sp.getBoolean("useTitlesOnCards", true)) {
             title!!.text = svc!!.title

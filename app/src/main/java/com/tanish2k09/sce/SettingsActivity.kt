@@ -1,24 +1,45 @@
 package com.tanish2k09.sce
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.cardview.widget.CardView
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.ViewTreeObserver
+import android.view.animation.LinearInterpolator
 import android.widget.Switch
 import android.widget.Toast
-import com.pes.androidmaterialcolorpickerdialog.ColorPicker
-import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import kotlin.math.hypot
+
 
 class SettingsActivity : AppCompatActivity(){
 
+    private var revealX = 0
+    private var revealY = 0
+    private lateinit var rootLayout: ConstraintLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (savedInstanceState == null)
+            overridePendingTransition(R.anim.no_op, R.anim.no_op)
+
         setContentView(R.layout.activity_settings)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
+        rootLayout = findViewById(R.id.settingsLayout)
+
+        if (intent.hasExtra("x"))
+            revealX = intent.getIntExtra("x", 0)
+
+        if (intent.hasExtra("y"))
+            revealY = intent.getIntExtra("y", 0)
 
         val sp = getSharedPreferences("settings", Context.MODE_PRIVATE)
 
@@ -54,6 +75,7 @@ class SettingsActivity : AppCompatActivity(){
         }
 
         setColorCard(colorCard, Color.parseColor(sp.getString("accentCol", "#00bfa5")))
+        /* TODO: Fix crash on color picker dialog
         colorCard.setOnClickListener {
             val preColor = Color.parseColor(sp.getString("accentCol", "#00bfa5"))
             val cp = ColorPicker(this, Color.red(preColor), Color.green(preColor), Color.blue(preColor))
@@ -65,6 +87,52 @@ class SettingsActivity : AppCompatActivity(){
                 }})
             cp.show()
         }
+         */
+
+        if (savedInstanceState == null) {
+            rootLayout.visibility = View.INVISIBLE
+
+            val vto: ViewTreeObserver = rootLayout.viewTreeObserver
+            if (vto.isAlive) {
+                vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        revealActivity(revealX, revealY)
+                        rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                })
+            }
+        }
+    }
+
+    private fun revealActivity(x: Int, y: Int) {
+        val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
+        // create the animator for this view (the start radius is zero)
+        val circularReveal = ViewAnimationUtils.createCircularReveal(
+                rootLayout,
+                x, y,
+                0f, finalRadius
+        )
+        circularReveal.duration = 750
+        circularReveal.interpolator = LinearInterpolator()
+        // make the view visible and start the animation
+        rootLayout.visibility = View.VISIBLE
+        circularReveal.start()
+    }
+
+    private fun unRevealActivity() {
+        val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
+        val circularReveal = ViewAnimationUtils.createCircularReveal(
+                rootLayout, revealX, revealY, finalRadius, 0f)
+        circularReveal.duration = 750
+        circularReveal.interpolator = LinearInterpolator()
+        circularReveal.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                rootLayout.visibility = View.INVISIBLE
+                finish()
+                overridePendingTransition(R.anim.no_op, R.anim.no_op)
+            }
+        })
+        circularReveal.start()
     }
 
     fun setColorCard(card: CardView, color: Int) {
@@ -85,5 +153,9 @@ class SettingsActivity : AppCompatActivity(){
             setThemeColor("#000000")
         else
             setThemeColor("#121212")
+    }
+
+    override fun onBackPressed() {
+        unRevealActivity()
     }
 }
