@@ -112,7 +112,7 @@ class SettingsActivity : AppCompatActivity(){
                 x, y,
                 0f, finalRadius
         )
-        circularReveal.duration = 750
+        circularReveal.duration = 500
         circularReveal.interpolator = LinearInterpolator()
         // make the view visible and start the animation
         rootLayout.visibility = View.VISIBLE
@@ -123,7 +123,7 @@ class SettingsActivity : AppCompatActivity(){
         val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
         val circularReveal = ViewAnimationUtils.createCircularReveal(
                 rootLayout, revealX, revealY, finalRadius, 0f)
-        circularReveal.duration = 750
+        circularReveal.duration = 500
         circularReveal.interpolator = LinearInterpolator()
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
@@ -135,7 +135,7 @@ class SettingsActivity : AppCompatActivity(){
         circularReveal.start()
     }
 
-    fun setColorCard(card: CardView, color: Int) {
+    private fun setColorCard(card: CardView, color: Int) {
         card.setCardBackgroundColor(color)
     }
 
