@@ -15,8 +15,8 @@ import android.widget.TextView
 
 import com.tanish2k09.sce.R
 import com.tanish2k09.sce.fragments.modals.ConfigOptionsModal
-import com.tanish2k09.sce.utils.ConfigCache
-import com.tanish2k09.sce.utils.StringVal
+import com.tanish2k09.sce.data.ConfigCache
+import com.tanish2k09.sce.data.StringVal
 
 import android.content.Context.MODE_PRIVATE
 import java.util.*
@@ -65,7 +65,9 @@ class ConfigVar : Fragment(), ConfigOptionsModal.Listener, View.OnClickListener 
         if (sp.getBoolean("useTitlesOnCards", true)) {
             title!!.text = svc!!.title
             title!!.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-            title!!.setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+            title!!.setTypeface(resources.getFont(
+                    R.font.app_tf
+            ), Typeface.BOLD)
         } else {
             title!!.text = svc!!.name.toUpperCase(Locale.getDefault())
             title!!.setTypeface(Typeface.MONOSPACE, Typeface.BOLD)
