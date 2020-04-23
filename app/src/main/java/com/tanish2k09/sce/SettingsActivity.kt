@@ -9,7 +9,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
-import android.view.animation.LinearInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -113,7 +114,7 @@ class SettingsActivity : AppCompatActivity(){
                 0f, finalRadius
         )
         circularReveal.duration = 500
-        circularReveal.interpolator = LinearInterpolator()
+        circularReveal.interpolator = AccelerateInterpolator()
         // make the view visible and start the animation
         rootLayout.visibility = View.VISIBLE
         circularReveal.start()
@@ -124,12 +125,11 @@ class SettingsActivity : AppCompatActivity(){
         val circularReveal = ViewAnimationUtils.createCircularReveal(
                 rootLayout, revealX, revealY, finalRadius, 0f)
         circularReveal.duration = 500
-        circularReveal.interpolator = LinearInterpolator()
+        circularReveal.interpolator = DecelerateInterpolator()
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 rootLayout.visibility = View.INVISIBLE
                 finish()
-                overridePendingTransition(R.anim.no_op, R.anim.no_op)
             }
         })
         circularReveal.start()
@@ -144,8 +144,6 @@ class SettingsActivity : AppCompatActivity(){
 
         val themeColor = ColorDrawable(Color.parseColor(colorHex))
         settingsLayout.background = themeColor
-        window.statusBarColor = Color.parseColor(colorHex)
-        window.navigationBarColor = Color.parseColor(colorHex)
     }
 
     private fun setThemeColor(isBlackChecked: Boolean) {
