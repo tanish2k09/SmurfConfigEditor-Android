@@ -1,8 +1,17 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.tanish2k09.sce"
@@ -30,7 +39,7 @@ android {
         alpha {
             dimension "version"
             applicationIdSuffix ".alpha"
-            versionNameSuffix "-alpha3"
+            versionNameSuffix "-a5"
         }
         full {
             dimension "version"
@@ -55,7 +64,9 @@ dependencies {
     def libSuVersion = '2.5.1'
     def htextview_version = "0.1.6"
 
+
     apply plugin: 'kotlin-android-extensions'
+    apply plugin: 'kotlin-android'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -66,13 +77,13 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha04'
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
 
     implementation "com.github.topjohnwu.libsu:core:${libSuVersion}"
     implementation "com.github.topjohnwu.libsu:io:${libSuVersion}"
-    implementation "androidx.core:core-ktx:1.1.0"
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.airbnb.android:lottie:3.3.1'
+    implementation 'com.airbnb.android:lottie:3.4.0'
     implementation "com.hanks:htextview-base:$htextview_version"
     implementation "com.hanks:htextview-scale:$htextview_version"
 }
