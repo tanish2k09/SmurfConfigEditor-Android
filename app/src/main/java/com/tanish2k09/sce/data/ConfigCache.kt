@@ -1,4 +1,4 @@
-package com.tanish2k09.sce.utils
+package com.tanish2k09.sce.data
 
 import java.util.ArrayList
 

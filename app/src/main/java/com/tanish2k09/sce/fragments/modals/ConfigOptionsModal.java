@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tanish2k09.sce.R;
-import com.tanish2k09.sce.utils.StringVal;
+import com.tanish2k09.sce.data.StringVal;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>

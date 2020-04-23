@@ -1,8 +1,8 @@
 package com.tanish2k09.sce.helpers
 
 import com.tanish2k09.sce.R
-import com.tanish2k09.sce.utils.ConfigCache
-import com.tanish2k09.sce.utils.TopCommentStore
+import com.tanish2k09.sce.data.ConfigCache
+import com.tanish2k09.sce.data.TopCommentStore
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.io.SuFile
 
