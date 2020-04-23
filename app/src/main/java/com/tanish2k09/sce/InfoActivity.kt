@@ -10,7 +10,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
-import android.view.animation.LinearInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -96,8 +97,6 @@ class InfoActivity : AppCompatActivity() {
         var color = "#121212"
         if (sp.getBoolean("useBlackNotDark", false)) color = "#000000"
         val parsedColor = Color.parseColor(color)
-        window.navigationBarColor = parsedColor
-        window.statusBarColor = parsedColor
         infoTopLayout.setBackgroundColor(parsedColor)
     }
 
@@ -110,7 +109,7 @@ class InfoActivity : AppCompatActivity() {
                 0f, finalRadius
         )
         circularReveal.duration = 500
-        circularReveal.interpolator = LinearInterpolator()
+        circularReveal.interpolator = AccelerateInterpolator()
         // make the view visible and start the animation
         rootLayout.visibility = View.VISIBLE
         circularReveal.start()
@@ -121,12 +120,11 @@ class InfoActivity : AppCompatActivity() {
         val circularReveal = ViewAnimationUtils.createCircularReveal(
                 rootLayout, revealX, revealY, finalRadius, 0f)
         circularReveal.duration = 500
-        circularReveal.interpolator = LinearInterpolator()
+        circularReveal.interpolator = DecelerateInterpolator()
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 rootLayout.visibility = View.INVISIBLE
                 finish()
-                overridePendingTransition(R.anim.no_op, R.anim.no_op)
             }
         })
         circularReveal.start()
