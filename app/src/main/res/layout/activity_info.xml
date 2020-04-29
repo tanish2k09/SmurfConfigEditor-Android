@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/InfoAppTitle" />
 
     <LinearLayout
-        android:id="@+id/colorPickerLayout"
+        android:id="@+id/sourceCodeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/infoBoxSideMargins"
@@ -53,6 +53,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/creditText">
+
+        <TextView
+            android:id="@+id/sourceCodeText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:autoLink="web"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/SourceCodeLiteral"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <ImageView
+            android:id="@+id/sourceCodeLinkImage"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@color/infoFiller"
+            android:contentDescription="@string/colorPickerLink"
+            android:foreground="@drawable/ic_github"
+            android:foregroundGravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/colorPickerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/infoBoxSideMargins"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/infoBoxSideMargins"
+        android:background="@drawable/white_outline"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sourceCodeLayout">
 
         <TextView
             android:id="@+id/colorPickerText"
@@ -74,20 +117,20 @@
             android:id="@+id/colorPickerLinkImage"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_weight="1"
             android:background="@color/infoFiller"
             android:contentDescription="@string/colorPickerLink"
             android:foreground="@drawable/ic_github"
-            android:foregroundGravity="center"
-            android:layout_weight="1"/>
+            android:foregroundGravity="center" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/sourceCodeLayout"
+        android:id="@+id/stickyScrollViewLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/infoBoxSideMargins"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="@dimen/infoBoxSideMargins"
         android:background="@drawable/white_outline"
         android:clickable="true"
@@ -98,75 +141,62 @@
         app:layout_constraintTop_toBottomOf="@+id/colorPickerLayout">
 
         <TextView
-            android:id="@+id/sourceCodeText"
+            android:id="@+id/stickyScrollText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_weight="1"
             android:autoLink="web"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/SourceCodeLiteral"
+            android:text="@string/stickyScrollLiteral"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:typeface="monospace"
-            android:layout_weight="1"/>
+            android:typeface="monospace" />
 
         <ImageView
-            android:id="@+id/sourceCodeLinkImage"
+            android:id="@+id/stickyScrollLinkImage"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_weight="1"
             android:background="@color/infoFiller"
             android:contentDescription="@string/colorPickerLink"
             android:foreground="@drawable/ic_github"
-            android:foregroundGravity="center"
-            android:layout_weight="1"/>
-
+            android:foregroundGravity="center" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/contactDivTop"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginLeft="@dimen/infoDivSideMargins"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="@dimen/infoDivSideMargins"
-        android:background="@color/infoFiller"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sourceCodeLayout" />
-
-    <TextView
-        android:id="@+id/contactMe"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/contactMeLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="false"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="@string/contactMe"
-        android:textColor="@color/infoFiller"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:typeface="monospace"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactDivTop" />
+        app:layout_constraintTop_toBottomOf="@+id/stickyScrollViewLayout">
 
-    <View
-        android:id="@+id/contactDivBottom"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginLeft="@dimen/infoDivSideMargins"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="@dimen/infoDivSideMargins"
-        android:background="@color/infoFiller"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contactMe" />
+        <TextView
+            android:id="@+id/contactMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/contactMe"
+            android:textColor="@color/infoFiller"
+            android:textSize="20sp"
+            android:textStyle="normal|bold"
+            android:typeface="monospace" />
+
+        <View
+            android:id="@+id/contactDivBottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heading_underline"
+            android:layout_marginTop="8dp"
+            android:background="@color/infoFiller" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/contactButtonsLayout1"
@@ -179,7 +209,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactDivBottom">
+        app:layout_constraintTop_toBottomOf="@+id/contactMeLayout">
 
         <Button
             android:id="@+id/xdaButton"

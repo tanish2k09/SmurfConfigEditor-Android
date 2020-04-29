@@ -41,6 +41,7 @@ class InfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_info)
         val colorPicker = findViewById<LinearLayout>(R.id.colorPickerLayout)
         val source = findViewById<LinearLayout>(R.id.sourceCodeLayout)
+        val stickyScroll = findViewById<LinearLayout>(R.id.stickyScrollViewLayout)
         val xda = findViewById<Button>(R.id.xdaButton)
         val telegram = findViewById<Button>(R.id.tgButton)
         val email = findViewById<Button>(R.id.emailButton)
@@ -74,6 +75,11 @@ class InfoActivity : AppCompatActivity() {
         }
         source.setOnClickListener {
             val uri = Uri.parse(getString(R.string.SourceCodeLink))
+            val i = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(i)
+        }
+        stickyScroll.setOnClickListener {
+            val uri = Uri.parse(getString(R.string.stickyScrollLink))
             val i = Intent(Intent.ACTION_VIEW, uri)
             startActivity(i)
         }

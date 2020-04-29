@@ -70,6 +70,8 @@
     <string name="colorPickerLink" translatable="false">https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
     <string name="SourceCodeLiteral">SCE Source Code</string>
     <string name="SourceCodeLink" translatable="false">https://github.com/tanish2k09/SmurfConfigEditor</string>
+    <string name="stickyScrollLiteral" translatable="false">Sticky Scrollview</string>
+    <string name="stickyScrollLink" translatable="false">https://github.com/emilsjolander/StickyScrollViewItems</string>
 
     <string name="displayVersion" translatable="false">- Version 2.0 alpha 6 -</string>
 </resources>
