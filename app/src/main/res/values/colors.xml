@@ -7,9 +7,10 @@
     <color name="textDefault">#e0e0e0</color>
     <color name="textSec">#898989</color>
     <color name="textDark">#121212</color>
-    <color name="menuBG">#1b1b1b</color>
     <color name="black">@android:color/black</color>
-    <color name="colorOutlineConfigCard">#272727</color>
+
+    <color name="menuBG">#1b1b1b</color>
+
     <color name="switchDisabled">#FFF</color>
     <color name="textColorPrimary">#bb111111</color>
     <color name="textColorHint">#e0e0e0</color>
@@ -21,17 +22,7 @@
     <color name="discord">#7289DA</color>
     <color name="infoFiller">#EEEEEE</color>
 
-    <color name="blur_white_overlay">#44FFFFFF</color>
+    <color name="colorBorderConfigCard">#616161</color>
 
-    <color name="materialcolorpicker__white">#ffffff</color>
-    <color name="materialcolorpicker__red">#f44336</color>
-    <color name="materialcolorpicker__green">#4caf50</color>
-    <color name="materialcolorpicker__blue">#2196f3</color>
-    <color name="materialcolorpicker__grey">#b3b3b3</color>
-    <color name="materialcolorpicker__lightgrey">#d9d9d9</color>
-    <color name="materialcolorpicker__dribble">#ea4c89</color>
-    <color name="materialcolorpicker__dribbledark">#c32361</color>
-    <color name="materialcolorpicker__black">#000000</color>
-    <color name="materialcolorpicker__dialogcolor">#009688</color>
-    <color name="materialcolorpicker__dark">#2b2b2b</color>
+    <color name="config_actions_icons">#282828</color>
 </resources>

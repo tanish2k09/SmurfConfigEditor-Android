@@ -2,7 +2,6 @@
     <dimen name="fab_radius">28dp</dimen>
     <dimen name="fab_size">56dp</dimen>
     <dimen name="cardRadius">12dp</dimen>
-    <dimen name="valueRadius">2dp</dimen>
     <dimen name="list_item_spacing">36dp</dimen>
     <dimen name="list_item_spacing_half">18dp</dimen>
     <dimen name="saveCardHeight">64dp</dimen>
@@ -13,8 +12,11 @@
     <dimen name="greet_text_padding">12dp</dimen>
     <dimen name="greet_bg_radius">8dp</dimen>
     <dimen name="greet_padding_inner">16dp</dimen>
+    
+    <dimen name="heading_underline">3dp</dimen>
 
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="materialcolorpicker__activity_horizontal_margin">16dp</dimen>
-    <dimen name="materialcolorpicker__activity_vertical_margin">16dp</dimen>
+    <dimen name="config_actions_corners">16dp</dimen>
+    <dimen name="config_actions_min_dimen">48dp</dimen>
+    <dimen name="config_actions_icon_padding">32dp</dimen>
+    <dimen name="config_actions_icon_divider">12dp</dimen>
 </resources>

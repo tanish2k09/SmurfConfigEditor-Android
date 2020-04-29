@@ -33,8 +33,11 @@ class CategoryFragment : Fragment() {
         return v
     }
 
-    fun pushConfigVarFragment(`var`: ConfigVar, index: Int) {
-        childFragmentManager.beginTransaction().add(R.id.categoryList, `var`, "configCard$index").commit()
+    fun pushConfigVarFragment(configVar: ConfigVar, index: Int) {
+        childFragmentManager
+                .beginTransaction()
+                .add(R.id.categoryList, configVar, "configCard$index")
+                .commitNow()
     }
 
     fun popFragment(index: Int): Boolean {
@@ -43,4 +46,4 @@ class CategoryFragment : Fragment() {
                 .commitNow()
         return childFragmentManager.fragments.size == 0
     }
-}// Required empty public constructor
+}

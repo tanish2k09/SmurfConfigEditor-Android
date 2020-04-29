@@ -2,20 +2,20 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-    <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
-    <!-- To change the popup menu and app text color  -->
-    <item name="android:textColor">@color/textDefault</item>
+        <!-- To change the popup menu and app text color  -->
+        <item name="android:textColor">@color/textDefault</item>
 
-    <!-- To change the background of options menu -->
-    <item name="android:itemBackground">@color/menuBG</item>
+        <!-- To change the background of options menu -->
+        <item name="android:itemBackground">@color/menuBG</item>
 
-    <!-- To change the background of status bar -->
-    <item name="android:statusBarColor">@color/colorPrimary</item>
-</style>
+        <!-- To change the background of status bar -->
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -40,5 +40,11 @@
 
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="ConfigItemDivider">
+        <item name="android:layout_height">@dimen/config_actions_icon_divider</item>
+        <item name="android:layout_width">1dp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 </resources>

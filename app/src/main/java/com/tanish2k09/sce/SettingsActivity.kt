@@ -12,11 +12,15 @@ import android.view.ViewTreeObserver
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
+import com.tanish2k09.sce.utils.extensions.changeBottomMargin
+import com.tanish2k09.sce.utils.extensions.changeTopMargin
 import kotlin.math.hypot
 
 
@@ -25,6 +29,7 @@ class SettingsActivity : AppCompatActivity(){
     private var revealX = 0
     private var revealY = 0
     private lateinit var rootLayout: ConstraintLayout
+    private var topMarginDefault: Int? = 32
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,13 @@ class SettingsActivity : AppCompatActivity(){
         setContentView(R.layout.activity_settings)
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
         rootLayout = findViewById(R.id.settingsLayout)
+
+        val appTitle = findViewById<TextView>(R.id.appTitle)
+        topMarginDefault = appTitle.marginTop
+        appTitle.setOnApplyWindowInsetsListener {view, insets ->
+            changeTopMargin(view, topMarginDefault!! + insets.systemWindowInsetTop)
+            insets
+        }
 
         if (intent.hasExtra("x"))
             revealX = intent.getIntExtra("x", 0)

@@ -14,9 +14,14 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginBottom
+import androidx.core.view.marginTop
+import com.tanish2k09.sce.utils.extensions.changeBottomMargin
+import com.tanish2k09.sce.utils.extensions.changeTopMargin
 import kotlin.math.hypot
 
 class InfoActivity : AppCompatActivity() {
@@ -24,6 +29,8 @@ class InfoActivity : AppCompatActivity() {
     private var revealX = 0
     private var revealY = 0
     private lateinit var rootLayout: ConstraintLayout
+    private var topMarginDefault: Int? = 32
+    private var bottomMarginDefault: Int? = 24
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +46,20 @@ class InfoActivity : AppCompatActivity() {
         val email = findViewById<Button>(R.id.emailButton)
         val discord = findViewById<Button>(R.id.discordButton)
         rootLayout = findViewById(R.id.infoTopLayout)
+
+        val infoAppTitle = findViewById<TextView>(R.id.InfoAppTitle)
+        topMarginDefault = infoAppTitle.marginTop
+        infoAppTitle.setOnApplyWindowInsetsListener {view, insets ->
+            changeTopMargin(view, topMarginDefault!! + insets.systemWindowInsetTop)
+            insets
+        }
+
+        val versionText = findViewById<TextView>(R.id.versionText)
+        bottomMarginDefault = versionText.marginBottom
+        versionText.setOnApplyWindowInsetsListener {view, insets ->
+            changeBottomMargin(view, bottomMarginDefault!! + insets.systemWindowInsetBottom)
+            insets
+        }
 
         if (intent.hasExtra("x"))
             revealX = intent.getIntExtra("x", 0)

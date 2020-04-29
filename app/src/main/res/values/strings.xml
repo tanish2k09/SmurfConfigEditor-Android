@@ -44,7 +44,7 @@
     <string name="telegramLink" translatable="false">https://t.me/tanish2k09</string>
     <string name="emailLink" translatable="false">mailto:tanish2k09.dev@gmail.com</string>
     <string name="discordLink" translatable="false">https://discordapp.com/channels/@me/328440224130793472/</string>
-    <string name="contactMe">CONTACT ME</string>
+    <string name="contactMe">Contact me</string>
     <string name="quantum" translatable="false">Discord ID: quantumcry#4820</string>
 
     <string name="materialcolorpicker__app_name">Android Material Color Picker Dialog</string>
@@ -71,5 +71,5 @@
     <string name="SourceCodeLiteral">SCE Source Code</string>
     <string name="SourceCodeLink" translatable="false">https://github.com/tanish2k09/SmurfConfigEditor</string>
 
-    <string name="displayVersion" translatable="false">- Version 2.0 alpha 3 -</string>
+    <string name="displayVersion" translatable="false">- Version 2.0 alpha 6 -</string>
 </resources>

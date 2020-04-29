@@ -93,8 +93,10 @@ class ConfigVar : Fragment(), ConfigOptionsModal.Listener, View.OnClickListener 
 
     override fun onClick(v: View) {
         if (v.id == R.id.ll_topCard)
-            ConfigOptionsModal.newInstance(svc, accentCol).show(childFragmentManager, svc!!.name + " Selector")
+            ConfigOptionsModal
+                    .newInstance(svc, accentCol)
+                    .show(childFragmentManager, svc!!.name + " Selector")
         else
             showInfoDialog(v)
     }
-}// Required empty public constructor
+}

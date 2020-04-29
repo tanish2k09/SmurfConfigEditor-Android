@@ -20,6 +20,7 @@ import java.io.IOException
 
 import com.tanish2k09.sce.R.string.ConfigPath1
 import com.tanish2k09.sce.R.string.ConfigPath2
+import com.tanish2k09.sce.interfaces.ScriptCallback
 
 class ConfigImportExport(private val ctx: Context) {
     private var configFile: File? = null
@@ -119,21 +120,25 @@ class ConfigImportExport(private val ctx: Context) {
 
     }
 
-    private fun runScript() {
+    fun runScript(cb: ScriptCallback?) {
         if (!Shell.rootAccess()) {
             Toast.makeText(ctx, ctx.resources.getString(R.string.noRoot), Toast.LENGTH_LONG).show()
             Log.e("SCE-CIE", "--- NO ROOT ACCESS ---")
+            cb?.callback()
             return
         }
+
         Log.d("SCE-CIE", "--- RunScript true ---")
         val scriptPath = detectScript(1)
 
-        bashSh(scriptPath)
+        bashSh(scriptPath, cb)
     }
 
-    private fun bashSh(path: String) {
+    private fun bashSh(path: String, cb: ScriptCallback?) {
         Log.d("SCE-CIE", "Executing script path: $path")
-        Shell.su("sh $path").submit()
+        Shell.su("sh $path").submit {
+            cb?.callback()
+        }
     }
 
     fun saveConfig(runScript: Boolean) {
@@ -159,7 +164,11 @@ class ConfigImportExport(private val ctx: Context) {
                 }
 
                 if (svc.descriptionString!!.isNotEmpty()) {
-                    val lines = svc.descriptionString!!.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    val lines =
+                            svc.descriptionString!!
+                                    .split("\n".toRegex())
+                                    .dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()
                     for (string in lines) {
                         outBW.write("##~$string")
                         outBW.newLine()
@@ -169,21 +178,26 @@ class ConfigImportExport(private val ctx: Context) {
                 for (option in 0 until svc.numOptions) {
                     val lineToWrite = StringBuilder()
 
-                    if (svc.getOption(option) != svc.activeVal && svc.name != ctx.getString(R.string.profileVersion))
+                    if (svc.getOption(option) != svc.activeVal && svc.name != ctx.getString(R.string.profileVersion)) {
                         lineToWrite.append("#")
+                    }
 
                     lineToWrite.append(svc.name).append("=").append(svc.getOption(option))
                     outBW.write(lineToWrite.toString())
                     outBW.newLine()
                 }
+
                 outBW.newLine()
                 outBW.newLine()
             }
+
             outBW.flush()
             outBW.close()
             Toast.makeText(ctx, "Saved successfully", Toast.LENGTH_SHORT).show()
-            if (runScript)
-                runScript()
+
+            if (runScript) {
+                runScript(null)
+            }
         } catch (e: IOException) {
             Toast.makeText(ctx, R.string.swwRC, Toast.LENGTH_SHORT).show()
             e.printStackTrace()

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topConfigLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:background="@color/colorPrimaryDark"
+    tools:context="com.tanish2k09.sce.ConfigActivity">
+
+    <com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
+        android:id="@+id/configScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@id/configActionsBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/configContents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </com.emilsjolander.components.StickyScrollViewItems.StickyScrollView>
+
+    <LinearLayout
+        android:id="@+id/configActionsBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/config_actions_bg"
+        android:divider="@drawable/config_action_divider"
+        android:elevation="2dp"
+        android:gravity="center"
+        android:minHeight="@dimen/config_actions_min_dimen"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/save"
+            android:foreground="@drawable/ripple_greet_option"
+            android:paddingTop="@dimen/config_actions_icon_padding"
+            android:paddingBottom="@dimen/config_actions_icon_padding"
+            android:scaleType="center"
+            android:tint="@color/config_actions_icons"
+            app:srcCompat="@drawable/ic_save_apply" />
+
+        <View style="@style/ConfigItemDivider" />
+
+        <ImageButton
+            android:id="@+id/applyConfigButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/action_settings"
+            android:foreground="@drawable/ripple_greet_option"
+            android:paddingTop="@dimen/config_actions_icon_padding"
+            android:paddingBottom="@dimen/config_actions_icon_padding"
+            android:tint="@color/config_actions_icons"
+            app:srcCompat="@drawable/config_action_script" />
+
+        <View style="@style/ConfigItemDivider" />
+
+        <ImageButton
+            android:id="@+id/searchConfigButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/action_settings"
+            android:foreground="@drawable/ripple_greet_option"
+            android:paddingTop="@dimen/config_actions_icon_padding"
+            android:paddingBottom="@dimen/config_actions_icon_padding"
+            android:tint="@color/config_actions_icons"
+            app:srcCompat="@drawable/config_action_search" />
+
+        <View style="@style/ConfigItemDivider" />
+
+        <ImageButton
+            android:id="@+id/settingsConfigButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/action_settings"
+            android:foreground="@drawable/ripple_greet_option"
+            android:paddingTop="@dimen/config_actions_icon_padding"
+            android:paddingBottom="@dimen/config_actions_icon_padding"
+            android:tint="@color/config_actions_icons"
+            app:srcCompat="@drawable/ic_settings" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

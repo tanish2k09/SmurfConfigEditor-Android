@@ -39,7 +39,7 @@ android {
         alpha {
             dimension "version"
             applicationIdSuffix ".alpha"
-            versionNameSuffix "-a5"
+            versionNameSuffix "-a6"
         }
         full {
             dimension "version"
@@ -48,11 +48,9 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility "1.8"
-        targetCompatibility "1.8"
-    }
     buildToolsVersion = '29.0.3'
+// To inline the bytecode built with JVM target 1.8 into
+// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
 }
 
 repositories {
@@ -65,8 +63,11 @@ dependencies {
     def htextview_version = "0.1.6"
 
 
-    apply plugin: 'kotlin-android-extensions'
-    apply plugin: 'kotlin-android'
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+    implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -86,4 +87,5 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.0'
     implementation "com.hanks:htextview-base:$htextview_version"
     implementation "com.hanks:htextview-scale:$htextview_version"
+    implementation 'se.emilsjolander:StickyScrollViewItems:1.1.0'
 }
