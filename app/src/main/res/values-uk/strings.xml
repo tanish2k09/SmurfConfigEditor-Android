@@ -2,13 +2,6 @@
     <string name="action_settings">Налаштування</string>
     <string name="action_info">Інформація</string>
 
-    <string name="no_config_card_text">
-        Схоже, ви не імпортували жодної конфігурації.
-        \n\n\n\nВи можете зробити це з опцій в меню ;)
-    </string>
-
-    <string name="configNF">Конфігураційний файл не знайдено. Створити?</string>
-
     <string name="nu_config">Натисніть, щоб імпортувати конфігурацію</string>
 
     <string name="import_config">Імпортувати конфігурацію</string>

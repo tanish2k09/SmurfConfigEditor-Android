@@ -3,13 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_info">Info</string>
 
-    <string name="no_config_card_text">
-        Doesn\'t look like you imported any config.
-        \n\n\n\nYou can do so from the menu options ;)
-    </string>
-
-    <string name="configNF">The config file wasn\'t found. Create one?</string>
-
     <string name="bamboozle_face" translatable="false">;)</string>
     <string name="nu_config">Tap me to import config</string>
 
@@ -35,6 +28,7 @@
     <string name="autoImportConfigSetting">Always import config on app start</string>
     <string name="autoUpdateConfigSetting">Run config application script on saving</string>
     <string name="pickAccentColor">My favorite accent color is that one over there -></string>
+    <string name="searchHint">Search for title or code...</string>
 
     <string name="credit">- Made by tanish2k09 -</string>
     <string name="developer" translatable="false">tanish2k09</string>
@@ -61,16 +55,16 @@
     <string name="ConfigPath1" translatable="false">/init.smurf.sh</string>
     <string name="ConfigPath2" translatable="false">/data/adb/modules/smurf/service.sh</string>
 
-    <string name="directImport" translatable="false">Direct</string>
-    <string name="folderImport" translatable="false">Folder</string>
-    <string name="zipImport" translatable="false">Zip</string>
-    <string name="device_name" translatable="false">OnePlus 6</string>
+    <string name="directImport">Direct</string>
+    <string name="folderImport">Folder</string>
+    <string name="zipImport">Zip</string>
+    <string name="presets_literal">Presets</string>
 
     <string name="colorPickerLiteral">Color Picker Source Code</string>
     <string name="colorPickerLink" translatable="false">https://github.com/tanish2k09/android-material-colour-picker-dialog-dark</string>
-    <string name="SourceCodeLiteral">SCE Source Code</string>
+    <string name="SourceCodeLiteral" translatable="false">SCE Source Code</string>
     <string name="SourceCodeLink" translatable="false">https://github.com/tanish2k09/SmurfConfigEditor</string>
-    <string name="stickyScrollLiteral" translatable="false">Sticky Scrollview</string>
+    <string name="stickyScrollLiteral" translatable="false">Sticky ScrollView</string>
     <string name="stickyScrollLink" translatable="false">https://github.com/emilsjolander/StickyScrollViewItems</string>
 
     <string name="displayVersion" translatable="false">- Version 2.0 alpha 6 -</string>
