@@ -189,13 +189,13 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/device_text"
+                android:id="@+id/presets_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_device"
+                android:drawableTop="@drawable/ic_presets_doc"
                 android:drawablePadding="@dimen/greet_text_padding"
                 android:drawableTint="@color/colorPrimaryDark"
                 android:fontFamily="monospace"
@@ -203,7 +203,7 @@
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
                 android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/device_name"
+                android:text="@string/presets_literal"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
                 android:textStyle="bold" />
