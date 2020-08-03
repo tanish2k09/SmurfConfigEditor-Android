@@ -21,7 +21,5 @@
 
     <style name="ConfigActivityTheme" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>

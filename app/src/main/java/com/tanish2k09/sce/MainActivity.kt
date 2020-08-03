@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.updatePadding
-import com.airbnb.lottie.LottieAnimationView
+import com.tanish2k09.sce.databinding.ActivityMainBinding
+import com.tanish2k09.sce.databinding.EntryGreetgateBinding
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
 
 import com.topjohnwu.superuser.Shell
@@ -26,61 +24,50 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
-    private var mainContentLayout: ConstraintLayout? = null
-    private var winkAnim: LottieAnimationView? = null
-
-    /* Greet screen controls */
-    private var winkContainer: ConstraintLayout? = null
-
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var greetBinding: EntryGreetgateBinding
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        mainContentLayout = findViewById(R.id.main_content_layout)
+        greetBinding = binding.mainContentLayout.greetLayout
 
-        mainContentLayout!!.setOnApplyWindowInsetsListener {view, insets ->
+        binding.mainContentLayout.root.setOnApplyWindowInsetsListener {view, insets ->
             view.updatePadding(bottom = insets.systemWindowInsetBottom)
             Log.d("SCE-INSET", insets.systemWindowInsetBottom.toString())
             insets
         }
 
-        winkAnim = findViewById(R.id.wink_anim)
-
-        val settingsGreetButton = findViewById<TextView>(R.id.settings_button)
-        settingsGreetButton.setOnTouchListener(object: View.OnTouchListener {
+        greetBinding.settingsButton.setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 if (m.action == MotionEvent.ACTION_UP) {
-                    winkAnim?.pauseAnimation()
                     val intent = Intent(v.context, SettingsActivity::class.java)
-                    rippleAnimationActivityOpener(m, settingsGreetButton, intent)
+                    rippleAnimationActivityOpener(m, v, intent)
                     return true
                 }
                 return false
             }
         })
 
-        val infoButton = findViewById<TextView>(R.id.info_button)
-        infoButton.setOnTouchListener(object: View.OnTouchListener {
+        greetBinding.infoButton.setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 if (m.action == MotionEvent.ACTION_UP) {
-                    winkAnim?.pauseAnimation()
                     val intent = Intent(v.context, InfoActivity::class.java)
-                    rippleAnimationActivityOpener(m, infoButton, intent)
+                    rippleAnimationActivityOpener(m, v, intent)
                     return true
                 }
                 return false
             }
         })
 
-        val importDirectButton = findViewById<LinearLayout>(R.id.import_direct_button)
-        importDirectButton.setOnTouchListener(object: View.OnTouchListener {
+        greetBinding.importDirectButton.setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 if (m.action == MotionEvent.ACTION_UP) {
-                    winkAnim?.pauseAnimation()
                     val intent = Intent(v.context, ConfigActivity::class.java)
-                    rippleAnimationActivityOpener(m, importDirectButton, intent)
+                    rippleAnimationActivityOpener(m, v, intent)
                     return true
                 }
                 return false
@@ -92,11 +79,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             Log.d("SCE-MAIN", "Caught exception executing shell, probably not rooted")
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        winkContainer = findViewById(R.id.greet_layout)
     }
 
     override fun onResume() {
@@ -113,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     1)
         }
 
-        winkAnim?.resumeAnimation()
+        greetBinding.winkAnim.resumeAnimation()
 
         updateTheme()
     }
@@ -140,7 +122,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onDestroy() {
+    override fun onPause() {
+        super.onPause()
+        greetBinding.winkAnim.pauseAnimation()
+    }
+
+    override fun onDestroy() {
         try {
             val shell = Shell.getCachedShell()
             shell?.close()

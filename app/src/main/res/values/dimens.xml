@@ -8,11 +8,11 @@
     <dimen name="infoBoxSideMargins">32dp</dimen>
     <dimen name="infoDivSideMargins">128dp</dimen>
 
-    <dimen name="greet_text_size">12sp</dimen>
+    <dimen name="greet_text_size">14sp</dimen>
     <dimen name="greet_text_padding">12dp</dimen>
     <dimen name="greet_bg_radius">8dp</dimen>
     <dimen name="greet_padding_inner">16dp</dimen>
-    
+
     <dimen name="heading_underline">3dp</dimen>
 
     <dimen name="config_actions_corners">16dp</dimen>

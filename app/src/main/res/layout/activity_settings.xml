@@ -31,7 +31,6 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:checked="false"
-        android:enabled="false"
         android:text="@string/autoImportConfigSetting"
         android:textColor="@color/textDefault"
         android:textSize="14sp"
@@ -41,14 +40,13 @@
         app:layout_constraintTop_toBottomOf="@id/appTitle" />
 
     <Switch
-        android:id="@+id/autoUpdateConfigSwitch"
+        android:id="@+id/autoScriptSwitch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:checked="false"
-        android:enabled="false"
+        android:checked="true"
         android:text="@string/autoUpdateConfigSetting"
         android:textColor="@color/textDefault"
         android:textSize="14sp"
@@ -70,7 +68,7 @@
         android:theme="@style/SwitchStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoUpdateConfigSwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/autoScriptSwitch" />
 
     <Switch
         android:id="@+id/useBlackNotDark"

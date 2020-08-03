@@ -42,101 +42,62 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
                 android:id="@+id/import_direct_button"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:drawableTop="@drawable/ic_import"
+                android:drawablePadding="@dimen/greet_text_padding"
+                android:drawableTint="@color/colorPrimaryDark"
                 android:foreground="@drawable/ripple_greet_option"
-                android:orientation="vertical"
+                android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner">
+                android:paddingBottom="@dimen/greet_padding_inner"
+                android:text="@string/directImport"
+                android:textColor="@color/textDark"
+                android:textSize="@dimen/greet_text_size"
+                android:fontFamily="@font/app_mono_tf"/>
 
-                <ImageView
-                    android:id="@+id/direct_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/directImport"
-                    app:srcCompat="@drawable/ic_import" />
-
-                <com.hanks.htextview.scale.ScaleTextView
-                    android:id="@+id/import_direct_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="monospace"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/greet_text_padding"
-                    android:text="@string/directImport"
-                    android:textColor="@color/textDark"
-                    android:textSize="@dimen/greet_text_size"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
                 android:id="@+id/import_folder_button"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:drawableTop="@drawable/ic_folder_import"
+                android:drawablePadding="@dimen/greet_text_padding"
+                android:drawableTint="@color/colorPrimaryDark"
                 android:foreground="@drawable/ripple_greet_option"
-                android:orientation="vertical"
+                android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner">
+                android:paddingBottom="@dimen/greet_padding_inner"
+                android:text="@string/folderImport"
+                android:textColor="@color/textDark"
+                android:textSize="@dimen/greet_text_size"
+                android:fontFamily="@font/app_mono_tf"/>
 
-                <ImageView
-                    android:id="@+id/folder_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/folderImport"
-                    app:srcCompat="@drawable/ic_folder_import" />
-
-                <com.hanks.htextview.scale.ScaleTextView
-                    android:id="@+id/import_folder_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="monospace"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/greet_text_padding"
-                    android:text="@string/folderImport"
-                    android:textColor="@color/textDark"
-                    android:textSize="@dimen/greet_text_size"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
                 android:id="@+id/import_zip_button"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
+                android:drawableTop="@drawable/ic_folder_zip"
+                android:drawablePadding="@dimen/greet_text_padding"
+                android:drawableTint="@color/colorPrimaryDark"
                 android:foreground="@drawable/ripple_greet_option"
-                android:orientation="vertical"
+                android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner">
-
-                <ImageView
-                    android:id="@+id/zip_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/folderImport"
-                    app:srcCompat="@drawable/ic_folder_zip" />
-
-                <com.hanks.htextview.scale.ScaleTextView
-                    android:id="@+id/import_zip_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="monospace"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/greet_text_padding"
-                    android:text="@string/zipImport"
-                    android:textColor="@color/textDark"
-                    android:textSize="@dimen/greet_text_size"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:paddingBottom="@dimen/greet_padding_inner"
+                android:text="@string/zipImport"
+                android:textColor="@color/textDark"
+                android:textSize="@dimen/greet_text_size"
+                android:fontFamily="@font/app_mono_tf"/>
 
         </LinearLayout>
 
@@ -158,15 +119,16 @@
                 android:drawableTop="@drawable/ic_settings"
                 android:drawablePadding="@dimen/greet_text_padding"
                 android:drawableTint="@color/colorPrimaryDark"
-                android:fontFamily="monospace"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/app_mono_tf"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
                 android:paddingBottom="@dimen/greet_padding_inner"
                 android:text="@string/action_settings"
                 android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                android:textStyle="bold" />
+                android:textSize="@dimen/greet_text_size" />
 
             <TextView
                 android:id="@+id/info_button"
@@ -178,7 +140,6 @@
                 android:drawableTop="@drawable/ic_info_outline"
                 android:drawablePadding="@dimen/greet_text_padding"
                 android:drawableTint="@color/colorPrimaryDark"
-                android:fontFamily="monospace"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -186,7 +147,7 @@
                 android:text="@string/action_info"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:textStyle="bold" />
+                android:fontFamily="@font/app_mono_tf" />
 
             <TextView
                 android:id="@+id/presets_button"
@@ -198,7 +159,6 @@
                 android:drawableTop="@drawable/ic_presets_doc"
                 android:drawablePadding="@dimen/greet_text_padding"
                 android:drawableTint="@color/colorPrimaryDark"
-                android:fontFamily="monospace"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -206,7 +166,7 @@
                 android:text="@string/presets_literal"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:textStyle="bold" />
+                android:fontFamily="@font/app_mono_tf" />
 
         </LinearLayout>
     </LinearLayout>

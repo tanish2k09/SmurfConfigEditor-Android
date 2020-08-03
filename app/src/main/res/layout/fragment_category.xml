@@ -7,7 +7,7 @@
     android:layout_marginTop="16dp"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="16dp"
-    android:background="@color/colorPrimaryDark"
+    android:background="@android:color/transparent"
     app:cardBackgroundColor="@color/colorPrimaryDark"
     app:cardCornerRadius="@dimen/cardRadius"
     tools:background="@color/colorPrimaryDark"
@@ -50,7 +50,7 @@
                 android:id="@+id/headingUnderline"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/heading_underline"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:background="@color/colorAccent" />
 
         </LinearLayout>
@@ -62,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:baselineAligned="false"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,9 +7,11 @@
     <color name="textDefault">#e0e0e0</color>
     <color name="textSec">#898989</color>
     <color name="textDark">#121212</color>
-    <color name="black">@android:color/black</color>
 
     <color name="menuBG">#1b1b1b</color>
+
+    <color name="optionActive">#69f0ae</color>
+    <color name="optionOriginal">#f06292</color>
 
     <color name="switchDisabled">#FFF</color>
     <color name="textColorPrimary">#bb111111</color>
@@ -25,4 +27,6 @@
     <color name="colorBorderConfigCard">#616161</color>
 
     <color name="config_actions_icons">#282828</color>
+
+    <color name="ic_launcher_background">#1B1B1B</color>
 </resources>

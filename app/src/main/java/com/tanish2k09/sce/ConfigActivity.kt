@@ -1,88 +1,70 @@
 package com.tanish2k09.sce
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginBottom
-import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentTransaction
-import com.tanish2k09.sce.data.ConfigCache
-import com.tanish2k09.sce.data.TopCommentStore
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.data.enums.ConfigResponse
+import com.tanish2k09.sce.data.enums.ETheme
+import com.tanish2k09.sce.databinding.ActivityConfigBinding
 import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment
-import com.tanish2k09.sce.fragments.containerFragments.ConfigVar
-import com.tanish2k09.sce.helpers.ConfigImportExport
-import com.tanish2k09.sce.interfaces.ScriptCallback
-import com.tanish2k09.sce.utils.extensions.changeBottomMargin
+import com.tanish2k09.sce.fragments.containerFragments.ConfigVarFragment
+import com.tanish2k09.sce.interfaces.IScriptCallback
+import com.tanish2k09.sce.utils.exceptions.ConfigFormatException
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
+import com.tanish2k09.sce.viewmodels.ConfigActivityVM
+import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 
+class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
-class ConfigActivity : AppCompatActivity(), ScriptCallback {
+    private lateinit var binding: ActivityConfigBinding
+    private lateinit var configVM: ConfigActivityVM
+    private lateinit var sharedVM: SharedPrefsVM
 
-    private var cig: ConfigImportExport? = null
-    private var runScript = true
-    private var actionsBottomMarginDefault: Int? = 24
-    private var actionsBar: LinearLayout? = null
-    private lateinit var scriptButton: ImageButton
-
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_config)
+        binding = ActivityConfigBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        cig = ConfigImportExport(this)
+        configVM = ViewModelProvider(this).get(ConfigActivityVM::class.java)
+        sharedVM = ViewModelProvider(this).get(SharedPrefsVM::class.java)
 
-        actionsBar = findViewById(R.id.configActionsBar)
-        val topLayout = findViewById<ConstraintLayout>(R.id.topConfigLayout)
+        initClickListeners()
+        attachViewModelObservers()
+    }
 
-        actionsBottomMarginDefault =
-                savedInstanceState?.getInt("ABMD", 24) ?: actionsBar!!.marginBottom
-
-        topLayout!!.setOnApplyWindowInsetsListener {view, insets ->
-            Log.d("SCE-INSETS", "Top: " + insets.systemWindowInsetTop)
-            view.updatePadding(top = insets.systemWindowInsetTop)
-            insets
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initClickListeners() {
+        binding.saveButton.setOnClickListener {
+            it.isEnabled = false
+            configVM.exportConfigFile("/SmurfKernel", getString(R.string.configFile))
+            configVM.configStore.commitActiveValues()
+            updateConfigFragments()
+            it.isEnabled = true
         }
 
-        actionsBar!!.setOnApplyWindowInsetsListener {view, insets ->
-            Log.d("SCE-INSETS", "Bottom: " + insets.systemWindowInsetBottom)
-            Log.d("SCE-INSETS", "Default: $actionsBottomMarginDefault")
-            Log.d("SCE-INSETS", "Current: " + actionsBar!!.marginBottom)
-            changeBottomMargin(
-                    view,
-                    insets.systemWindowInsetBottom + actionsBottomMarginDefault!!
-            )
-            insets
-        }
-
-        val saveButton = findViewById<ImageButton>(R.id.saveButton)
-        saveButton.setOnClickListener {
-            saveButton.isEnabled = false
-            cig!!.saveConfig(false)
-            saveButton.isEnabled = true
-        }
-
-        saveButton.setOnLongClickListener {
+        binding.saveButton.setOnLongClickListener {
             Toast.makeText(this, "Save config", Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
-        scriptButton = findViewById(R.id.applyConfigButton)
-        scriptButton.setOnClickListener {
-            scriptButton.isEnabled = false
+        binding.applyConfigButton.setOnClickListener {
+            it.isEnabled = false
             Toast.makeText(this, "Executing script...", Toast.LENGTH_SHORT).show()
-            cig!!.runScript(this)
+            // TODO: Check for runScript and run the script
+            //cig!!.runScript(this)
         }
 
-        scriptButton.setOnLongClickListener {
+        binding.applyConfigButton.setOnLongClickListener {
             Toast.makeText(
                     this,
                     "Execute script to apply config",
@@ -90,81 +72,85 @@ class ConfigActivity : AppCompatActivity(), ScriptCallback {
             return@setOnLongClickListener true
         }
 
-        val searchButton = findViewById<ImageButton>(R.id.searchConfigButton)
-        searchButton.setOnClickListener {
+        binding.searchConfigButton.setOnClickListener {
             Toast.makeText(
                     this,
                     "Unavailable, search coming soon",
                     Toast.LENGTH_SHORT)
-                .show()
+                    .show()
         }
 
-        searchButton.setOnLongClickListener {
+        binding.searchConfigButton.setOnLongClickListener {
             Toast.makeText(this, "Search within variables", Toast.LENGTH_SHORT).show()
             return@setOnLongClickListener true
         }
 
-        val settingsButton = findViewById<ImageButton>(R.id.settingsConfigButton)
-        settingsButton.setOnTouchListener(object: View.OnTouchListener {
+        binding.settingsConfigButton.setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 if (m.action == MotionEvent.ACTION_UP) {
                     val intent = Intent(v.context, SettingsActivity::class.java)
-                    rippleAnimationActivityOpener(m, settingsButton, intent)
+                    rippleAnimationActivityOpener(m, binding.settingsConfigButton, intent)
                     return true
                 }
                 return false
             }
         })
-
-        if (runScript && savedInstanceState == null) {
-            commenceConfigImport()
-        }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("ABMD", actionsBottomMarginDefault!!)
-        super.onSaveInstanceState(outState)
+    private fun attachViewModelObservers() {
+        sharedVM.theme.observe(this, Observer {
+            handleTheme(it)
+        })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        commenceConfigImport()
     }
 
     override fun onResume() {
-        // TODO: Respect the theme settings
-        actionsBar?.requestApplyInsets()
         super.onResume()
+        sharedVM.readSettingsToFields()
     }
 
-    private fun commenceConfigImport(): Boolean {
-        removeConfigFragments()
-        TopCommentStore.clear()
+    private fun handleTheme(newTheme: ETheme) {
+        val mainColor = Color.parseColor(newTheme.hex)
+        binding.topConfigLayout.setBackgroundColor(mainColor)
+        window.statusBarColor = mainColor
+        window.navigationBarColor = mainColor
+    }
 
-        if (!cig!!.configImport()) {
-            Toast.makeText(
-                    this,
-                    resources.getString(R.string.swwImport),
-                    Toast.LENGTH_SHORT
-            )
-                    .show()
-            return false
+    private fun commenceConfigImport() {
+        removeConfigFragments()
+
+        try {
+            configVM.importConfigFile("/SmurfKernel", resources.getString(R.string.configFile))
+        } catch (e: ConfigFormatException) {
+            showErrorDialog(e.response)
+            return
         }
 
-        val size = ConfigCache.configListSize
+        val size = configVM.configStore.linearCachedCodes.size
         Log.d("SCE-CIE", "Found $size values")
 
         if (size > 0) {
             fillConfigFragments()
         } else {
             Toast.makeText(this, "No values could be extracted", Toast.LENGTH_SHORT).show()
+            finish()
         }
-
-        return true
     }
 
     private fun removeConfigFragments() {
         val fm = supportFragmentManager
 
-        for (idx in 1 until ConfigCache.configListSize) {
+        for (idx in configVM.configStore.linearCachedCodes.indices) {
             val cf = fm.findFragmentByTag(
                     "catFrag" +
-                        (ConfigCache.getStringVal(idx)?.category ?: "")
+                        (
+                                configVM.configStore.getVar(
+                                        configVM.configStore.linearCachedCodes[idx]
+                                )?.category)
             ) as CategoryFragment?
 
             // Remove all variable fragments, and then the category
@@ -177,35 +163,55 @@ class ConfigActivity : AppCompatActivity(), ScriptCallback {
     private fun fillConfigFragments() {
         val fm = supportFragmentManager
         var ft: FragmentTransaction
+        val configStore = configVM.configStore
 
-        /* Assumes the first config is PROFILE.VERSION, so we skip that for fragment inflation*/
-        val pv = "Profile version: " + (ConfigCache.getStringVal(0)?.activeVal ?: "Null?")
-        Toast.makeText(this, pv, Toast.LENGTH_SHORT).show()
-        Log.d("SCE-CIE", pv)
-
-        for (idx in 1 until ConfigCache.configListSize) {
-            val configVarFragment = ConfigVar()
-            val category = ConfigCache.getStringVal(idx)?.category
+        for (idx in configStore.linearCachedCodes.indices) {
+            val category = configStore.getVar(configStore.linearCachedCodes[idx])?.category
             var cf = fm.findFragmentByTag("catFrag$category") as CategoryFragment?
 
             // Create a new category fragment if it's null
             if (cf == null) {
                 ft = fm.beginTransaction()
-                cf = CategoryFragment()
-                cf.setInstanceCategory(category!!)
-                ft.add(R.id.configContents, cf, "catFrag$category").commitNow()
+                cf = CategoryFragment(category?:getString(R.string.noCategoryLiteral))
+                ft.add(binding.configContents.id, cf, "catFrag$category").commitNow()
             }
 
-            if (!configVarFragment.setupCardInfo(idx)) {
-                Log.d("SCE-CIE", "CONTINUING without DRAWING")
-                continue
-            }
-
+            val configVarFragment = ConfigVarFragment(configStore.getVar(configStore.linearCachedCodes[idx])!!)
             cf.pushConfigVarFragment(configVarFragment, idx)
         }
     }
 
+    private fun updateConfigFragments() {
+        val fm = supportFragmentManager
+        val configStore = configVM.configStore
+
+        for (idx in configStore.linearCachedCodes.indices) {
+            val configVar = configStore.getVar(configStore.linearCachedCodes[idx])!!
+            val cf = fm.findFragmentByTag("catFrag${configVar.category}") as CategoryFragment
+
+            cf.updateConfigVarFragment(configVar, idx)
+        }
+    }
+
+    private fun showErrorDialog(response: ConfigResponse) {
+        val builder = AlertDialog.Builder(this, R.style.dialogCustomStyle)
+
+        builder.setPositiveButton("Aw snap") {
+            dialog, _ ->
+            run {
+                dialog.dismiss()
+                finish()
+            }
+        }
+
+        builder.setTitle(resources.getString(R.string.importError))
+                .setMessage(response.description)
+                .setCancelable(false)
+                .create()
+                .show()
+    }
+
     override fun callback() {
-        scriptButton.isEnabled = true
+        binding.applyConfigButton.isEnabled = true
     }
 }

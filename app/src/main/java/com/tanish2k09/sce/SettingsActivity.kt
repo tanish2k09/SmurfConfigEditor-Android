@@ -2,25 +2,21 @@ package com.tanish2k09.sce
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.Switch
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.marginTop
-import com.tanish2k09.sce.utils.extensions.changeBottomMargin
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.data.enums.ETheme
+import com.tanish2k09.sce.databinding.ActivitySettingsBinding
 import com.tanish2k09.sce.utils.extensions.changeTopMargin
+import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 import kotlin.math.hypot
 
 
@@ -28,8 +24,8 @@ class SettingsActivity : AppCompatActivity(){
 
     private var revealX = 0
     private var revealY = 0
-    private lateinit var rootLayout: ConstraintLayout
-    private var topMarginDefault: Int? = 32
+    private lateinit var binding: ActivitySettingsBinding
+    private lateinit var settingsVM: SharedPrefsVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,132 +33,131 @@ class SettingsActivity : AppCompatActivity(){
         if (savedInstanceState == null)
             overridePendingTransition(R.anim.no_op, R.anim.no_op)
 
-        setContentView(R.layout.activity_settings)
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
-        rootLayout = findViewById(R.id.settingsLayout)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val appTitle = findViewById<TextView>(R.id.appTitle)
-        topMarginDefault = appTitle.marginTop
-        appTitle.setOnApplyWindowInsetsListener {view, insets ->
-            changeTopMargin(view, topMarginDefault!! + insets.systemWindowInsetTop)
+        settingsVM = ViewModelProvider(this).get(SharedPrefsVM::class.java)
+        attachViewModelObservers()
+
+        initUIListeners()
+
+        if (intent.hasExtra("x")) {
+            revealX = intent.getIntExtra("x", 0)
+        }
+
+        if (intent.hasExtra("y")) {
+            revealY = intent.getIntExtra("y", 0)
+        }
+
+        if (savedInstanceState != null) {
+            return
+        }
+
+        binding.settingsLayout.visibility = View.INVISIBLE
+        val vto: ViewTreeObserver = binding.settingsLayout.viewTreeObserver
+
+        if (vto.isAlive.not()) {
+            return
+        }
+
+        vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                revealActivity(revealX, revealY)
+                binding.settingsLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        settingsVM.readSettingsToFields()
+    }
+
+    private fun initUIListeners() {
+        binding.appTitle.setOnApplyWindowInsetsListener {view, insets ->
+            changeTopMargin(view, binding.appTitle.marginTop + insets.systemWindowInsetTop)
             insets
         }
 
-        if (intent.hasExtra("x"))
-            revealX = intent.getIntExtra("x", 0)
-
-        if (intent.hasExtra("y"))
-            revealY = intent.getIntExtra("y", 0)
-
-        val sp = getSharedPreferences("settings", Context.MODE_PRIVATE)
-
-        val autoImportConfig = findViewById<Switch>(R.id.autoImportConfigSwitch)
-        val autoUpdateConfig = findViewById<Switch>(R.id.autoUpdateConfigSwitch)
-        val useTitles = findViewById<Switch>(R.id.useTitlesOnCards)
-        val useBlackBG = findViewById<Switch>(R.id.useBlackNotDark)
-        val colorCard = findViewById<CardView>(R.id.colorCard)
-
-        autoImportConfig.isChecked = sp.getBoolean("autoImportConfig", true)
-        autoImportConfig.setOnCheckedChangeListener { _, _ ->
-            sp.edit().putBoolean("autoImportConfig", autoImportConfig.isChecked).apply()
-            Toast.makeText(this, "autoImportConfig: Restart app to apply", Toast.LENGTH_SHORT).show()
+        binding.autoImportConfigSwitch.setOnCheckedChangeListener { _, b ->
+            settingsVM.setAutoImport(b)
         }
 
-        autoUpdateConfig.isChecked = sp.getBoolean("autoUpdateConfig", true)
-        autoUpdateConfig.setOnCheckedChangeListener { _, _ -> sp.edit().putBoolean("autoUpdateConfig", autoUpdateConfig.isChecked).apply() }
-
-        useTitles.isChecked = sp.getBoolean("useTitlesOnCards", true)
-        useTitles.setOnCheckedChangeListener { _, isChecked -> sp.edit().putBoolean("useTitlesOnCards", isChecked).apply() }
-
-        useBlackBG.isChecked = sp.getBoolean("useBlackNotDark", false)
-        setThemeColor(useBlackBG.isChecked)
-        useBlackBG.setOnCheckedChangeListener { _, isChecked ->
-            sp.edit().putBoolean("useBlackNotDark", isChecked).apply()
-
-            var color = "#121212"
-
-            if (isChecked)
-                color = "#000000"
-
-            setThemeColor(color)
+        binding.autoScriptSwitch.setOnCheckedChangeListener { _, b ->
+            settingsVM.setRunScript(b)
         }
 
-        setColorCard(colorCard, Color.parseColor(sp.getString("accentCol", "#00bfa5")))
-        /* TODO: Fix crash on color picker dialog
-        colorCard.setOnClickListener {
-            val preColor = Color.parseColor(sp.getString("accentCol", "#00bfa5"))
-            val cp = ColorPicker(this, Color.red(preColor), Color.green(preColor), Color.blue(preColor))
-            cp.enableAutoClose()
-            cp.setCallback(object : ColorPickerCallback {
-                override fun onColorChosen(color: Int) {
-                    sp.edit().putString("accentCol", String.format("#%06X", 0xFFFFFF and color)).apply()
-                    setColorCard(colorCard, color)
-                }})
-            cp.show()
+        binding.useTitlesOnCards.setOnCheckedChangeListener { _, b ->
+            settingsVM.setUseTitles(b)
         }
-         */
 
-        if (savedInstanceState == null) {
-            rootLayout.visibility = View.INVISIBLE
-
-            val vto: ViewTreeObserver = rootLayout.viewTreeObserver
-            if (vto.isAlive) {
-                vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        revealActivity(revealX, revealY)
-                        rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    }
-                })
+        binding.useBlackNotDark.setOnCheckedChangeListener { _, b ->
+            if (b) {
+                settingsVM.setTheme(ETheme.BLACK)
+            } else {
+                settingsVM.setTheme(ETheme.DARK)
             }
         }
     }
 
+    private fun attachViewModelObservers() {
+        settingsVM.autoImport.observe(this, Observer {
+            binding.autoImportConfigSwitch.isChecked = it
+        })
+
+        settingsVM.runScript.observe(this, Observer {
+            binding.autoScriptSwitch.isChecked = it
+        })
+
+        settingsVM.useTitles.observe(this, Observer {
+            binding.useTitlesOnCards.isChecked = it
+        })
+
+        settingsVM.theme.observe(this, Observer {
+            binding.useBlackNotDark.isChecked = (it == ETheme.BLACK)
+            handleTheme(it)
+        })
+    }
+
+    private fun handleTheme(newTheme: ETheme) {
+        val mainColor = Color.parseColor(newTheme.hex)
+        binding.settingsLayout.setBackgroundColor(mainColor)
+    }
+
     private fun revealActivity(x: Int, y: Int) {
-        val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
+        val finalRadius = hypot(
+                binding.settingsLayout.width.toDouble(),
+                binding.settingsLayout.height.toDouble()).toFloat()
+
         // create the animator for this view (the start radius is zero)
         val circularReveal = ViewAnimationUtils.createCircularReveal(
-                rootLayout,
+                binding.settingsLayout,
                 x, y,
                 0f, finalRadius
         )
+
         circularReveal.duration = 500
         circularReveal.interpolator = AccelerateInterpolator()
         // make the view visible and start the animation
-        rootLayout.visibility = View.VISIBLE
+        binding.settingsLayout.visibility = View.VISIBLE
         circularReveal.start()
     }
 
     private fun unRevealActivity() {
-        val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
+        val finalRadius = hypot(
+                binding.settingsLayout.width.toDouble(),
+                binding.settingsLayout.height.toDouble()).toFloat()
         val circularReveal = ViewAnimationUtils.createCircularReveal(
-                rootLayout, revealX, revealY, finalRadius, 0f)
+                binding.settingsLayout, revealX, revealY, finalRadius, 0f)
         circularReveal.duration = 500
         circularReveal.interpolator = DecelerateInterpolator()
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                rootLayout.visibility = View.INVISIBLE
+                binding.settingsLayout.visibility = View.INVISIBLE
                 finish()
             }
         })
         circularReveal.start()
-    }
-
-    private fun setColorCard(card: CardView, color: Int) {
-        card.setCardBackgroundColor(color)
-    }
-
-    private fun setThemeColor(colorHex: String) {
-        val settingsLayout = findViewById<ConstraintLayout>(R.id.settingsLayout)
-
-        val themeColor = ColorDrawable(Color.parseColor(colorHex))
-        settingsLayout.background = themeColor
-    }
-
-    private fun setThemeColor(isBlackChecked: Boolean) {
-        if (isBlackChecked)
-            setThemeColor("#000000")
-        else
-            setThemeColor("#121212")
     }
 
     override fun onBackPressed() {

@@ -39,7 +39,7 @@ android {
         alpha {
             dimension "version"
             applicationIdSuffix ".alpha"
-            versionNameSuffix "-a6"
+            versionNameSuffix "-a10"
         }
         full {
             dimension "version"
@@ -49,6 +49,10 @@ android {
     }
 
     buildToolsVersion = '29.0.3'
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 repositories {
@@ -57,17 +61,17 @@ repositories {
 }
 
 dependencies {
+    def libSuVersion = '2.5.1'
+    def lifecycle_version = "2.2.0"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    def libSuVersion = '2.5.1'
-    def htextview_version = "0.1.6"
-
-
-    implementation 'androidx.navigation:navigation-fragment:2.2.2'
-    implementation 'androidx.navigation:navigation-ui:2.2.2'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -78,15 +82,13 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.3.0-alpha01'
+    implementation 'com.google.android.material:material:1.3.0-alpha02'
 
     implementation "com.github.topjohnwu.libsu:core:${libSuVersion}"
     implementation "com.github.topjohnwu.libsu:io:${libSuVersion}"
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.airbnb.android:lottie:3.4.0'
-    implementation "com.hanks:htextview-base:$htextview_version"
-    implementation "com.hanks:htextview-scale:$htextview_version"
     implementation 'se.emilsjolander:StickyScrollViewItems:1.1.0'
     implementation 'com.github.forkachild:reel-search-android:0.1.1-alpha-2'
     implementation 'com.github.codekidX:storage-chooser:2.0.4.4'
