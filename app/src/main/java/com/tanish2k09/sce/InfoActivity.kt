@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginBottom
 import androidx.core.view.marginTop
+import com.tanish2k09.sce.databinding.ActivityInfoBinding
 import com.tanish2k09.sce.utils.extensions.changeBottomMargin
 import com.tanish2k09.sce.utils.extensions.changeTopMargin
 import kotlin.math.hypot
@@ -28,7 +29,7 @@ class InfoActivity : AppCompatActivity() {
 
     private var revealX = 0
     private var revealY = 0
-    private lateinit var rootLayout: ConstraintLayout
+    private lateinit var binding: ActivityInfoBinding
     private var topMarginDefault: Int? = 32
     private var bottomMarginDefault: Int? = 24
 
@@ -38,15 +39,8 @@ class InfoActivity : AppCompatActivity() {
         if (savedInstanceState == null)
             overridePendingTransition(R.anim.no_op, R.anim.no_op)
 
-        setContentView(R.layout.activity_info)
-        val colorPicker = findViewById<LinearLayout>(R.id.colorPickerLayout)
-        val source = findViewById<LinearLayout>(R.id.sourceCodeLayout)
-        val stickyScroll = findViewById<LinearLayout>(R.id.stickyScrollViewLayout)
-        val xda = findViewById<Button>(R.id.xdaButton)
-        val telegram = findViewById<Button>(R.id.tgButton)
-        val email = findViewById<Button>(R.id.emailButton)
-        val discord = findViewById<Button>(R.id.discordButton)
-        rootLayout = findViewById(R.id.infoTopLayout)
+        binding = ActivityInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val infoAppTitle = findViewById<TextView>(R.id.InfoAppTitle)
         topMarginDefault = infoAppTitle.marginTop

@@ -13,3 +13,6 @@
 .externalNativeBuild
 playstore.png
 /app/release
+/app/alpha
+/app/beta
+/app/full

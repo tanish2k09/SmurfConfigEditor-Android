@@ -5,8 +5,8 @@
     android:id="@+id/topConfigLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    tools:background="@color/colorPrimaryDark"
+    android:background="@color/dark"
+    tools:background="@color/dark"
     tools:context="com.tanish2k09.sce.ConfigActivity">
 
     <com.emilsjolander.components.StickyScrollViewItems.StickyScrollView

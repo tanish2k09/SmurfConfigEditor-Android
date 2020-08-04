@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@color/colorPrimaryDark">
+    tools:background="@color/dark">
 
     <View
         android:id="@+id/tapView"
@@ -30,10 +30,10 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/app_mono_tf"
         android:maxLength="4"
+        android:paddingVertical="@dimen/list_item_spacing_half"
         android:textColor="@color/textDefault"
         android:textSize="16sp"
         android:typeface="monospace"
-        android:paddingVertical="@dimen/list_item_spacing_half"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -13,6 +13,7 @@
     <string name="saveAndApply">Save + Apply</string>
 
     <string name="importError">Import error</string>
+    <string name="importErrorLine">Import error at line %s</string>
     <string name="swwRC">Something went wrong while reading config</string>
     <string name="swwImport">Something went wrong while importing config</string>
     <string name="noRoot">No root access: Can\'t apply settings</string>
@@ -67,5 +68,5 @@
     <string name="stickyScrollLiteral" translatable="false">Sticky ScrollView</string>
     <string name="stickyScrollLink" translatable="false">https://github.com/emilsjolander/StickyScrollViewItems</string>
 
-    <string name="displayVersion" translatable="false">- Version 2.0 alpha 10 -</string>
+    <string name="displayVersion" translatable="false">- Version 2.0 beta 1 -</string>
 </resources>

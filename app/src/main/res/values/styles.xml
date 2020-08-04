@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -17,7 +17,7 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -31,7 +31,7 @@
 
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/dark</item>
     </style>
 
     <style name="SwitchStyle" parent="Theme.AppCompat.Light">
@@ -45,6 +45,6 @@
     <style name="ConfigItemDivider">
         <item name="android:layout_height">@dimen/config_actions_icon_divider</item>
         <item name="android:layout_width">1dp</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/dark</item>
     </style>
 </resources>

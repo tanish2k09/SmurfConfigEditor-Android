@@ -8,9 +8,7 @@
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="16dp"
     android:background="@android:color/transparent"
-    app:cardBackgroundColor="@color/colorPrimaryDark"
-    app:cardCornerRadius="@dimen/cardRadius"
-    tools:background="@color/colorPrimaryDark"
+    tools:background="@color/dark"
     tools:context=".fragments.containerFragments.CategoryFragment">
 
 
@@ -18,13 +16,12 @@
         android:id="@+id/titleGroupBg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/dark"
         android:paddingBottom="16dp"
         android:tag="sticky-hastransparency"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/colorPrimary">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/titleGroup"
@@ -51,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/heading_underline"
                 android:layout_marginTop="4dp"
-                android:background="@color/colorAccent" />
+                android:background="@color/colorTeal" />
 
         </LinearLayout>
     </FrameLayout>

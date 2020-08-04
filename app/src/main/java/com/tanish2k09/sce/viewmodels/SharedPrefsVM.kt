@@ -1,5 +1,6 @@
 package com.tanish2k09.sce.viewmodels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
@@ -81,25 +82,29 @@ class SharedPrefsVM(application: Application) : AndroidViewModel(application) {
         accentColor =
                 _settingsPrefs.getString(
                         StringConstants.SETTING_ACCENT_COLOR,
-                        getApplication<Application>().getString(0+R.color.colorAccent)
+                        getApplication<Application>().getString(0+R.color.colorTeal)
                 ).toString()
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setUseTitles(useTitles: Boolean) {
         _settingsPrefs.edit().putBoolean(StringConstants.SETTING_USE_TITLES, useTitles).commit()
         _useTitles.value = useTitles
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setTheme(theme: ETheme) {
         _settingsPrefs.edit().putInt(StringConstants.SETTING_THEME, theme.code).commit()
         _theme.value = theme
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setAutoImport(autoImport: Boolean) {
         _settingsPrefs.edit().putBoolean(StringConstants.SETTING_IMPORT_ON_START, autoImport).commit()
         _autoImport.value = autoImport
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setRunScript(runScript: Boolean) {
         _settingsPrefs.edit().putBoolean(StringConstants.SETTING_RUN_SCRIPT_ON_SAVE, runScript).commit()
         _runScript.value = runScript

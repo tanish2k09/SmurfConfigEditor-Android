@@ -5,12 +5,12 @@
     android:id="@+id/search_modal_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/dark"
     android:clipToPadding="false"
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
     tools:context="com.tanish2k09.sce.fragments.modals.ConfigSearchModal"
-    tools:listitem="@layout/fragment_config_search_modal_list_dialog_item" >
+    tools:listitem="@layout/fragment_list_item_text" >
 
     <com.suhel.library.ReelSearchView
         android:id="@+id/search_modal_reel"

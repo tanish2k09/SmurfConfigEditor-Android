@@ -1,11 +1,9 @@
 package com.tanish2k09.sce.fragments.containerFragments
 
 import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +19,7 @@ import com.tanish2k09.sce.fragments.modals.ConfigOptionsModal
 import com.tanish2k09.sce.interfaces.ISelectedItemCallback
 import com.tanish2k09.sce.viewmodels.ConfigVarVM
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
-import java.lang.IllegalArgumentException
 
-/**
- * A simple [Fragment] subclass.
- */
 class ConfigVarFragment(private val configVar: ConfigVar) : Fragment(), ISelectedItemCallback {
 
     private lateinit var binding: FragmentConfigVarBinding
@@ -52,9 +46,21 @@ class ConfigVarFragment(private val configVar: ConfigVar) : Fragment(), ISelecte
         updateConfigVar(configVar)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val handler = Handler()
+        handler.postDelayed({
+            binding.title.animateText(configVarVM.displayName.value)
+        }, 100)
+    }
+
     private fun attachViewModelObservers() {
         configVarVM.displayName.observe(viewLifecycleOwner, Observer {
-            binding.title.text = it
+            if (binding.title.text == it) {
+                return@Observer
+            }
+
+            binding.title.animateText(it.trim())
         })
 
         configVarVM.value.observe(viewLifecycleOwner, Observer {
@@ -70,7 +76,7 @@ class ConfigVarFragment(private val configVar: ConfigVar) : Fragment(), ISelecte
         })
 
         sharedVM.useTitles.observe(viewLifecycleOwner, Observer {
-            handleTitleChange(it)
+            configVarVM.handleUseTitles(it)
         })
     }
 
@@ -85,35 +91,10 @@ class ConfigVarFragment(private val configVar: ConfigVar) : Fragment(), ISelecte
         }
     }
 
-    private fun handleTitleChange(useTitles: Boolean) {
-        configVarVM.handleUseTitles(useTitles)
-
-        if (useTitles) {
-            binding.title.setTypeface(resources.getFont(R.font.app_tf), Typeface.BOLD)
-            binding.title.isAllCaps = false
-        } else {
-            binding.title.setTypeface(resources.getFont(R.font.app_tf), Typeface.BOLD)
-            binding.title.isAllCaps = true
-        }
-    }
-
     fun updateConfigVar(configVariable: ConfigVar) {
         configVarVM.setDataFromConfigVar(
                 configVariable,
                 sharedVM.useTitles.value?:DefaultSettings.USE_TITLES)
-    }
-
-    private fun handleThemeChange() {
-        try {
-            //binding.curVal.setTextColor(Color.parseColor(sharedVM.accentColor))
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        handleThemeChange()
     }
 
     override fun onItemClickedGov(position: Int) {

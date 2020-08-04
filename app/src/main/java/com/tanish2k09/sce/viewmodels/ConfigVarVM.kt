@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tanish2k09.sce.data.config.ConfigVar
+import java.util.*
 
 class ConfigVarVM : ViewModel() {
     private val _displayName = MutableLiveData<String>()
     private val _changed = MutableLiveData<Boolean>()
     private val _value = MutableLiveData<String>()
-
 
     val displayName: LiveData<String>
         get() = _displayName
@@ -26,9 +26,9 @@ class ConfigVarVM : ViewModel() {
     fun handleUseTitles(value: Boolean) {
         // Set display name based on title setting
         _displayName.value = if (value) {
-            configVar.title
+            configVar.title.trim()
         } else {
-            configVar.code
+            configVar.code.trim().toUpperCase(Locale.ROOT)
         }
     }
 

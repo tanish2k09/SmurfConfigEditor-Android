@@ -5,7 +5,7 @@
     android:id="@+id/master_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorTeal"
     tools:context=".MainActivity">
 
     <include

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,9 +15,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.tanish2k09.sce.databinding.ActivityMainBinding
 import com.tanish2k09.sce.databinding.EntryGreetgateBinding
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
+import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 
 import com.topjohnwu.superuser.Shell
 
@@ -26,15 +30,45 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var greetBinding: EntryGreetgateBinding
+    private lateinit var settingsVM: SharedPrefsVM
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        settingsVM = ViewModelProvider(this).get(SharedPrefsVM::class.java)
 
         greetBinding = binding.mainContentLayout.greetLayout
+        initUIListeners()
+        attachViewModelObservers()
+        tryRoot()
 
+        if (hasPermissions()) {
+            Log.d("MA", "Permission check successful")
+            settingsVM.readSettingsToFields()
+        }
+
+        setContentView(binding.root)
+    }
+
+    private fun tryRoot() {
+        try {
+            Shell.su("cd /").submit()
+        } catch (e: IOException) {
+            Log.d("SCE-MAIN", "Caught exception executing shell, probably not rooted")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        checkPermissions()
+        greetBinding.winkAnim.resumeAnimation()
+        updateTheme()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initUIListeners() {
         binding.mainContentLayout.root.setOnApplyWindowInsetsListener {view, insets ->
             view.updatePadding(bottom = insets.systemWindowInsetBottom)
             Log.d("SCE-INSET", insets.systemWindowInsetBottom.toString())
@@ -63,41 +97,47 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        greetBinding.importDirectButton.setOnTouchListener(object: View.OnTouchListener {
-            override fun onTouch(v: View, m: MotionEvent): Boolean {
-                if (m.action == MotionEvent.ACTION_UP) {
-                    val intent = Intent(v.context, ConfigActivity::class.java)
-                    rippleAnimationActivityOpener(m, v, intent)
-                    return true
-                }
-                return false
-            }
-        })
-
-        try {
-            Shell.su("cd /").submit()
-        } catch (e: IOException) {
-            Log.d("SCE-MAIN", "Caught exception executing shell, probably not rooted")
+        greetBinding.importDirectButton.setOnClickListener {
+            startConfigActivity()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun attachViewModelObservers() {
+        settingsVM.autoImport.observe(this, Observer {
+            if (it && checkPermissions()) {
+                Log.d("MA", "Opening config activity")
+                startConfigActivity()
+            }
+        })
+    }
 
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+    private fun startConfigActivity() {
+        val intent = Intent(this, ConfigActivity::class.java)
+        startActivity(intent)
+    }
 
+    private fun hasPermissions(): Boolean {
+        return (ContextCompat
+                    .checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (!hasPermissions())
+        {
             ActivityCompat.requestPermissions(this,
                     arrayOf(
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE
                     ),
                     1)
+            return false
         }
 
-        greetBinding.winkAnim.resumeAnimation()
-
-        updateTheme()
+        return true
     }
 
     private fun updateTheme() {
@@ -115,10 +155,14 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        if (grantResults.isEmpty()) { return }
+
         if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             Toast.makeText(this, R.string.StoragePermDenied, Toast.LENGTH_LONG).show()
             finish()
             moveTaskToBack(true)
+        } else {
+            Log.d("MA", "Permission request approved")
         }
     }
 
@@ -140,7 +184,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         init {
-            /* Shell.Config methods shall be called before any shell is created
+        /* Shell.Config methods shall be called before any shell is created
          * This is the reason why you should call it in a static block
          * The followings are some examples, check Javadoc for more details */
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR or Shell.FLAG_VERBOSE_LOGGING)

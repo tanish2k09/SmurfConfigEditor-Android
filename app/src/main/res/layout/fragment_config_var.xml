@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingVertical="8dp"
-    tools:context=".fragments.containerFragments.ConfigVarFragment">
+    tools:context=".fragments.containerFragments.ConfigVarFragment"
+    tools:background="@color/dark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/config_card_background"
-        tools:background="@color/colorPrimaryDark">
+        android:background="@drawable/config_card_background">
 
-        <TextView
+        <com.hanks.htextview.scale.ScaleTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,12 +22,14 @@
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:textColor="@color/textDefault"
             android:textSize="14sp"
-            android:typeface="normal"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="BOOT_PROFILE" />
+            tools:text="Performance Mode" />
 
         <ImageButton
             android:id="@+id/infoButtonConfig"
@@ -68,7 +70,7 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="12dp"
             android:gravity="end"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorTeal"
             android:textSize="14sp"
             android:textStyle="bold"
             android:typeface="monospace"

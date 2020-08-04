@@ -2,6 +2,7 @@ package com.tanish2k09.sce
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -13,22 +14,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.tanish2k09.sce.data.enums.ConfigResponse
 import com.tanish2k09.sce.data.enums.ETheme
 import com.tanish2k09.sce.databinding.ActivityConfigBinding
 import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment
 import com.tanish2k09.sce.fragments.containerFragments.ConfigVarFragment
+import com.tanish2k09.sce.helpers.config.ConfigScript
 import com.tanish2k09.sce.interfaces.IScriptCallback
 import com.tanish2k09.sce.utils.exceptions.ConfigFormatException
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
 import com.tanish2k09.sce.viewmodels.ConfigActivityVM
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
+import java.lang.ref.WeakReference
 
 class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
     private lateinit var binding: ActivityConfigBinding
     private lateinit var configVM: ConfigActivityVM
     private lateinit var sharedVM: SharedPrefsVM
+    private lateinit var configScript: ConfigScript
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,9 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
         initClickListeners()
         attachViewModelObservers()
+
+        commenceConfigImport()
+        createWeakConfigScript()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -49,6 +55,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
             configVM.exportConfigFile("/SmurfKernel", getString(R.string.configFile))
             configVM.configStore.commitActiveValues()
             updateConfigFragments()
+            handleRunScript()
             it.isEnabled = true
         }
 
@@ -60,8 +67,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         binding.applyConfigButton.setOnClickListener {
             it.isEnabled = false
             Toast.makeText(this, "Executing script...", Toast.LENGTH_SHORT).show()
-            // TODO: Check for runScript and run the script
-            //cig!!.runScript(this)
+            configScript.runScript(this)
         }
 
         binding.applyConfigButton.setOnLongClickListener {
@@ -101,11 +107,19 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         sharedVM.theme.observe(this, Observer {
             handleTheme(it)
         })
+
+        sharedVM.runScript.observe(this, Observer {
+            if (it) {
+                binding.saveButton.setImageResource(R.drawable.ic_save_apply)
+            } else {
+                binding.saveButton.setImageResource(R.drawable.ic_save)
+            }
+        })
     }
 
-    override fun onStart() {
-        super.onStart()
-        commenceConfigImport()
+    private fun createWeakConfigScript() {
+        val weakContext = WeakReference<Context>(applicationContext)
+        configScript = ConfigScript(weakContext)
     }
 
     override fun onResume() {
@@ -120,13 +134,19 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         window.navigationBarColor = mainColor
     }
 
+    private fun handleRunScript() {
+        if (sharedVM.runScript.value == true) {
+            binding.applyConfigButton.performClick()
+        }
+    }
+
     private fun commenceConfigImport() {
         removeConfigFragments()
 
         try {
             configVM.importConfigFile("/SmurfKernel", resources.getString(R.string.configFile))
-        } catch (e: ConfigFormatException) {
-            showErrorDialog(e.response)
+        } catch (cfe: ConfigFormatException) {
+            showErrorDialog(cfe)
             return
         }
 
@@ -193,7 +213,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         }
     }
 
-    private fun showErrorDialog(response: ConfigResponse) {
+    private fun showErrorDialog(cfe: ConfigFormatException) {
         val builder = AlertDialog.Builder(this, R.style.dialogCustomStyle)
 
         builder.setPositiveButton("Aw snap") {
@@ -204,8 +224,14 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
             }
         }
 
-        builder.setTitle(resources.getString(R.string.importError))
-                .setMessage(response.description)
+        val title = if (cfe.getLineNumber() != null) {
+            getString(R.string.importErrorLine, cfe.getLineNumber().toString())
+        } else {
+            getString(R.string.importError)
+        }
+
+        builder.setTitle(title)
+                .setMessage(cfe.response.description)
                 .setCancelable(false)
                 .create()
                 .show()
