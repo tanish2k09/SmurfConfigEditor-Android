@@ -2,7 +2,6 @@ package com.tanish2k09.sce
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -12,26 +11,27 @@ import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.marginBottom
 import androidx.core.view.marginTop
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.data.enums.ETheme
 import com.tanish2k09.sce.databinding.ActivityInfoBinding
 import com.tanish2k09.sce.utils.extensions.changeBottomMargin
 import com.tanish2k09.sce.utils.extensions.changeTopMargin
+import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 import kotlin.math.hypot
 
 class InfoActivity : AppCompatActivity() {
 
     private var revealX = 0
     private var revealY = 0
+    private var topMarginDefault: Int = 32
+    private var bottomMarginDefault: Int = 24
+    private lateinit var settingsVM: SharedPrefsVM
     private lateinit var binding: ActivityInfoBinding
-    private var topMarginDefault: Int? = 32
-    private var bottomMarginDefault: Int? = 24
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,112 +42,139 @@ class InfoActivity : AppCompatActivity() {
         binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val infoAppTitle = findViewById<TextView>(R.id.InfoAppTitle)
-        topMarginDefault = infoAppTitle.marginTop
-        infoAppTitle.setOnApplyWindowInsetsListener {view, insets ->
-            changeTopMargin(view, topMarginDefault!! + insets.systemWindowInsetTop)
-            insets
-        }
+        settingsVM = ViewModelProvider(this).get(SharedPrefsVM::class.java)
+        attachViewModelObservers()
 
-        val versionText = findViewById<TextView>(R.id.versionText)
-        bottomMarginDefault = versionText.marginBottom
-        versionText.setOnApplyWindowInsetsListener {view, insets ->
-            changeBottomMargin(view, bottomMarginDefault!! + insets.systemWindowInsetBottom)
-            insets
-        }
+        initUIListeners()
 
-        if (intent.hasExtra("x"))
+        if (intent.hasExtra("x")) {
             revealX = intent.getIntExtra("x", 0)
+        }
 
-        if (intent.hasExtra("y"))
+        if (intent.hasExtra("y")) {
             revealY = intent.getIntExtra("y", 0)
+        }
 
-        colorPicker.setOnClickListener {
-            val uri = Uri.parse(getString(R.string.colorPickerLink))
-            val i = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(i)
+        if (savedInstanceState != null) {
+            return
         }
-        source.setOnClickListener {
-            val uri = Uri.parse(getString(R.string.SourceCodeLink))
-            val i = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(i)
+
+        /* Commence reveal animation */
+        binding.infoTopLayout.visibility = View.INVISIBLE
+        val vto: ViewTreeObserver = binding.infoTopLayout.viewTreeObserver
+
+        if (vto.isAlive.not()) {
+            return
         }
-        stickyScroll.setOnClickListener {
-            val uri = Uri.parse(getString(R.string.stickyScrollLink))
-            val i = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(i)
+
+        vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                revealActivity(revealX, revealY)
+                binding.infoTopLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
+    }
+
+    private fun attachViewModelObservers() {
+        settingsVM.theme.observe(this, Observer {
+            handleTheme(it)
+        })
+    }
+
+    private fun initUIListeners() {
+        binding.colorPickerLayout.setOnClickListener {
+            launchEvent(Uri.parse(getString(R.string.colorPickerLink)))
         }
-        xda.setOnClickListener {
-            val uri = Uri.parse(getString(R.string.xdaLink))
-            val i = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(i)
+        binding.sourceCodeLayout.setOnClickListener {
+            launchEvent(Uri.parse(getString(R.string.SourceCodeLink)))
         }
-        telegram.setOnClickListener {
-            val uri = Uri.parse(getString(R.string.telegramLink))
-            val i = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(i)
+        binding.stickyScrollViewLayout.setOnClickListener {
+            launchEvent(Uri.parse(getString(R.string.stickyScrollLink)))
         }
-        email.setOnClickListener {
-            val uri = Uri.parse(getString(R.string.emailLink))
-            val i = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(i)
+        binding.xdaButton.setOnClickListener {
+            launchEvent(Uri.parse(getString(R.string.xdaLink)))
         }
-        discord.setOnClickListener {
+        binding.tgButton.setOnClickListener {
+            launchEvent(Uri.parse(getString(R.string.telegramLink)))
+        }
+        binding.emailButton.setOnClickListener {
+            launchEvent(Uri.parse(getString(R.string.emailLink)))
+        }
+        binding.discordButton.setOnClickListener {
             Toast.makeText(this, this.resources.getString(R.string.quantum), Toast.LENGTH_LONG).show()
         }
 
-        if (savedInstanceState == null) {
-            rootLayout.visibility = View.INVISIBLE
+        topMarginDefault = binding.infoAppTitle.marginTop
+        binding.infoAppTitle.setOnApplyWindowInsetsListener {view, insets ->
+            changeTopMargin(view, topMarginDefault + insets.systemWindowInsetTop)
+            insets
+        }
 
-            val vto: ViewTreeObserver = rootLayout.viewTreeObserver
-            if (vto.isAlive) {
-                vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        revealActivity(revealX, revealY)
-                        rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    }
-                })
-            }
+        bottomMarginDefault = binding.versionText.marginBottom
+        binding.versionText.setOnApplyWindowInsetsListener {view, insets ->
+            changeBottomMargin(view, bottomMarginDefault + insets.systemWindowInsetBottom)
+            insets
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val sp = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val infoTopLayout = findViewById<ConstraintLayout>(R.id.infoTopLayout)
-        var color = "#121212"
-        if (sp.getBoolean("useBlackNotDark", false)) color = "#000000"
-        val parsedColor = Color.parseColor(color)
-        infoTopLayout.setBackgroundColor(parsedColor)
+        settingsVM.readSettingsToFields()
+    }
+
+    private fun handleTheme(newTheme: ETheme) {
+        val mainColor = Color.parseColor(newTheme.hex)
+        binding.infoTopLayout.setBackgroundColor(mainColor)
+    }
+
+    private fun launchEvent(uri: Uri) {
+        val i = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(i)
     }
 
     private fun revealActivity(x: Int, y: Int) {
-        val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
+        val finalRadius = hypot(
+                binding.infoTopLayout.width.toDouble(),
+                binding.infoTopLayout.height.toDouble()).toFloat()
+
         // create the animator for this view (the start radius is zero)
         val circularReveal = ViewAnimationUtils.createCircularReveal(
-                rootLayout,
+                binding.infoTopLayout,
                 x, y,
                 0f, finalRadius
         )
+
         circularReveal.duration = 500
         circularReveal.interpolator = AccelerateInterpolator()
+
         // make the view visible and start the animation
-        rootLayout.visibility = View.VISIBLE
+        binding.infoTopLayout.visibility = View.VISIBLE
         circularReveal.start()
     }
 
     private fun unRevealActivity() {
-        val finalRadius = hypot(rootLayout.width.toDouble(), rootLayout.height.toDouble()).toFloat()
+        val finalRadius = hypot(
+                binding.infoTopLayout.width.toDouble(),
+                binding.infoTopLayout.height.toDouble()).toFloat()
+
         val circularReveal = ViewAnimationUtils.createCircularReveal(
-                rootLayout, revealX, revealY, finalRadius, 0f)
+                binding.infoTopLayout,
+                revealX,
+                revealY,
+                finalRadius,
+                0f
+        )
+
         circularReveal.duration = 500
         circularReveal.interpolator = DecelerateInterpolator()
+
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                rootLayout.visibility = View.INVISIBLE
+                binding.infoTopLayout.visibility = View.INVISIBLE
                 finish()
             }
         })
+
         circularReveal.start()
     }
 

@@ -19,4 +19,7 @@
     <dimen name="config_actions_min_dimen">48dp</dimen>
     <dimen name="config_actions_icon_padding">32dp</dimen>
     <dimen name="config_actions_icon_divider">12dp</dimen>
+
+    <dimen name="colorpicker_activity_horizontal_margin">16dp</dimen>
+    <dimen name="colorpicker_activity_vertical_margin">16dp</dimen>
 </resources>

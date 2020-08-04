@@ -30,4 +30,15 @@
     <color name="config_actions_icons">#282828</color>
 
     <color name="ic_launcher_background">#1B1B1B</color>
+
+    <color name="colorpicker_red">#f44336</color>
+    <color name="colorpicker_green">#4caf50</color>
+    <color name="colorpicker_blue">#2196f3</color>
+    <color name="colorpicker_grey">#b3b3b3</color>
+    <color name="colorpicker_lightGrey">#d9d9d9</color>
+    <color name="colorpicker_dribble">#ea4c89</color>
+    <color name="colorpicker_dribbleDark">#c32361</color>
+    <color name="materialcolorpicker_dialog">#009688</color>
+
+    <color name="materialcolorpicker__dark">#2b2b2b</color>
 </resources>

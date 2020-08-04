@@ -9,7 +9,7 @@
     tools:context=".InfoActivity">
 
     <TextView
-        android:id="@+id/InfoAppTitle"
+        android:id="@+id/infoAppTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -38,7 +38,7 @@
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/InfoAppTitle" />
+        app:layout_constraintTop_toBottomOf="@id/infoAppTitle" />
 
     <LinearLayout
         android:id="@+id/sourceCodeLayout"
@@ -64,7 +64,7 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:autoLink="web"
-            android:clickable="true"
+            android:clickable="false"
             android:gravity="center"
             android:text="@string/SourceCodeLiteral"
             android:textColor="@color/textDefault"
@@ -108,7 +108,7 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:autoLink="web"
-            android:clickable="true"
+            android:clickable="false"
             android:gravity="center"
             android:text="@string/colorPickerLiteral"
             android:textColor="@color/textDefault"
@@ -152,7 +152,7 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:autoLink="web"
-            android:clickable="true"
+            android:clickable="false"
             android:gravity="center"
             android:text="@string/stickyScrollLiteral"
             android:textColor="@color/textDefault"

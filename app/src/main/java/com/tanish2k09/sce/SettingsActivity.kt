@@ -53,6 +53,7 @@ class SettingsActivity : AppCompatActivity(){
             return
         }
 
+        /* Commence reveal animation */
         binding.settingsLayout.visibility = View.INVISIBLE
         val vto: ViewTreeObserver = binding.settingsLayout.viewTreeObserver
 
@@ -138,6 +139,7 @@ class SettingsActivity : AppCompatActivity(){
 
         circularReveal.duration = 500
         circularReveal.interpolator = AccelerateInterpolator()
+
         // make the view visible and start the animation
         binding.settingsLayout.visibility = View.VISIBLE
         circularReveal.start()
@@ -147,16 +149,25 @@ class SettingsActivity : AppCompatActivity(){
         val finalRadius = hypot(
                 binding.settingsLayout.width.toDouble(),
                 binding.settingsLayout.height.toDouble()).toFloat()
+
         val circularReveal = ViewAnimationUtils.createCircularReveal(
-                binding.settingsLayout, revealX, revealY, finalRadius, 0f)
+                binding.settingsLayout,
+                revealX,
+                revealY,
+                finalRadius,
+                0f
+        )
+
         circularReveal.duration = 500
         circularReveal.interpolator = DecelerateInterpolator()
+
         circularReveal.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 binding.settingsLayout.visibility = View.INVISIBLE
                 finish()
             }
         })
+
         circularReveal.start()
     }
 
