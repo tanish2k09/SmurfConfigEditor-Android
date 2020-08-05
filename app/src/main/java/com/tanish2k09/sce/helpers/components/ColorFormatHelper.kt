@@ -1,4 +1,4 @@
-package com.pes.androidmaterialcolorpickerdialog
+package com.tanish2k09.sce.helpers.components
 
 import androidx.annotation.IntRange
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +15,7 @@ import com.tanish2k09.sce.data.enums.ETheme
 import java.lang.IllegalArgumentException
 
 class SharedPrefsVM(application: Application) : AndroidViewModel(application) {
+
     private var _settingsPrefs =
             application.getSharedPreferences(
                     StringConstants.SHARED_PREF_SETTINGS,
@@ -24,6 +26,7 @@ class SharedPrefsVM(application: Application) : AndroidViewModel(application) {
     private val _theme = MutableLiveData<ETheme>()
     private val _autoImport = MutableLiveData<Boolean>()
     private val _runScript = MutableLiveData<Boolean>()
+    private val _accentColor = MutableLiveData<String>()
 
     val useTitles: LiveData<Boolean>
         get() = _useTitles
@@ -37,20 +40,11 @@ class SharedPrefsVM(application: Application) : AndroidViewModel(application) {
     val runScript: LiveData<Boolean>
         get() = _runScript
 
-    lateinit var accentColor: String
-        private set
+    val accentColor: LiveData<String>
+        get() = _accentColor
 
     init {
         readSettingsToFields()
-    }
-
-    private fun isValidHexCode(value: String): Boolean {
-        return try {
-            Color.parseColor(value)
-            true
-        } catch (e: IllegalArgumentException) {
-            false
-        }
     }
 
     fun readSettingsToFields() {
@@ -79,11 +73,7 @@ class SharedPrefsVM(application: Application) : AndroidViewModel(application) {
                         DefaultSettings.RUN_SCRIPT
                 )
 
-        accentColor =
-                _settingsPrefs.getString(
-                        StringConstants.SETTING_ACCENT_COLOR,
-                        getApplication<Application>().getString(0+R.color.colorTeal)
-                ).toString()
+        readAccent()
     }
 
     @SuppressLint("ApplySharedPref")
@@ -108,5 +98,26 @@ class SharedPrefsVM(application: Application) : AndroidViewModel(application) {
     fun setRunScript(runScript: Boolean) {
         _settingsPrefs.edit().putBoolean(StringConstants.SETTING_RUN_SCRIPT_ON_SAVE, runScript).commit()
         _runScript.value = runScript
+    }
+
+    @SuppressLint("ApplySharedPref")
+    fun setAccentColor(color: String) {
+        try {
+            Color.parseColor(color)
+        } catch (e: Exception) {
+            Log.d("SPVM", "Rejected accent color $color")
+            return
+        }
+
+        _settingsPrefs.edit().putString(StringConstants.SETTING_ACCENT_COLOR, color).commit()
+        _accentColor.value = color
+    }
+
+    fun readAccent() {
+        _accentColor.value =
+                _settingsPrefs.getString(
+                        StringConstants.SETTING_ACCENT_COLOR,
+                        getApplication<Application>().getString(0+R.color.colorTeal)
+                ).toString()
     }
 }

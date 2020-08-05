@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/dark"
     tools:background="@color/dark"
-    tools:context="com.tanish2k09.sce.ConfigActivity">
+    tools:context="com.tanish2k09.sce.ui.activities.ConfigActivity">
 
     <com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
         android:id="@+id/configScroll"
@@ -30,85 +30,92 @@
             android:orientation="vertical" />
     </com.emilsjolander.components.StickyScrollViewItems.StickyScrollView>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/configActionsBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/config_actions_bg"
-        android:elevation="2dp"
-        android:gravity="center"
-        android:minHeight="@dimen/config_actions_min_dimen"
-        android:orientation="horizontal"
+        app:cardBackgroundColor="@color/colorTeal"
+        app:cardCornerRadius="@dimen/config_actions_corners"
+        app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/save"
-            android:foreground="@drawable/ripple_greet_option"
-            android:paddingTop="@dimen/config_actions_icon_padding"
-            android:paddingBottom="@dimen/config_actions_icon_padding"
-            android:scaleType="center"
-            android:tint="@color/config_actions_icons"
-            app:srcCompat="@drawable/ic_save_apply" />
+            android:gravity="center"
+            android:minHeight="@dimen/config_actions_min_dimen"
+            android:orientation="horizontal">
 
-        <View style="@style/ConfigItemDivider" />
+            <ImageButton
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/save"
+                android:foreground="@drawable/ripple_greet_option"
+                android:paddingTop="@dimen/config_actions_icon_padding"
+                android:paddingBottom="@dimen/config_actions_icon_padding"
+                android:scaleType="center"
+                android:tint="@color/config_actions_icons"
+                app:srcCompat="@drawable/ic_save_apply" />
 
-        <ImageButton
-            android:id="@+id/applyConfigButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/action_settings"
-            android:foreground="@drawable/ripple_greet_option"
-            android:paddingTop="@dimen/config_actions_icon_padding"
-            android:paddingBottom="@dimen/config_actions_icon_padding"
-            android:tint="@color/config_actions_icons"
-            app:srcCompat="@drawable/config_action_script" />
+            <View style="@style/ConfigItemDivider" />
 
-        <View style="@style/ConfigItemDivider" />
+            <ImageButton
+                android:id="@+id/applyConfigButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/action_settings"
+                android:foreground="@drawable/ripple_greet_option"
+                android:paddingTop="@dimen/config_actions_icon_padding"
+                android:paddingBottom="@dimen/config_actions_icon_padding"
+                android:tint="@color/config_actions_icons"
+                app:srcCompat="@drawable/config_action_script" />
 
-        <ImageButton
-            android:id="@+id/searchConfigButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/action_settings"
-            android:foreground="@drawable/ripple_greet_option"
-            android:paddingTop="@dimen/config_actions_icon_padding"
-            android:paddingBottom="@dimen/config_actions_icon_padding"
-            android:tint="@color/config_actions_icons"
-            app:srcCompat="@drawable/config_action_search" />
+            <View style="@style/ConfigItemDivider" />
 
-        <View style="@style/ConfigItemDivider" />
+            <ImageButton
+                android:id="@+id/searchConfigButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/action_settings"
+                android:foreground="@drawable/ripple_greet_option"
+                android:paddingTop="@dimen/config_actions_icon_padding"
+                android:paddingBottom="@dimen/config_actions_icon_padding"
+                android:tint="@color/config_actions_icons"
+                app:srcCompat="@drawable/config_action_search" />
 
-        <ImageButton
-            android:id="@+id/settingsConfigButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/action_settings"
-            android:foreground="@drawable/ripple_greet_option"
-            android:paddingTop="@dimen/config_actions_icon_padding"
-            android:paddingBottom="@dimen/config_actions_icon_padding"
-            android:tint="@color/config_actions_icons"
-            app:srcCompat="@drawable/ic_settings" />
+            <View style="@style/ConfigItemDivider" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/settingsConfigButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/action_settings"
+                android:foreground="@drawable/ripple_greet_option"
+                android:paddingTop="@dimen/config_actions_icon_padding"
+                android:paddingBottom="@dimen/config_actions_icon_padding"
+                android:tint="@color/config_actions_icons"
+                app:srcCompat="@drawable/ic_settings" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

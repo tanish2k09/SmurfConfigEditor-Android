@@ -1,4 +1,4 @@
-package com.tanish2k09.sce.fragments.containerFragments
+package com.tanish2k09.sce.ui.fragments.containerFragments
 
 import android.graphics.Color
 import android.os.Bundle
@@ -37,6 +37,10 @@ class CategoryFragment(private val cat: String) : Fragment() {
     private fun attachViewModelObservers() {
         sharedVM.theme.observe(viewLifecycleOwner, Observer {
             handleTheme(it)
+        })
+
+        sharedVM.accentColor.observe(viewLifecycleOwner, Observer {
+            binding.headingUnderline.setBackgroundColor(Color.parseColor(it))
         })
     }
 

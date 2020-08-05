@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@color/dark"
-    tools:context=".InfoActivity">
+    tools:context=".ui.activities.InfoActivity">
 
     <TextView
         android:id="@+id/infoAppTitle"
@@ -69,55 +69,10 @@
             android:text="@string/SourceCodeLiteral"
             android:textColor="@color/textDefault"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/sourceCodeLinkImage"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="@color/infoFiller"
-            android:contentDescription="@string/colorPickerLink"
-            android:foreground="@drawable/ic_github"
-            android:foregroundGravity="center" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/colorPickerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/infoBoxSideMargins"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="@dimen/infoBoxSideMargins"
-        android:background="@drawable/white_outline"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sourceCodeLayout">
-
-        <TextView
-            android:id="@+id/colorPickerText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:autoLink="web"
-            android:clickable="false"
-            android:gravity="center"
-            android:text="@string/colorPickerLiteral"
-            android:textColor="@color/textDefault"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
-
-        <ImageView
-            android:id="@+id/colorPickerLinkImage"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_weight="1"
@@ -141,7 +96,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorPickerLayout">
+        app:layout_constraintTop_toBottomOf="@+id/sourceCodeLayout">
 
         <TextView
             android:id="@+id/stickyScrollText"
@@ -157,8 +112,7 @@
             android:text="@string/stickyScrollLiteral"
             android:textColor="@color/textDefault"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:typeface="monospace" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/stickyScrollLinkImage"

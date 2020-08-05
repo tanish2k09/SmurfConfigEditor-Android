@@ -1,4 +1,4 @@
-package com.tanish2k09.sce
+package com.tanish2k09.sce.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -17,6 +17,7 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.R
 import com.tanish2k09.sce.data.enums.ETheme
 import com.tanish2k09.sce.databinding.ActivityInfoBinding
 import com.tanish2k09.sce.utils.extensions.changeBottomMargin
@@ -82,9 +83,6 @@ class InfoActivity : AppCompatActivity() {
     }
 
     private fun initUIListeners() {
-        binding.colorPickerLayout.setOnClickListener {
-            launchEvent(Uri.parse(getString(R.string.colorPickerLink)))
-        }
         binding.sourceCodeLayout.setOnClickListener {
             launchEvent(Uri.parse(getString(R.string.SourceCodeLink)))
         }

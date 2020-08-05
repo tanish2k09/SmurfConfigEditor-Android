@@ -1,10 +1,10 @@
-package com.tanish2k09.sce
+package com.tanish2k09.sce.ui.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.R
 import com.tanish2k09.sce.databinding.ActivityMainBinding
 import com.tanish2k09.sce.databinding.EntryGreetgateBinding
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
@@ -146,6 +147,9 @@ class MainActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         }
+
+        settingsVM.readAccent()
+        binding.root.setBackgroundColor(Color.parseColor(settingsVM.accentColor.value))
     }
 
     override fun onRequestPermissionsResult(

@@ -1,8 +1,7 @@
-package com.tanish2k09.sce.fragments.modals
+package com.tanish2k09.sce.ui.fragments.modals
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -1,6 +1,7 @@
-package com.tanish2k09.sce.fragments.containerFragments
+package com.tanish2k09.sce.ui.fragments.containerFragments
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -15,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.tanish2k09.sce.data.config.ConfigVar
 import com.tanish2k09.sce.data.constants.DefaultSettings
 import com.tanish2k09.sce.databinding.FragmentConfigVarBinding
-import com.tanish2k09.sce.fragments.modals.ConfigOptionsModal
+import com.tanish2k09.sce.ui.fragments.modals.ConfigOptionsModal
 import com.tanish2k09.sce.interfaces.ISelectedItemCallback
 import com.tanish2k09.sce.viewmodels.ConfigVarVM
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
@@ -78,11 +79,15 @@ class ConfigVarFragment(private val configVar: ConfigVar) : Fragment(), ISelecte
         sharedVM.useTitles.observe(viewLifecycleOwner, Observer {
             configVarVM.handleUseTitles(it)
         })
+
+        sharedVM.accentColor.observe(viewLifecycleOwner, Observer {
+            binding.curVal.setTextColor(Color.parseColor(it))
+        })
     }
 
     private fun initClickListeners() {
         binding.containerLayout.setOnClickListener {
-            ConfigOptionsModal(configVarVM.configVar, sharedVM.accentColor, this)
+            ConfigOptionsModal(configVarVM.configVar, sharedVM.accentColor.value!!, this)
                     .show(childFragmentManager, configVarVM.displayName.value + " Selector")
         }
 

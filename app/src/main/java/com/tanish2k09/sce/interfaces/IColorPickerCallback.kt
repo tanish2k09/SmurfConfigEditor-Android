@@ -1,4 +1,4 @@
-package com.pes.androidmaterialcolorpickerdialog;
+package com.tanish2k09.sce.interfaces;
 
 import androidx.annotation.ColorInt;
 
@@ -7,7 +7,7 @@ import androidx.annotation.ColorInt;
  *
  * @author Patrick Geselbracht
  */
-interface ColorPickerCallback {
+interface IColorPickerCallback {
     /**
      * Gets called whenever a user chooses a color from the ColorPicker, i.e., presses the
      * "Choose" button.

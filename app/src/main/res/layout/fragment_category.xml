@@ -9,7 +9,7 @@
     android:layout_marginBottom="16dp"
     android:background="@android:color/transparent"
     tools:background="@color/dark"
-    tools:context=".fragments.containerFragments.CategoryFragment">
+    tools:context=".ui.fragments.containerFragments.CategoryFragment">
 
 
     <FrameLayout

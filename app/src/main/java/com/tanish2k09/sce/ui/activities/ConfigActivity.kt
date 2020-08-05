@@ -1,4 +1,4 @@
-package com.tanish2k09.sce
+package com.tanish2k09.sce.ui.activities
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -14,10 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.R
 import com.tanish2k09.sce.data.enums.ETheme
 import com.tanish2k09.sce.databinding.ActivityConfigBinding
-import com.tanish2k09.sce.fragments.containerFragments.CategoryFragment
-import com.tanish2k09.sce.fragments.containerFragments.ConfigVarFragment
+import com.tanish2k09.sce.ui.fragments.containerFragments.CategoryFragment
+import com.tanish2k09.sce.ui.fragments.containerFragments.ConfigVarFragment
 import com.tanish2k09.sce.helpers.config.ConfigScript
 import com.tanish2k09.sce.interfaces.IScriptCallback
 import com.tanish2k09.sce.utils.exceptions.ConfigFormatException
@@ -114,6 +115,10 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
             } else {
                 binding.saveButton.setImageResource(R.drawable.ic_save)
             }
+        })
+
+        sharedVM.accentColor.observe(this, Observer {
+            binding.configActionsBar.setCardBackgroundColor(Color.parseColor(it))
         })
     }
 

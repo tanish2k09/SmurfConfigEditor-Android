@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingVertical="8dp"
-    tools:context=".fragments.containerFragments.ConfigVarFragment"
+    tools:context=".ui.fragments.containerFragments.ConfigVarFragment"
     tools:background="@color/dark">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,43 +1,47 @@
-package com.pes.androidmaterialcolorpickerdialog
+package com.tanish2k09.sce.ui.components
 
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import android.text.InputFilter
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.SeekBar
 import android.widget.TextView
-import com.pes.androidmaterialcolorpickerdialog.ColorFormatHelper.Companion.assertColorValueInRange
-import com.pes.androidmaterialcolorpickerdialog.ColorFormatHelper.Companion.formatColorValues
+import com.tanish2k09.sce.helpers.components.ColorFormatHelper.Companion.assertColorValueInRange
+import com.tanish2k09.sce.helpers.components.ColorFormatHelper.Companion.formatColorValues
+import com.tanish2k09.sce.interfaces.IColorPickerCallback
 import com.tanish2k09.sce.R
 import com.tanish2k09.sce.databinding.DialogColorPickerBinding
+import kotlin.math.roundToInt
 
 /**
  * This is the only class of the project. It consists in a custom dialog that shows the GUI
  * used for choosing a color using three sliders or an input field.
  *
  * @author Simone Pessotto
+ * @author Tanish Manku
  */
 class ColorPicker(
         private val activity: Activity)
-    : Dialog(activity), SeekBar.OnSeekBarChangeListener {
+    : Dialog(activity) {
 
     private lateinit var binding: DialogColorPickerBinding
     private var red: Int = 0
     private var green: Int = 0
     private var blue: Int = 0
-    private lateinit var callback: ColorPickerCallback
+    private lateinit var callback: IColorPickerCallback
 
-    private var autoclose: Boolean = true
+    private val rangeMax = 255
+    private val rangeMin = 0
+
+    var autoclose: Boolean = true
 
     init {
-        if (activity is ColorPickerCallback) {
+        if (activity is IColorPickerCallback) {
             callback = activity
         }
     }
@@ -45,7 +49,6 @@ class ColorPicker(
     /**
      * Creator of the class. It will initialize the class with the rgb color passed as default
      *
-     * @param activity The reference to the activity where the color picker is called
      * @param red      Red color for RGB values (0 - 255)
      * @param green    Green color for RGB values (0 - 255)
      * @param blue     Blue color for RGB values (0 - 255)
@@ -54,30 +57,27 @@ class ColorPicker(
      *                 be place at 0.
      */
     constructor(activity: Activity,
-                       @IntRange(from = 0, to = 255) red: Int,
-                       @IntRange(from = 0, to = 255) green: Int,
-                       @IntRange(from = 0, to = 255) blue: Int)
-    : this(activity) {
-
+                @IntRange(from = 0, to = 255) red: Int,
+                @IntRange(from = 0, to = 255) green: Int,
+                  @IntRange(from = 0, to = 255) blue: Int)
+    : this(activity)
+    {
         this.red = assertColorValueInRange(red)
         this.green = assertColorValueInRange(green)
         this.blue = assertColorValueInRange(blue)
     }
 
-    fun setCallback(listener: ColorPickerCallback) {
+    fun setCallback(listener: IColorPickerCallback) {
         callback = listener
     }
 
-    @Override
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DialogColorPickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.redSeekBar.setOnSeekBarChangeListener(this)
-        binding.greenSeekBar.setOnSeekBarChangeListener(this)
-        binding.blueSeekBar.setOnSeekBarChangeListener(this)
+        initUi()
 
         binding.hexCode.filters = arrayOf(InputFilter.LengthFilter(6))
 
@@ -85,8 +85,8 @@ class ColorPicker(
                 TextView.OnEditorActionListener { v, actionId, event ->
                         if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                                 actionId == EditorInfo.IME_ACTION_DONE ||
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+                                event.action == KeyEvent.ACTION_DOWN &&
+                                event.keyCode == KeyEvent.KEYCODE_ENTER)
                         {
                             updateColorView(v.text.toString())
                             val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE)
@@ -97,10 +97,9 @@ class ColorPicker(
                             return@OnEditorActionListener true
                         }
                         false
-                });
+                })
 
-
-        binding.okColorButton.setOnClickListener {
+        binding.selectColorButton.setOnClickListener {
             sendColor()
         }
     }
@@ -108,11 +107,55 @@ class ColorPicker(
     private fun initUi() {
         binding.colorView.setBackgroundColor(getColor())
 
-        binding.redSeekBar.progress = red
-        binding.greenSeekBar.progress = green
-        binding.blueSeekBar.progress = blue
+        initSeekbarTexts()
+        initSeekbarListeners()
+        setSeekbarValues()
 
         binding.hexCode.setText(formatColorValues(red, green, blue))
+    }
+
+    private fun initSeekbarTexts() {
+        binding.redSeekBar.startText = rangeMin.toString()
+        binding.greenSeekBar.startText = rangeMin.toString()
+        binding.blueSeekBar.startText = rangeMin.toString()
+
+        binding.redSeekBar.endText = rangeMax.toString()
+        binding.greenSeekBar.endText = rangeMax.toString()
+        binding.blueSeekBar.endText = rangeMax.toString()
+    }
+
+    private fun setSeekbarValues() {
+        binding.redSeekBar.position = getSeekbarFraction(red)
+        binding.greenSeekBar.position = getSeekbarFraction(green)
+        binding.blueSeekBar.position = getSeekbarFraction(blue)
+    }
+
+    private fun initSeekbarListeners() {
+        binding.redSeekBar.positionListener = { pos ->
+            red = getFractionToValue(pos)
+            binding.redSeekBar.bubbleText = "$red"
+            syncViewsToColorUpdate()
+        }
+
+        binding.greenSeekBar.positionListener = { pos ->
+            green = getFractionToValue(pos)
+            binding.greenSeekBar.bubbleText = "$green"
+            syncViewsToColorUpdate()
+        }
+
+        binding.blueSeekBar.positionListener = { pos ->
+            blue = getFractionToValue(pos)
+            binding.blueSeekBar.bubbleText = "$blue"
+            syncViewsToColorUpdate()
+        }
+    }
+
+    private fun getSeekbarFraction(value: Int): Float {
+        return (value.toFloat() / (rangeMax - rangeMin))
+    }
+
+    private fun getFractionToValue(fraction: Float): Int {
+        return ((rangeMax - rangeMin) * fraction).roundToInt()
     }
 
     private fun sendColor() {
@@ -121,12 +164,6 @@ class ColorPicker(
         if(autoclose){
             dismiss()
         }
-    }
-
-    fun setColor(@ColorInt color: Int) {
-        red = Color.red(color)
-        green = Color.green(color)
-        blue = Color.blue(color)
     }
 
     /**
@@ -141,46 +178,16 @@ class ColorPicker(
             green = Color.green(color)
             blue = Color.blue(color)
 
-            binding.colorView.setBackgroundColor(getColor())
-
-            binding.redSeekBar.progress = red
-            binding.greenSeekBar.progress = green
-            binding.blueSeekBar.progress = blue
+            setSeekbarValues()
         } catch (ignored: IllegalArgumentException) {
             binding.hexCode.error = activity.resources.getText(R.string.materialcolorpicker__errHex)
         }
     }
 
-    /**
-     * Method called when the user change the value of the bars. This sync the colors.
-     *
-     * @param seekBar  SeekBar that has changed
-     * @param progress The new progress value
-     * @param fromUser Whether the user is the reason for the method call
-     */
-    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-
-        when (seekBar.id) {
-            R.id.redSeekBar -> {
-                red = progress
-            }
-            R.id.greenSeekBar -> {
-                green = progress
-            }
-            R.id.blueSeekBar -> {
-                blue = progress
-            }
-        }
-
+    private fun syncViewsToColorUpdate() {
         binding.colorView.setBackgroundColor(getColor())
-
-        //Setting the inputText hex color
         binding.hexCode.setText(formatColorValues(red, green, blue))
     }
-
-    override fun onStopTrackingTouch(seekBar: SeekBar) {}
-
-    override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
     /**
      * Getter for the color as Android Color class value.
@@ -192,11 +199,6 @@ class ColorPicker(
      * @return Selected color as Android Color class value.
      */
     private fun getColor(): Int {
-        return Color.rgb(red, green, blue);
-    }
-
-    override fun show() {
-        super.show()
-        initUi()
+        return Color.rgb(red, green, blue)
     }
 }

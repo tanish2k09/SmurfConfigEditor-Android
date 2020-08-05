@@ -1,4 +1,4 @@
-package com.tanish2k09.sce
+package com.tanish2k09.sce.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -13,14 +13,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.tanish2k09.sce.ui.components.ColorPicker
+import com.tanish2k09.sce.interfaces.IColorPickerCallback
+import com.tanish2k09.sce.R
 import com.tanish2k09.sce.data.enums.ETheme
 import com.tanish2k09.sce.databinding.ActivitySettingsBinding
 import com.tanish2k09.sce.utils.extensions.changeTopMargin
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 import kotlin.math.hypot
 
-
-class SettingsActivity : AppCompatActivity(){
+class SettingsActivity : AppCompatActivity(), IColorPickerCallback {
 
     private var revealX = 0
     private var revealY = 0
@@ -99,6 +101,19 @@ class SettingsActivity : AppCompatActivity(){
                 settingsVM.setTheme(ETheme.DARK)
             }
         }
+
+        binding.colorCard.setOnClickListener {
+            val color = Color.parseColor(settingsVM.accentColor.value)
+            val picker = ColorPicker(
+                    this,
+                    Color.red(color),
+                    Color.green(color),
+                    Color.blue(color)
+            )
+            picker.autoclose = true
+            picker.setCallback(this)
+            picker.show()
+        }
     }
 
     private fun attachViewModelObservers() {
@@ -117,6 +132,10 @@ class SettingsActivity : AppCompatActivity(){
         settingsVM.theme.observe(this, Observer {
             binding.useBlackNotDark.isChecked = (it == ETheme.BLACK)
             handleTheme(it)
+        })
+
+        settingsVM.accentColor.observe(this, Observer {
+            binding.colorCard.setCardBackgroundColor(Color.parseColor(it))
         })
     }
 
@@ -173,5 +192,9 @@ class SettingsActivity : AppCompatActivity(){
 
     override fun onBackPressed() {
         unRevealActivity()
+    }
+
+    override fun onColorChosen(color: Int) {
+        settingsVM.setAccentColor(String.format("#%06X", 0xFFFFFF and color))
     }
 }

@@ -1,4 +1,4 @@
-package com.tanish2k09.sce.fragments.modals
+package com.tanish2k09.sce.ui.fragments.modals
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

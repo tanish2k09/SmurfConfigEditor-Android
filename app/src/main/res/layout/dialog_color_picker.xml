@@ -1,105 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/dark">
+    android:background="@color/dark"
+    tools:context=".ui.components.ColorPicker">
 
     <View
-        android:id="@+id/colorView"
-        android:layout_width="fill_parent"
+        android:id="@+id/color_view"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:elevation="2dp"/>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/controls_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/colorpicker_activity_vertical_margin"
         android:paddingLeft="@dimen/colorpicker_activity_horizontal_margin"
         android:paddingRight="@dimen/colorpicker_activity_horizontal_margin"
-        android:paddingTop="@dimen/colorpicker_activity_vertical_margin">
+        android:paddingBottom="@dimen/colorpicker_activity_vertical_margin">
 
-        <com.pes.androidmaterialcolorpickerdialog.MaterialColorPickerTextSeekBar
-            android:id="@+id/redSeekBar"
-            android:layout_width="fill_parent"
+        <com.ramotion.fluidslider.FluidSlider
+            android:id="@+id/red_seek_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="255"
-            android:maxHeight="3dip"
-            android:minHeight="3dip"
-            android:progressDrawable="@drawable/colorpicker_red_progress"
-            android:textColor="@android:color/holo_red_light"
-            android:thumbTint="@android:color/holo_red_light"/>
+            app:bar_color="@color/colorpicker_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:size="small"
+            app:text_size="@dimen/colorpicker_seekbar_text"/>
 
-        <com.pes.androidmaterialcolorpickerdialog.MaterialColorPickerTextSeekBar
-            android:id="@+id/greenSeekBar"
-            android:layout_width="fill_parent"
+        <com.ramotion.fluidslider.FluidSlider
+            android:id="@+id/green_seek_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/redSeekBar"
-            android:max="255"
-            android:maxHeight="3dip"
-            android:minHeight="3dip"
-            android:progressDrawable="@drawable/colorpicker_green_progress"
-            android:textColor="@android:color/holo_green_light"
-            android:thumbTint="@android:color/holo_green_light"/>
+            app:bar_color="@color/colorpicker_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/red_seek_bar"
+            app:size="small" />
 
-        <com.pes.androidmaterialcolorpickerdialog.MaterialColorPickerTextSeekBar
-            android:id="@+id/blueSeekBar"
-            android:layout_width="fill_parent"
+        <com.ramotion.fluidslider.FluidSlider
+            android:id="@+id/blue_seek_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/greenSeekBar"
-            android:max="255"
-            android:maxHeight="3dip"
-            android:minHeight="3dip"
-            android:progressDrawable="@drawable/colorpicker_blue_progress"
-            android:textColor="@android:color/holo_blue_light"
-            android:thumbTint="@android:color/holo_blue_light"/>
+            app:bar_color="@color/colorpicker_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/green_seek_bar"
+            app:size="small" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/hash_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/hexCode"
-            android:layout_alignEnd="@+id/hexCode"
+            android:layout_alignBaseline="@+id/hex_code"
+            android:layout_alignEnd="@+id/hex_code"
             android:layout_alignParentStart="true"
-            android:labelFor="@id/hexCode"
+            android:layout_marginTop="32dp"
+            android:labelFor="@id/hex_code"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:text="@string/materialcolorpicker__hash"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/blue_seek_bar" />
 
         <EditText
-            android:id="@+id/hexCode"
+            android:id="@+id/hex_code"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_alignParentBottom="false"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/blue_seek_bar"
             android:layout_alignParentStart="false"
-            android:layout_below="@+id/blueSeekBar"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_alignParentBottom="false"
             android:imeOptions="actionDone|actionGo|actionSend"
+            android:importantForAutofill="no"
             android:inputType="textCapCharacters|textNoSuggestions"
             android:lines="1"
             android:maxLength="6"
             android:maxLines="1"
-            android:paddingEnd="4dp"
             android:paddingStart="4dp"
-            android:textColorHint="@android:color/primary_text_light"
-            android:textSize="18sp"
-            tools:text="123456"
+            android:paddingEnd="4dp"
             android:textColor="@android:color/white"
-            android:importantForAutofill="no" />
+            android:textColorHint="@android:color/primary_text_light"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/hash_text"
+            app:layout_constraintTop_toTopOf="@+id/hash_text"
+            tools:text="123456" />
 
         <Button
-            android:id="@+id/okColorButton"
+            android:id="@+id/select_color_button"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_alignBaseline="@+id/hexCode"
-            android:layout_alignParentBottom="false"
+            android:layout_alignBaseline="@+id/hex_code"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="false"
+            android:backgroundTint="@color/colorTeal"
             android:text="@string/materialcolorpicker__btnSelectColor"
             android:textColor="@color/textDark"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/hash_text" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
