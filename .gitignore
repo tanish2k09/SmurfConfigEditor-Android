@@ -16,3 +16,5 @@ playstore.png
 /app/alpha
 /app/beta
 /app/full
+*.jks
+*.sceconfig

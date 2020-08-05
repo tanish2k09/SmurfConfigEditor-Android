@@ -5,6 +5,13 @@ apply plugin: 'kotlin-android-extensions'
 android {
     signingConfigs {
         distribution {
+            Properties keystoreProps = new Properties()
+            keystoreProps.load(new FileInputStream(file('sce_keys.sceconfig')))
+
+            keyAlias keystoreProps['keyAlias']
+            keyPassword keystoreProps['keyPassword']
+            storePassword keystoreProps['storePassword']
+            storeFile file('smurf_aug_2020.jks')
         }
     }
     compileOptions {
