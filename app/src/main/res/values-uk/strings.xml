@@ -21,7 +21,7 @@
 
     <string name="autoImportConfigSetting">Завжди імпортувати конфігурацію під час запуску застосунку</string>
     <string name="autoUpdateConfigSetting">Запускати скрипт конфігурації під час збереження</string>
-    <string name="pickAccentColor">Мій улюблений колір ось цей -></string>
+    <string name="pickAccentColor">Мій улюблений колір - …</string>
 
     <string name="credit">- Створено tanish2k09 -</string>
     <string name="gimmeMoni">Віддати мені всі гроші можна тут</string>

@@ -28,8 +28,8 @@
     <string name="autoImportConfigSetting">Always import config on app start</string>
     <string name="restartAppToApplyChanges">Restart app to apply changes</string>
     <string name="autoUpdateConfigSetting">Run config application script on saving</string>
-    <string name="pickAccentColor">My favorite accent color is that one over there -></string>
-    <string name="searchHint">Search for title or code...</string>
+    <string name="pickAccentColor">My favorite accent color is…</string>
+    <string name="searchHint">Search for title or code…</string>
 
     <string name="credit">- Made by tanish2k09 -</string>
     <string name="developer" translatable="false">tanish2k09</string>
