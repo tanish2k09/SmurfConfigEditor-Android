@@ -49,9 +49,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_import"
                 android:drawablePadding="@dimen/greet_text_padding"
-                android:drawableTint="@color/dark"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -59,7 +57,9 @@
                 android:text="@string/directImport"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"/>
+                android:fontFamily="@font/app_mono_tf"
+                app:drawableTopCompat="@drawable/ic_import"
+                app:drawableTint="@color/dark" />
 
             <TextView
                 android:id="@+id/import_folder_button"
@@ -68,9 +68,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_folder_import"
                 android:drawablePadding="@dimen/greet_text_padding"
-                android:drawableTint="@color/dark"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -78,7 +76,9 @@
                 android:text="@string/folderImport"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"/>
+                android:fontFamily="@font/app_mono_tf"
+                app:drawableTopCompat="@drawable/ic_folder_import"
+                app:drawableTint="@color/dark" />
 
             <TextView
                 android:id="@+id/import_zip_button"
@@ -87,9 +87,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_folder_zip"
                 android:drawablePadding="@dimen/greet_text_padding"
-                android:drawableTint="@color/dark"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -97,7 +95,9 @@
                 android:text="@string/zipImport"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"/>
+                android:fontFamily="@font/app_mono_tf"
+                app:drawableTopCompat="@drawable/ic_folder_zip"
+                app:drawableTint="@color/dark" />
 
         </LinearLayout>
 
@@ -116,9 +116,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_settings"
                 android:drawablePadding="@dimen/greet_text_padding"
-                android:drawableTint="@color/dark"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:fontFamily="@font/app_mono_tf"
@@ -128,7 +126,9 @@
                 android:paddingBottom="@dimen/greet_padding_inner"
                 android:text="@string/action_settings"
                 android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size" />
+                android:textSize="@dimen/greet_text_size"
+                app:drawableTopCompat="@drawable/ic_settings"
+                app:drawableTint="@color/dark" />
 
             <TextView
                 android:id="@+id/info_button"
@@ -137,9 +137,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_info_outline"
                 android:drawablePadding="@dimen/greet_text_padding"
-                android:drawableTint="@color/dark"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -147,7 +145,9 @@
                 android:text="@string/action_info"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf" />
+                android:fontFamily="@font/app_mono_tf"
+                app:drawableTopCompat="@drawable/ic_info_outline"
+                app:drawableTint="@color/dark" />
 
             <TextView
                 android:id="@+id/presets_button"
@@ -156,9 +156,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:drawableTop="@drawable/ic_presets_doc"
                 android:drawablePadding="@dimen/greet_text_padding"
-                android:drawableTint="@color/dark"
                 android:foreground="@drawable/ripple_greet_option"
                 android:gravity="center"
                 android:paddingTop="@dimen/greet_padding_inner"
@@ -166,7 +164,9 @@
                 android:text="@string/presets_literal"
                 android:textColor="@color/textDark"
                 android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf" />
+                android:fontFamily="@font/app_mono_tf"
+                app:drawableTopCompat="@drawable/ic_presets_doc"
+                app:drawableTint="@color/dark" />
 
         </LinearLayout>
     </LinearLayout>
