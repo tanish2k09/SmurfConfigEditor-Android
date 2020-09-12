@@ -68,5 +68,5 @@
     <string name="stickyScrollLiteral" translatable="false">Sticky ScrollView</string>
     <string name="stickyScrollLink" translatable="false">https://github.com/emilsjolander/StickyScrollViewItems</string>
 
-    <string name="displayVersion" translatable="false">- Version 2.0 beta 3 -</string>
+    <string name="displayVersion" translatable="false">- Version 2.0.1 -</string>
 </resources>
