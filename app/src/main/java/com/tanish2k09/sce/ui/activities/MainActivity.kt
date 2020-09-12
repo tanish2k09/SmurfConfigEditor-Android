@@ -6,14 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
-
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,10 +21,9 @@ import com.tanish2k09.sce.databinding.ActivityMainBinding
 import com.tanish2k09.sce.databinding.EntryGreetgateBinding
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
-
 import com.topjohnwu.superuser.Shell
-
 import java.io.IOException
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -100,6 +98,12 @@ class MainActivity : AppCompatActivity() {
 
         greetBinding.importDirectButton.setOnClickListener {
             startConfigActivity()
+        }
+
+        greetBinding.importFolderButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "*/*.config"
+            startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
         }
     }
 
@@ -194,5 +198,7 @@ class MainActivity : AppCompatActivity() {
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR or Shell.FLAG_VERBOSE_LOGGING)
             Shell.Config.setTimeout(5)
         }
+
+        private const val PICK_FILE_REQUEST_CODE = 100
     }
 }
