@@ -29,8 +29,6 @@
 
     <color name="config_actions_icons">#121212</color>
 
-    <color name="ic_launcher_background">#1B1B1B</color>
-
     <color name="colorpicker_red">#f44336</color>
     <color name="colorpicker_green">#4caf50</color>
     <color name="colorpicker_blue">#2196f3</color>
