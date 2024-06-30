@@ -5,12 +5,15 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +29,7 @@ import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
 import com.tanish2k09.sce.viewmodels.ConfigActivityVM
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 import java.lang.ref.WeakReference
+import java.net.URI
 
 class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
@@ -33,6 +37,8 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
     private lateinit var configVM: ConfigActivityVM
     private lateinit var sharedVM: SharedPrefsVM
     private lateinit var configScript: ConfigScript
+    private var configUriDialog: AlertDialog? = null
+    private val getConfigUri = registerForActivityResult(ActivityResultContracts.OpenDocumentTree(), ::onConfigUriReceived)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +51,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         initClickListeners()
         attachViewModelObservers()
 
-        commenceConfigImport()
+//        commenceConfigFilePermission()
         createWeakConfigScript()
     }
 
@@ -53,7 +59,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
     private fun initClickListeners() {
         binding.saveButton.setOnClickListener {
             it.isEnabled = false
-            configVM.exportConfigFile("/SmurfKernel", getString(R.string.configFile))
+            configVM.exportConfigFile()
             configVM.configStore.commitActiveValues()
             updateConfigFragments()
             handleRunScript()
@@ -105,31 +111,42 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
     }
 
     private fun attachViewModelObservers() {
-        sharedVM.theme.observe(this, Observer {
+        sharedVM.theme.observe(this) {
             handleTheme(it)
-        })
+        }
 
-        sharedVM.runScript.observe(this, Observer {
+        sharedVM.runScript.observe(this) {
             if (it) {
                 binding.saveButton.setImageResource(R.drawable.ic_save_apply)
             } else {
                 binding.saveButton.setImageResource(R.drawable.ic_save)
             }
-        })
+        }
 
-        sharedVM.accentColor.observe(this, Observer {
+        sharedVM.accentColor.observe(this) {
             binding.configActionsBar.setCardBackgroundColor(Color.parseColor(it))
-        })
+        }
+
+        configVM.configUri.observe(this) {
+            if (it != null) {
+                // If the dialog box is still open, we can safely dismiss it now and reset the reference
+                configUriDialog?.dismiss()
+                configUriDialog = null
+
+                commenceConfigImport()
+            }
+        }
     }
 
     private fun createWeakConfigScript() {
-        val weakContext = WeakReference<Context>(applicationContext)
+        val weakContext = WeakReference(applicationContext)
         configScript = ConfigScript(weakContext)
     }
 
     override fun onResume() {
         super.onResume()
         sharedVM.readSettingsToFields()
+        ensureUriAccess()
     }
 
     private fun handleTheme(newTheme: ETheme) {
@@ -145,11 +162,70 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         }
     }
 
+    // Return true IFF a matching persistent Uri is found within content resolver
+    private fun checkPersistentUriAccess(): Boolean {
+        contentResolver.persistedUriPermissions.forEach { p ->
+            if (p.uri == configVM.configUri.value) {
+                // We have persistent access to the Uri
+                return true
+            }
+        }
+
+        // No matching Uri found
+        return false
+    }
+
+    private fun ensureUriAccess() {
+        // Make sure we have the latest Uri
+        configVM.readPersistentUri()
+
+        // If we don't have a Uri or don't have access to it, request it again
+        if (configVM.configUri.value == null || !checkPersistentUriAccess()) {
+            commenceConfigFilePermission()
+        }
+    }
+
+    private fun commenceConfigFilePermission() {
+        configUriDialog = AlertDialog.Builder(this)
+            .setTitle(R.string.filePermissionRequired)
+            .setMessage(R.string.importConfigDialogMsg)
+            .setPositiveButton(R.string.select) { _, _ -> getConfigUri.launch(null) }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun onConfigUriReceived(uri: Uri?) {
+        if (uri == null) {
+            Toast.makeText(this, "No file received", Toast.LENGTH_SHORT).show()
+            configVM.storePersistentURI(null)
+            finish()
+            return
+        }
+
+        Log.v("SCE-CIE", "URI received: $uri")
+        contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        commenceConfigUriFileCheck(uri)
+    }
+
+    private fun commenceConfigUriFileCheck(uri: Uri) {
+        val docFile = DocumentFile.fromTreeUri(this, uri)
+        val configFile = docFile?.findFile(getString(R.string.configFile))
+
+        if (configFile == null) {
+            Toast.makeText(this, "${getString(R.string.configFile)} not found in folder", Toast.LENGTH_SHORT).show()
+            configVM.storePersistentURI(null)
+            return
+        }
+
+        configVM.storePersistentURI(uri)
+    }
+
     private fun commenceConfigImport() {
         removeConfigFragments()
 
         try {
-            configVM.importConfigFile("/SmurfKernel", resources.getString(R.string.configFile))
+            // TODO: Refactor importer and exporter to use the new Uri
+            configVM.importConfigFile()
         } catch (cfe: ConfigFormatException) {
             showErrorDialog(cfe)
             return
