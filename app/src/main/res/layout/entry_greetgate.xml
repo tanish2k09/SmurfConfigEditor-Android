@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/greet_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,152 +24,77 @@
         app:lottie_loop="true" />
 
     <LinearLayout
-        android:id="@+id/greet_button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:orientation="vertical"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wink_anim"
         app:layout_constraintVertical_bias="0.75">
 
-        <LinearLayout
-            android:id="@+id/import_button_layout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/import_direct_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="@dimen/greet_text_padding"
+            android:fontFamily="@font/app_mono_tf"
+            android:foreground="@drawable/ripple_greet_option"
+            android:gravity="center"
+            android:paddingTop="@dimen/greet_padding_inner"
+            android:paddingBottom="@dimen/greet_padding_inner"
+            android:text="@string/directImport"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/greet_text_size"
+            app:drawableTint="@color/dark"
+            app:drawableTopCompat="@drawable/ic_import" />
 
-            <TextView
-                android:id="@+id/import_direct_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawablePadding="@dimen/greet_text_padding"
-                android:foreground="@drawable/ripple_greet_option"
-                android:gravity="center"
-                android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/directImport"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"
-                app:drawableTopCompat="@drawable/ic_import"
-                app:drawableTint="@color/dark" />
-
-            <TextView
-                android:id="@+id/import_folder_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawablePadding="@dimen/greet_text_padding"
-                android:foreground="@drawable/ripple_greet_option"
-                android:gravity="center"
-                android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/folderImport"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"
-                app:drawableTopCompat="@drawable/ic_folder_import"
-                app:drawableTint="@color/dark" />
-
-            <TextView
-                android:id="@+id/import_zip_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawablePadding="@dimen/greet_text_padding"
-                android:foreground="@drawable/ripple_greet_option"
-                android:gravity="center"
-                android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/zipImport"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"
-                app:drawableTopCompat="@drawable/ic_folder_zip"
-                app:drawableTint="@color/dark" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/activity_button_layout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/settings_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="@dimen/greet_text_padding"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/app_mono_tf"
+            android:foreground="@drawable/ripple_greet_option"
+            android:gravity="center"
+            android:paddingTop="@dimen/greet_padding_inner"
+            android:paddingBottom="@dimen/greet_padding_inner"
+            android:text="@string/action_settings"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/greet_text_size"
+            app:drawableTint="@color/dark"
+            app:drawableTopCompat="@drawable/ic_settings" />
 
-            <TextView
-                android:id="@+id/settings_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawablePadding="@dimen/greet_text_padding"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:fontFamily="@font/app_mono_tf"
-                android:foreground="@drawable/ripple_greet_option"
-                android:gravity="center"
-                android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/action_settings"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                app:drawableTopCompat="@drawable/ic_settings"
-                app:drawableTint="@color/dark" />
+        <TextView
+            android:id="@+id/info_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="@dimen/greet_text_padding"
+            android:fontFamily="@font/app_mono_tf"
+            android:foreground="@drawable/ripple_greet_option"
+            android:gravity="center"
+            android:paddingTop="@dimen/greet_padding_inner"
+            android:paddingBottom="@dimen/greet_padding_inner"
+            android:text="@string/action_info"
+            android:textColor="@color/textDark"
+            android:textSize="@dimen/greet_text_size"
+            app:drawableTint="@color/dark"
+            app:drawableTopCompat="@drawable/ic_info_outline" />
 
-            <TextView
-                android:id="@+id/info_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawablePadding="@dimen/greet_text_padding"
-                android:foreground="@drawable/ripple_greet_option"
-                android:gravity="center"
-                android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/action_info"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"
-                app:drawableTopCompat="@drawable/ic_info_outline"
-                app:drawableTint="@color/dark" />
-
-            <TextView
-                android:id="@+id/presets_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawablePadding="@dimen/greet_text_padding"
-                android:foreground="@drawable/ripple_greet_option"
-                android:gravity="center"
-                android:paddingTop="@dimen/greet_padding_inner"
-                android:paddingBottom="@dimen/greet_padding_inner"
-                android:text="@string/presets_literal"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/greet_text_size"
-                android:fontFamily="@font/app_mono_tf"
-                app:drawableTopCompat="@drawable/ic_presets_doc"
-                app:drawableTint="@color/dark" />
-
-        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

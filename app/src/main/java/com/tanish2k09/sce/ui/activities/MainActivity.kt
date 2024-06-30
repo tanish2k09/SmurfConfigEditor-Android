@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.updatePadding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.tanish2k09.sce.R
 import com.tanish2k09.sce.databinding.ActivityMainBinding
@@ -61,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        checkPermissions()
         greetBinding.winkAnim.resumeAnimation()
         updateTheme()
     }
@@ -99,21 +97,15 @@ class MainActivity : AppCompatActivity() {
         greetBinding.importDirectButton.setOnClickListener {
             startConfigActivity()
         }
-
-        greetBinding.importFolderButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*.config"
-            startActivityForResult(intent, PICK_FILE_REQUEST_CODE)
-        }
     }
 
     private fun attachViewModelObservers() {
-        settingsVM.autoImport.observe(this, Observer {
-            if (it && checkPermissions()) {
+        settingsVM.autoImport.observe(this) {
+            if (it) {
                 Log.d("MA", "Opening config activity")
                 startConfigActivity()
             }
-        })
+        }
     }
 
     private fun startConfigActivity() {
@@ -198,7 +190,5 @@ class MainActivity : AppCompatActivity() {
             Shell.Config.setFlags(Shell.FLAG_REDIRECT_STDERR or Shell.FLAG_VERBOSE_LOGGING)
             Shell.Config.setTimeout(5)
         }
-
-        private const val PICK_FILE_REQUEST_CODE = 100
     }
 }
