@@ -7,6 +7,6 @@ class DefaultSettings {
         val DEFAULT_THEME = ETheme.DARK
         const val RUN_SCRIPT = true
         const val USE_TITLES = true
-        const val IMPORT_ON_START = true
+        const val IMPORT_ON_START = false
     }
 }
