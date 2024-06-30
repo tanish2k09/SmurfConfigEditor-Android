@@ -224,7 +224,6 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         removeConfigFragments()
 
         try {
-            // TODO: Refactor importer and exporter to use the new Uri
             configVM.importConfigFile()
         } catch (cfe: ConfigFormatException) {
             showErrorDialog(cfe)
