@@ -2,7 +2,6 @@ package com.tanish2k09.sce.ui.activities
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -15,21 +14,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.tanish2k09.sce.R
 import com.tanish2k09.sce.data.enums.ETheme
 import com.tanish2k09.sce.databinding.ActivityConfigBinding
-import com.tanish2k09.sce.ui.fragments.containerFragments.CategoryFragment
-import com.tanish2k09.sce.ui.fragments.containerFragments.ConfigVarFragment
 import com.tanish2k09.sce.helpers.config.ConfigScript
 import com.tanish2k09.sce.interfaces.IScriptCallback
+import com.tanish2k09.sce.ui.fragments.containerFragments.CategoryFragment
+import com.tanish2k09.sce.ui.fragments.containerFragments.ConfigVarFragment
 import com.tanish2k09.sce.utils.exceptions.ConfigFormatException
 import com.tanish2k09.sce.utils.extensions.rippleAnimationActivityOpener
 import com.tanish2k09.sce.viewmodels.ConfigActivityVM
 import com.tanish2k09.sce.viewmodels.SharedPrefsVM
 import java.lang.ref.WeakReference
-import java.net.URI
 
 class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
@@ -79,18 +76,20 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
         binding.applyConfigButton.setOnLongClickListener {
             Toast.makeText(
-                    this,
-                    "Execute script to apply config",
-                    Toast.LENGTH_SHORT).show()
+                this,
+                "Execute script to apply config",
+                Toast.LENGTH_SHORT
+            ).show()
             return@setOnLongClickListener true
         }
 
         binding.searchConfigButton.setOnClickListener {
             Toast.makeText(
-                    this,
-                    "Unavailable, search coming soon",
-                    Toast.LENGTH_SHORT)
-                    .show()
+                this,
+                "Unavailable, search coming soon",
+                Toast.LENGTH_SHORT
+            )
+                .show()
         }
 
         binding.searchConfigButton.setOnLongClickListener {
@@ -98,7 +97,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
             return@setOnLongClickListener true
         }
 
-        binding.settingsConfigButton.setOnTouchListener(object: View.OnTouchListener {
+        binding.settingsConfigButton.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 if (m.action == MotionEvent.ACTION_UP) {
                     val intent = Intent(v.context, SettingsActivity::class.java)
@@ -246,10 +245,10 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
 
         for (idx in configVM.configStore.linearCachedCodes.indices) {
             val cf = fm.findFragmentByTag(
-                    "catFrag" +
+                "catFrag" +
                         (
                                 configVM.configStore.getVar(
-                                        configVM.configStore.linearCachedCodes[idx]
+                                    configVM.configStore.linearCachedCodes[idx]
                                 )?.category)
             ) as CategoryFragment?
 
@@ -272,7 +271,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
             // Create a new category fragment if it's null
             if (cf == null) {
                 ft = fm.beginTransaction()
-                cf = CategoryFragment(category?:getString(R.string.noCategoryLiteral))
+                cf = CategoryFragment(category ?: getString(R.string.noCategoryLiteral))
                 ft.add(binding.configContents.id, cf, "catFrag$category").commitNow()
             }
 
@@ -296,8 +295,7 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
     private fun showErrorDialog(cfe: ConfigFormatException) {
         val builder = AlertDialog.Builder(this, R.style.dialogCustomStyle)
 
-        builder.setPositiveButton("Aw snap") {
-            dialog, _ ->
+        builder.setPositiveButton("Aw snap") { dialog, _ ->
             run {
                 dialog.dismiss()
                 finish()
@@ -311,10 +309,10 @@ class ConfigActivity : AppCompatActivity(), IScriptCallback {
         }
 
         builder.setTitle(title)
-                .setMessage(cfe.response.description)
-                .setCancelable(false)
-                .create()
-                .show()
+            .setMessage(cfe.response.description)
+            .setCancelable(false)
+            .create()
+            .show()
     }
 
     override fun callback() {

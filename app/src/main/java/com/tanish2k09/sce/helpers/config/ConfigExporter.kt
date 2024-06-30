@@ -2,11 +2,8 @@ package com.tanish2k09.sce.helpers.config
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.os.Environment
 import com.tanish2k09.sce.data.config.ConfigDetail
 import com.tanish2k09.sce.data.config.ConfigStore
-import java.io.BufferedWriter
-import java.io.FileWriter
 
 class ConfigExporter(private val store: ConfigStore) {
     fun exportToStorage(resolver: ContentResolver, uri: Uri) {
@@ -23,7 +20,7 @@ class ConfigExporter(private val store: ConfigStore) {
             configVarSB.appendLine(ConfigDetail.TITLE_PREFIX + configVar.title)
             configVarSB.appendLine(stringifyComment(configVar.description.getCommentString()))
             configVarSB.append(
-                    stringifyOptions(configVar.options, configVar.activeValue, configVar.code)
+                stringifyOptions(configVar.options, configVar.activeValue, configVar.code)
             )
 
             outBW.write(configVarSB.toString())
@@ -52,7 +49,8 @@ class ConfigExporter(private val store: ConfigStore) {
     private fun stringifyComment(comment: String): String {
         return ConfigDetail.COMMENT_PREFIX +
                 comment.replace(
-                        "\n",
-                        "\n${ConfigDetail.COMMENT_PREFIX}")
+                    "\n",
+                    "\n${ConfigDetail.COMMENT_PREFIX}"
+                )
     }
 }

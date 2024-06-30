@@ -2,17 +2,11 @@ package com.tanish2k09.sce.helpers.config
 
 import android.content.ContentResolver
 import android.net.Uri
-import android.os.Environment
-import android.util.Log
 import com.tanish2k09.sce.data.config.ConfigDetail
-import com.tanish2k09.sce.data.enums.ConfigResponse
 import com.tanish2k09.sce.data.config.ConfigStore
 import com.tanish2k09.sce.data.config.ConfigVar
+import com.tanish2k09.sce.data.enums.ConfigResponse
 import com.tanish2k09.sce.utils.exceptions.ConfigFormatException
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.IOException
 import java.io.InputStream
 
 class ConfigImporter {
@@ -55,8 +49,8 @@ class ConfigImporter {
         val response = configStore.addEntry(newVar)
 
         if (response != ConfigResponse.OK &&
-            response != ConfigResponse.EMPTY_VAR)
-        {
+            response != ConfigResponse.EMPTY_VAR
+        ) {
             throw ConfigFormatException(response)
         }
     }
