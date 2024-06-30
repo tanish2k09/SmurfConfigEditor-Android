@@ -1,39 +1,22 @@
 package com.tanish2k09.sce.helpers.config
 
-import android.os.Environment
-import android.util.Log
+import android.content.ContentResolver
+import android.net.Uri
 import com.tanish2k09.sce.data.config.ConfigDetail
-import com.tanish2k09.sce.data.enums.ConfigResponse
 import com.tanish2k09.sce.data.config.ConfigStore
 import com.tanish2k09.sce.data.config.ConfigVar
+import com.tanish2k09.sce.data.enums.ConfigResponse
 import com.tanish2k09.sce.utils.exceptions.ConfigFormatException
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.IOException
+import java.io.InputStream
 
 class ConfigImporter {
     private val configStore: ConfigStore = ConfigStore()
     private val equalSplitPattern: Regex = "=".toRegex()
     private var lineNum = 0
 
-    private fun checkFile(file: File): Boolean {
-        Log.d("SCE_CIE", "DIR PATH: " + file.path)
-
-        return file.exists()
-    }
-
-    @Suppress("DEPRECATION")
-    fun importConfig(folderPath: String, name: String): ConfigResponse {
-        val configFile = File(Environment.getExternalStorageDirectory().path + folderPath, name)
-        if (!checkFile(configFile)) {
-            throw ConfigFormatException(ConfigResponse.CONFIG_FILE_BAD)
-        }
-
-        try {
-            importConfigFromFile(configFile)
-        } catch (e: IOException) {
-            throw ConfigFormatException(ConfigResponse.CONFIG_IOE)
+    fun importConfig(resolver: ContentResolver, uri: Uri): ConfigResponse {
+        resolver.openInputStream(uri)?.use {
+            importConfigFromStream(it)
         }
 
         return ConfigResponse.OK
@@ -66,14 +49,14 @@ class ConfigImporter {
         val response = configStore.addEntry(newVar)
 
         if (response != ConfigResponse.OK &&
-            response != ConfigResponse.EMPTY_VAR)
-        {
+            response != ConfigResponse.EMPTY_VAR
+        ) {
             throw ConfigFormatException(response)
         }
     }
 
-    private fun importConfigFromFile(configFile: File): ConfigResponse {
-        val inBR = BufferedReader(FileReader(configFile))
+    private fun importConfigFromStream(stream: InputStream): ConfigResponse {
+        val inBR = stream.bufferedReader()
         var lastLine = inBR.readLine()
         var newVar = ConfigVar()
         var ignoreWhiteLines = true

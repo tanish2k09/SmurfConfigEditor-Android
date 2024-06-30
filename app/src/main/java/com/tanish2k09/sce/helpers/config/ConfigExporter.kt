@@ -1,19 +1,13 @@
 package com.tanish2k09.sce.helpers.config
 
-import android.os.Environment
+import android.content.ContentResolver
+import android.net.Uri
 import com.tanish2k09.sce.data.config.ConfigDetail
 import com.tanish2k09.sce.data.config.ConfigStore
-import java.io.BufferedWriter
-import java.io.FileWriter
 
 class ConfigExporter(private val store: ConfigStore) {
-    fun exportToStorage(folderPath: String, name: String) {
-        val outBW = BufferedWriter(
-                FileWriter(
-                        Environment.getExternalStorageDirectory().path +
-                                folderPath + '/' +
-                                name
-                ))
+    fun exportToStorage(resolver: ContentResolver, uri: Uri) {
+        val outBW = resolver.openOutputStream(uri)?.bufferedWriter() ?: return
 
         // Write top comment
         outBW.write(store.topComment.getCommentString())
@@ -22,11 +16,11 @@ class ConfigExporter(private val store: ConfigStore) {
 
         for (code in store.linearCachedCodes) {
             val configVar = store.getVar(code)!!
-            configVarSB.appendln(ConfigDetail.CAT_PREFIX + configVar.category)
-            configVarSB.appendln(ConfigDetail.TITLE_PREFIX + configVar.title)
-            configVarSB.appendln(stringifyComment(configVar.description.getCommentString()))
+            configVarSB.appendLine(ConfigDetail.CAT_PREFIX + configVar.category)
+            configVarSB.appendLine(ConfigDetail.TITLE_PREFIX + configVar.title)
+            configVarSB.appendLine(stringifyComment(configVar.description.getCommentString()))
             configVarSB.append(
-                    stringifyOptions(configVar.options, configVar.activeValue, configVar.code)
+                stringifyOptions(configVar.options, configVar.activeValue, configVar.code)
             )
 
             outBW.write(configVarSB.toString())
@@ -55,7 +49,8 @@ class ConfigExporter(private val store: ConfigStore) {
     private fun stringifyComment(comment: String): String {
         return ConfigDetail.COMMENT_PREFIX +
                 comment.replace(
-                        "\n",
-                        "\n${ConfigDetail.COMMENT_PREFIX}")
+                    "\n",
+                    "\n${ConfigDetail.COMMENT_PREFIX}"
+                )
     }
 }

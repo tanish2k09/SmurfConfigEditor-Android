@@ -18,3 +18,4 @@ playstore.png
 /app/full
 *.jks
 *.sceconfig
+app/sce_key.properties

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.tanish2k09.sce">
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="false"
@@ -18,7 +15,6 @@
         <activity
             android:name=".ui.activities.ConfigActivity"
             android:theme="@style/ConfigActivityTheme"
-            android:screenOrientation="portrait"
             android:configChanges="uiMode"/>
         <activity
             android:name=".ui.activities.SettingsActivity"
@@ -31,8 +27,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:configChanges="orientation|uiMode"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
